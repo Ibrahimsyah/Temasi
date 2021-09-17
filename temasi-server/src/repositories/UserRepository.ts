@@ -1,14 +1,14 @@
-import {Knex} from 'knex';
+import {Sequelize} from 'sequelize/types';
 
 class UserRepository {
-  _db: Knex;
+  _db: Sequelize;
 
-  constructor(db : Knex) {
+  constructor(db : Sequelize) {
     this._db = db;
   }
 
   getAllUser = async () => {
-    const result = await this._db.raw('select 1 + 1 as result');
+    const result = await this._db.query('select 1 + 1 as result');
     return Promise.resolve(result);
   }
 }

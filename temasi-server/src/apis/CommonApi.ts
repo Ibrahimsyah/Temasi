@@ -14,7 +14,7 @@ class CommonApi {
   }
 
   healthCheckHandler = async (req: Request, res: Response) => {
-    res.send('Pong ');
+    res.send('Pong');
   }
 }
 
