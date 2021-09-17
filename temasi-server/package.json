@@ -7,7 +7,7 @@
   "author": "Ibrahimsyah Zairussalam",
   "license": "MIT",
   "scripts": {
-    "dev": "nodemon index.ts --transpile-only",
+    "dev": "sequelize-cli db:migrate && nodemon index.ts --transpile-only",
     "start": "node index.ts"
   },
   "devDependencies": {
@@ -19,6 +19,7 @@
     "eslint": "^7.32.0",
     "eslint-config-google": "^0.14.0",
     "sequelize": "^6.6.5",
+    "sequelize-cli": "^6.2.0",
     "ts-node": "^10.2.1",
     "typescript": "^4.4.3"
   },
