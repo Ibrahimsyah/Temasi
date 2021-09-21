@@ -1,6 +1,6 @@
 import React from 'react';
-import Router from './router';
+import {GlobalRouter} from './router/GlobalRouter';
 
 export default () => {
-  return <Router />;
+  return <GlobalRouter />;
 };

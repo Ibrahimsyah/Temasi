@@ -1,25 +1,9 @@
-import React, {useState} from 'react';
-import {Pressable, Text, View} from 'react-native';
+import React from 'react';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {default as IconFA} from 'react-native-vector-icons/FontAwesome';
-import styles from './style';
-
-function Feed() {
-  const [count, setCount] = useState(0);
-
-  const onButtonClick = () => {
-    setCount(value => value + 1);
-  };
-  return (
-    <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-      <Text>Feed! {count}</Text>
-      <Pressable onPress={onButtonClick}>
-        <Text>Add</Text>
-      </Pressable>
-    </View>
-  );
-}
+import {View, Text} from 'react-native';
+import HomeScreen from './Home/HomeScreen';
 
 function Profile() {
   return (
@@ -39,7 +23,7 @@ function Notifications() {
 
 const Tab = createBottomTabNavigator();
 
-export default props => {
+export default () => {
   return (
     <Tab.Navigator
       initialRouteName="Feed"
@@ -52,7 +36,7 @@ export default props => {
       }}>
       <Tab.Screen
         name="Feed"
-        component={Feed}
+        component={HomeScreen}
         options={{
           tabBarLabel: 'Donasi',
           tabBarIcon: ({color, size}) => (
