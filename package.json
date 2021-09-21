@@ -1,9 +1,0 @@
-{
-  "name": "Temasi",
-  "version": "1.0.0",
-  "description": "Server App for Teman Masa Isolasi (TEMASI) Information System",
-  "main": "index.js",
-  "repository": "https://github.com/Ibrahimsyah/Temasi",
-  "author": "Ibrahimsyah Zairussalam",
-  "license": "MIT"
-}
