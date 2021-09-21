@@ -10,12 +10,14 @@ const Feed1 = () => {
   };
 
   return (
-    <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-      <Text>Hello Form Feed 2</Text>
-      <TouchableOpacity onPress={onNavClick}>
-        <Text>Goto Feed 2</Text>
-      </TouchableOpacity>
-    </View>
+    <>
+      <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+        <Text>Hello Form Feed 2</Text>
+        <TouchableOpacity onPress={onNavClick}>
+          <Text>Goto Feed 2</Text>
+        </TouchableOpacity>
+      </View>
+    </>
   );
 };
 
