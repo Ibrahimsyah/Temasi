@@ -1,4 +1,4 @@
-import HomeScreen from '../view/Main/HomeScreen';
+import HomeScreen from '../view/Main/MainScreen';
 import SplashScreen from '../view/Splash/SplashScreen';
 
 export default {
