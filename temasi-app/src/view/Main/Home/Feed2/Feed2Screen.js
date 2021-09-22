@@ -1,20 +1,51 @@
+import Geolocation from '@react-native-community/geolocation';
 import React, {useState, useEffect} from 'react';
 import {View, Text, StatusBar} from 'react-native';
+import MapView, {Marker} from 'react-native-maps';
 
-const colors = ['#ff00ff', '#ffff00', '#ffffff'];
 const Feed2 = () => {
-  const [color, setColor] = useState(colors[0]);
+  const [position, setPosition] = useState(null);
   useEffect(() => {
-    const interval = setInterval(() => {
-      setColor(colors[Math.round(Math.random() * 2)]);
-    }, 1000);
-    return () => clearInterval(interval);
+    Geolocation.getCurrentPosition(info =>
+      setPosition({
+        latitude: info.coords.latitude,
+        longitude: info.coords.longitude,
+      }),
+    );
   }, []);
   return (
     <>
-      <StatusBar backgroundColor={color} />
-      <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-        <Text>Hello Form Feed 2</Text>
+      <View
+        pointerEvents="none"
+        style={{
+          width: '100%',
+          height: 200,
+          overflow: 'hidden',
+          borderRadius: 20,
+        }}>
+        {position && (
+          <MapView
+            style={{
+              height: 150,
+              margin: 20,
+              borderRadius: 20,
+              borderWidth: 1,
+              borderColor: '#000000',
+            }}
+            initialRegion={{
+              latitude: position.latitude,
+              longitude: position.longitude,
+              longitudeDelta: 0.03,
+              latitudeDelta: 0.03,
+            }}>
+            <Marker
+              coordinate={{
+                latitude: position.latitude,
+                longitude: position.longitude,
+              }}
+            />
+          </MapView>
+        )}
       </View>
     </>
   );
