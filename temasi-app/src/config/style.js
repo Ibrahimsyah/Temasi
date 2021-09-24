@@ -1,4 +1,30 @@
 export const Color = {
-  TEXT_WHITE: '#FFFFFF',
-  RED_PRIMARY: '#E6292E',
+  WHITE: '#FFFFFF',
+  PRIMARY: '#00A57A',
+  LIGHT_GRAY: '#F8F8F8',
+  DARK_GRAY: '#B6B6B6',
+  BLACK: '#333333',
+  DARKER_GRAY: 'rgba(0, 0, 0, 0.6)',
+  LIGHT_RED: '#FFCDCD',
+  MED_RED: '#FF5555',
+  MED_BLUE: '#2F80ED',
+  LIGHT_BLUE: '#CDE1FF',
+  LIGHT_GREEN: '#E2FFE5',
+  MED_GREEN: '#219653',
+  MED_GRAY: '#F2F2F2'
 };
+
+export const FontStyle = {
+  H2: {
+    fontFamily: 'Roboto',
+    fontWeight: '500',
+    fontSize: 20,
+    color: Color.BLACK,
+  },
+  CAPTION: {
+    fontFamily: 'Roboto',
+    fontWeight: '400',
+    fontSize: 12,
+    color: Color.DARKER_GRAY
+  }
+}

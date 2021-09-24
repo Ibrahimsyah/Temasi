@@ -13,13 +13,12 @@ export default () => {
 
   useEffect(() => {
     setTimeout(() => {
-      const navAction = StackActions.replace('HomeScreen');
+      const navAction = StackActions.replace('LandingScreen');
       navigation.dispatch(navAction);
     }, 2000);
   }, [navigation]);
   return (
     <>
-      <StatusBar backgroundColor={Color.RED_PRIMARY} />
       <View style={style.body}>
         <FadeInComponent>
           <View>

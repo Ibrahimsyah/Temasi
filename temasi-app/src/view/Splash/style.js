@@ -1,10 +1,10 @@
-import {StyleSheet} from 'react-native';
-import {Color} from '../../config/style';
+import { StyleSheet } from 'react-native';
+import { Color } from '../../config/style';
 
 export default StyleSheet.create({
   body: {
     flex: 1,
-    backgroundColor: Color.RED_PRIMARY,
+    backgroundColor: Color.WHITE,
     justifyContent: 'center',
     alignItems: 'center',
   },
@@ -16,8 +16,9 @@ export default StyleSheet.create({
 
   title: {
     textAlign: 'center',
-    color: Color.TEXT_WHITE,
+    color: Color.PRIMARY,
     fontSize: 25,
+    fontFamily: 'Roboto',
     fontWeight: 'bold',
   },
 });
