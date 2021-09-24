@@ -1,11 +1,9 @@
 import React from 'react'
-import { Dimensions, Image, Text, View } from 'react-native'
+import { Image, Text, View, StatusBar } from 'react-native'
 import Carousel from 'react-native-looped-carousel'
-import ButtonPrimary from '../../component/ButtonPrimary';
+import ButtonPrimary from '../../components/ButtonPrimary';
 import config from './index.config'
 import style from './style'
-
-const { width, height } = Dimensions.get('window');
 
 const LandingItem = props => {
     const { image, title, description } = props
@@ -20,6 +18,7 @@ const LandingItem = props => {
 
 export default () => {
     return <>
+        <StatusBar {...config.statusBarStyle} />
         <View style={style.landingView}>
             <Carousel {...config.carouselConfig}>
                 {config.carouselItems.map(item => <LandingItem key={item.id} {...item} />)}

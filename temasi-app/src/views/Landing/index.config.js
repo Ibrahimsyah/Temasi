@@ -1,3 +1,4 @@
+import { Color } from '../../configs/style'
 
 const imageLanding1 = require('../../assets/images/landing1.png')
 const imageLanding2 = require('../../assets/images/landing2.png')
@@ -25,5 +26,9 @@ export default {
             description: 'Bantu saudara kita berjuang melawan COVID-19 dengan memberikan uluran tangan. Anda dapat memberi atau menyewakan barang kepada mereka yang membutuhkan',
             image: imageLanding2
         },
-    ]
+    ],
+    statusBarStyle: {
+        backgroundColor: Color.WHITE,
+        barStyle: "dark-content"
+    }
 }

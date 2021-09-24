@@ -1,6 +1,6 @@
 import React from 'react'
 import { TouchableOpacity, StyleSheet, Text, View } from 'react-native'
-import { Color } from '../config/style'
+import { Color } from '../configs/style'
 
 const style = StyleSheet.create({
     button: {
