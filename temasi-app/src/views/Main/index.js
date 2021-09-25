@@ -9,7 +9,7 @@ const Tab = createBottomTabNavigator();
 export default () => {
   return (
     <>
-      <StatusBar backgroundColor={Color.WHITE} barStyle="dark-content" />
+      <StatusBar backgroundColor={Color.LIGHT_GRAY} barStyle="dark-content" />
       <Tab.Navigator {...config.navigatorConfig}>
         {config.tabs.map((tab, index) =>
           <Tab.Screen key={index} {...tab} />
