@@ -3,10 +3,11 @@ import { default as FontAwesomeIcon } from 'react-native-vector-icons/FontAwesom
 import { default as FontAwesome5Icon } from 'react-native-vector-icons/FontAwesome5';
 import { default as MaterialCommunityIcon } from 'react-native-vector-icons/MaterialCommunityIcons';
 import { default as MaterialIcon } from 'react-native-vector-icons/MaterialIcons';
-import { View, Text, Pressable, ScrollView } from 'react-native';
+import { View, Text, Pressable, ScrollView, FlatList } from 'react-native';
 import style from './style';
 import { Color } from '../../../../configs/style';
 import { generateGreeting } from '../../../../utils/time';
+import CardBantuan from '../../../../components/CardBantuan';
 
 const HomeFragment = () => {
   const greeting = generateGreeting();
@@ -16,12 +17,14 @@ const HomeFragment = () => {
       <ScrollView style={style.container}>
         <Text style={style.greeting}>{greeting}</Text>
         <Text style={style.userName}>Ibrahimsyah Zairussalam</Text>
+
         <Pressable style={style.searchBar}>
           <View style={style.searchContainer}>
             <FontAwesomeIcon name="search" style={style.searchIcon} />
             <Text style={style.searchHint}>Coba cari "Tabung Oksigen"</Text>
           </View>
         </Pressable>
+
         <View style={style.mainPanel}>
           <Text style={style.panelTitle}>Yuk Bantu Mereka</Text>
           <View style={style.panelGrid}>
@@ -45,12 +48,20 @@ const HomeFragment = () => {
             </Pressable>
           </View>
         </View>
+
         <View style={style.sectionHeader}>
           <Text style={style.sectionTitle}>Dibutuhkan Segera</Text>
           <Pressable>
             <Text style={style.showMore}>Lihat Semua</Text>
           </Pressable>
         </View>
+        <FlatList
+          horizontal={true}
+          style={style.urgentList}
+          showsHorizontalScrollIndicator={false}
+          data={Array(4)}
+          renderItem={({ item }) => <CardBantuan />}
+        />
 
         <View style={style.sectionHeader}>
           <Text style={style.sectionTitle}>Permohonan Baru</Text>
@@ -58,6 +69,7 @@ const HomeFragment = () => {
             <Text style={style.showMore}>Lihat Semua</Text>
           </Pressable>
         </View>
+
       </ScrollView>
     </>
   );

@@ -28,8 +28,8 @@ export default StyleSheet.create({
             height: 4,
         },
         shadowOpacity: 0.1,
-        shadowRadius: 4.00,
-        elevation: 3,
+        shadowRadius: 2.00,
+        elevation: 4,
     },
     searchIcon: {
         height: 16,
@@ -100,5 +100,8 @@ export default StyleSheet.create({
         ...FontStyle.BODY,
         fontWeight: 'bold',
         color: Color.PRIMARY,
+    },
+    urgentList: {
+        marginTop: 11,
     },
 });
