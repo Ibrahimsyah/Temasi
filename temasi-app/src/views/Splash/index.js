@@ -18,23 +18,22 @@ export default () => {
 
   useEffect(() => {
     const init = async () => {
-      const account = await storage.getData(ACCOUNT_STORAGE_KEY)
+      const account = await storage.getData(ACCOUNT_STORAGE_KEY);
       if (account) {
-        dispatch(setAccount(account))
+        dispatch(setAccount(account));
       }
 
-      const isFirstTime = await storage.getData(APP_FIRST_USE) || true
-      console.log(isFirstTime)
-      const nextScreen = isFirstTime ? "LandingScreen" : "HomeScreen"
+      const isFirstTime = await storage.getData(APP_FIRST_USE);
+      const nextScreen = isFirstTime === null || isFirstTime ? 'LandingScreen' : 'HomeScreen';
 
       setTimeout(() => {
         const navAction = StackActions.replace(nextScreen);
         navigation.dispatch(navAction);
       }, 2000);
-    }
+    };
 
-    init()
-  }, [navigation]);
+    init();
+  }, [navigation, dispatch]);
   return (
     <>
       <StatusBar backgroundColor={Color.WHITE} barStyle="dark-content" />

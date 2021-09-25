@@ -11,7 +11,8 @@ export const Color = {
   LIGHT_BLUE: '#CDE1FF',
   LIGHT_GREEN: '#E2FFE5',
   MED_GREEN: '#219653',
-  MED_GRAY: '#F2F2F2'
+  MED_GRAY: '#F2F2F2',
+  SHADOW_COLOR: 'rgba(0, 0, 0, 0.1)',
 };
 
 export const FontStyle = {
@@ -39,12 +40,12 @@ export const FontStyle = {
   BODY:{
     fontFamily: 'Roboto',
     fontSize: 12,
-  }, 
+  },
   CAPTION: {
     fontFamily: 'Roboto',
     fontWeight: '400',
     fontSize: 12,
-    color: Color.DARKER_GRAY
+    color: Color.DARKER_GRAY,
   },
   SECTION_TITLE: {
     fontFamily: 'Roboto',
@@ -58,16 +59,16 @@ export const FontStyle = {
   LABEL_CATEGORY:{
     fontFamily: 'Roboto',
     fontSize: 10,
-    fontWeight: 'bold'
+    fontWeight: 'bold',
   },
   ITEM_TITLE: {
     fontFamily: 'Roboto',
     fontSize: 12,
-    fontWeight: '500'
+    fontWeight: '500',
   },
   DETAIL_TITLE: {
     fontFamily: 'Roboto',
     fontSize: 16,
-    fontWeight: 'bold'
-  }
-}
+    fontWeight: 'bold',
+  },
+};
