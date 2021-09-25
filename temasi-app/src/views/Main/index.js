@@ -1,13 +1,13 @@
 import React from 'react';
-import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import {default as IconFA} from 'react-native-vector-icons/FontAwesome';
-import {View, Text} from 'react-native';
-import HomeScreen from './Home/HomeScreen';
+import { default as IconFA } from 'react-native-vector-icons/FontAwesome';
+import { View, Text } from 'react-native';
+import HomeScreen from './Home';
 
 function Profile() {
   return (
-    <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
       <Text>Profile!</Text>
     </View>
   );
@@ -15,7 +15,7 @@ function Profile() {
 
 function Notifications() {
   return (
-    <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
       <Text>Notifications!</Text>
     </View>
   );
@@ -39,7 +39,7 @@ export default () => {
         component={HomeScreen}
         options={{
           tabBarLabel: 'Donasi',
-          tabBarIcon: ({color, size}) => (
+          tabBarIcon: ({ color, size }) => (
             <Icon name="heart" size={size} color={color} />
           ),
         }}
@@ -49,7 +49,7 @@ export default () => {
         component={Notifications}
         options={{
           tabBarLabel: 'Permohonan',
-          tabBarIcon: ({color, size}) => (
+          tabBarIcon: ({ color, size }) => (
             <Icon name="hand-heart" size={size} color={color} />
           ),
         }}
@@ -59,7 +59,7 @@ export default () => {
         component={Profile}
         options={{
           tabBarLabel: 'Profile',
-          tabBarIcon: ({color, size}) => (
+          tabBarIcon: ({ color, size }) => (
             <IconFA name="user" size={size} color={color} />
           ),
         }}

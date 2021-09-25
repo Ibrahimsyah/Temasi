@@ -1,6 +1,12 @@
 import React from 'react';
-import {GlobalRouter} from './router/GlobalRouter';
+import { GlobalRouter } from './router/GlobalRouter';
+import { createStore } from 'redux'
+import reducer from './stores'
+import { Provider } from 'react-redux'
 
 export default () => {
-  return <GlobalRouter />;
+  const store = createStore(reducer)
+  return <Provider store={store}>
+    <GlobalRouter />
+  </Provider>;
 };

@@ -10,12 +10,12 @@
     "lint": "eslint ."
   },
   "dependencies": {
+    "@react-native-async-storage/async-storage": "^1.15.8",
     "@react-native-community/geolocation": "^2.0.2",
     "@react-navigation/bottom-tabs": "^6.0.5",
     "@react-navigation/native": "^6.0.2",
     "@react-navigation/native-stack": "^6.1.0",
     "axios": "^0.21.1",
-    "mobx": "^6.3.3",
     "mobx-persist": "^0.4.1",
     "react": "17.0.2",
     "react-native": "0.65.1",
@@ -23,7 +23,9 @@
     "react-native-maps": "0.29.3",
     "react-native-safe-area-context": "^3.3.0",
     "react-native-screens": "^3.6.0",
-    "react-native-vector-icons": "^8.1.0"
+    "react-native-vector-icons": "^8.1.0",
+    "react-redux": "^7.2.5",
+    "redux": "^4.1.1"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9",

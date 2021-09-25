@@ -1,6 +1,6 @@
-import LandingScreen from '../view/Landing';
-import HomeScreen from '../view/Main/MainScreen';
-import SplashScreen from '../view/Splash/SplashScreen';
+import LandingScreen from '../views/Landing';
+import HomeScreen from '../views/Main';
+import SplashScreen from '../views/Splash';
 
 export default {
   defaultRouteName: 'SplashScreen',
@@ -8,8 +8,8 @@ export default {
     headerShown: false,
   },
   routes: [
-    {name: 'SplashScreen', screen: SplashScreen},
-    {name: 'HomeScreen', screen: HomeScreen},
-    {name: 'LandingScreen', screen: LandingScreen}
+    { name: 'SplashScreen', screen: SplashScreen },
+    { name: 'HomeScreen', screen: HomeScreen },
+    { name: 'LandingScreen', screen: LandingScreen }
   ],
 };
