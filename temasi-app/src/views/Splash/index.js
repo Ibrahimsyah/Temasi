@@ -23,9 +23,8 @@ export default () => {
         dispatch(setAccount(account))
       }
 
-      const isFirstTime = await storage.getData(APP_FIRST_USE) || true
-      console.log(isFirstTime)
-      const nextScreen = isFirstTime ? "LandingScreen" : "HomeScreen"
+      const isFirstTime = await storage.getData(APP_FIRST_USE)
+      const nextScreen = isFirstTime === null || isFirstTime ? "LandingScreen" : "HomeScreen"
 
       setTimeout(() => {
         const navAction = StackActions.replace(nextScreen);
