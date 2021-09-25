@@ -1,5 +1,5 @@
 import React from 'react';
-import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Feed2 from '../views/Main/Home/Feed2/Feed2Screen';
 import Feed1 from '../views/Main/Home/Feed1/Feed1Screen';
 import config from './index.config';
