@@ -21,7 +21,7 @@ export default StyleSheet.create({
         paddingHorizontal: 16,
         backgroundColor: Color.WHITE,
         borderRadius: 20,
-        marginTop: 38,
+        marginTop: 30,
         shadowColor: '#000',
         shadowOffset: {
             width: 0,
@@ -47,7 +47,7 @@ export default StyleSheet.create({
         alignItems: 'center',
     },
     mainPanel: {
-        marginTop: 32,
+        marginTop: 24,
         borderRadius: 8,
         backgroundColor: Color.PRIMARY,
         paddingHorizontal: 23,
@@ -91,7 +91,7 @@ export default StyleSheet.create({
         ...FontStyle.SECTION_TITLE,
     },
     sectionHeader: {
-        marginTop: 27,
+        marginTop: 22,
         justifyContent: 'space-between',
         alignItems: 'center',
         flexDirection: 'row',
@@ -101,7 +101,7 @@ export default StyleSheet.create({
         fontWeight: 'bold',
         color: Color.PRIMARY,
     },
-    urgentList: {
+    list: {
         marginTop: 11,
     },
 });

@@ -22,7 +22,7 @@ const style = StyleSheet.create({
         shadowRadius: 1.00,
 
         elevation: 1,
-        marginBottom:3,
+        marginBottom: 3,
     },
     iconContainer: {
         alignSelf: 'flex-start',
@@ -65,58 +65,59 @@ const style = StyleSheet.create({
         color: Color.DARKER_GRAY,
     },
 });
-export default props => {
-    const { type = TYPE_PLASMA, title = 'Plasma Darah Golongan AB+', distance = 0.2, time = 3 } = props;
 
-    const renderCategoryAndIcon = itemType => {
-        let iconBgColor;
-        let color;
-        let icon;
-        let category;
-        switch (itemType) {
-            case TYPE_PANGAN_SUPLEMEN: {
-                iconBgColor = Color.LIGHT_BLUE;
-                color = Color.MED_BLUE;
-                icon = <MaterialIcon name="local-hospital" style={{ ...style.icon, color: Color.MED_BLUE }} />;
-                category = PANGAN_SUPLEMEN;
-                break;
-            }
-            case TYPE_OKSIGEN: {
-                iconBgColor = Color.LIGHT_GREEN;
-                color = Color.PRIMARY;
-                icon = <MaterialCommunityIcon name="diving-scuba-tank" style={{ ...style.icon, color: Color.PRIMARY }} />;
-                category = OKSIGEN;
-                break;
-            }
-            default: {
-                iconBgColor = Color.LIGHT_RED;
-                color = Color.MED_RED;
-                icon = <FontAwesome5Icon name="tint" style={{ ...style.icon, color: Color.MED_RED }} />;
-                category = PLASMA;
-                break;
-            }
+const renderCategoryAndIcon = itemType => {
+    let iconBgColor;
+    let color;
+    let icon;
+    let category;
+    switch (itemType) {
+        case TYPE_PANGAN_SUPLEMEN: {
+            iconBgColor = Color.LIGHT_BLUE;
+            color = Color.MED_BLUE;
+            icon = <MaterialIcon name="local-hospital" style={{ ...style.icon, color: Color.MED_BLUE }} />;
+            category = PANGAN_SUPLEMEN;
+            break;
         }
-        return <>
-            <>
-                <View style={{ ...style.iconContainer, backgroundColor: iconBgColor }}>
-                    {icon}
-                </View>
-                <Text style={{ ...style.category, color: color }} >{category}</Text>
-            </>
-        </>;
-    };
+        case TYPE_OKSIGEN: {
+            iconBgColor = Color.LIGHT_GREEN;
+            color = Color.PRIMARY;
+            icon = <MaterialCommunityIcon name="diving-scuba-tank" style={{ ...style.icon, color: Color.PRIMARY }} />;
+            category = OKSIGEN;
+            break;
+        }
+        default: {
+            iconBgColor = Color.LIGHT_RED;
+            color = Color.MED_RED;
+            icon = <FontAwesome5Icon name="tint" style={{ ...style.icon, color: Color.MED_RED }} />;
+            category = PLASMA;
+            break;
+        }
+    }
+    return <>
+        <>
+            <View style={{ ...style.iconContainer, backgroundColor: iconBgColor }}>
+                {icon}
+            </View>
+            <Text style={{ ...style.category, color: color }} >{category}</Text>
+        </>
+    </>;
+};
+
+export default props => {
+    const { type = TYPE_PLASMA, title = 'Plasma Darah Golongan AB+', distance = '0.2 KM', time = '3 Hari Lagi' } = props;
 
     return <>
-        <View style={style.cardContainer}>
+        <TouchableOpacity style={style.cardContainer}>
             {renderCategoryAndIcon(type)}
             <Text style={style.itemTitle}>{title}</Text>
             <View style={style.cardFooter}>
                 <View style={style.footerLeft}>
                     <MaterialIcon name="location-on" style={style.locationIcon} />
-                    <Text style={style.location}>{distance} KM</Text>
+                    <Text style={style.location}>{distance}</Text>
                 </View>
-                <Text style={style.time}>{time} Jam Lagi</Text>
+                <Text style={style.time}>{time}</Text>
             </View>
-        </View>
+        </TouchableOpacity>
     </>;
 };
