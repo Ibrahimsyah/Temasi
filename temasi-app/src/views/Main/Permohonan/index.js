@@ -24,7 +24,7 @@ export default () => {
         <ScrollView style={style.container} contentContainerStyle={style.contentContainer}>
             <Text style={style.title}>Permohonan Anda</Text>
             {!data.length ? <NotFound /> : data.map((_, index) => (
-                <CardPermohonan type={TYPE_PLASMA} />
+                <CardPermohonan type={TYPE_PLASMA} key={index} />
             ))}
         </ScrollView>
         <FABPermohonan />
