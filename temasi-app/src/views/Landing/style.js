@@ -1,5 +1,5 @@
-import { StyleSheet } from 'react-native'
-import { Color, FontStyle } from '../../configs/style'
+import { StyleSheet } from 'react-native';
+import { Color, FontStyle } from '../../configs/style';
 
 export default StyleSheet.create({
     landingView: {
@@ -7,25 +7,25 @@ export default StyleSheet.create({
         flex: 1,
         justifyContent: 'space-between',
         alignItems: 'center',
-        padding: 20
+        padding: 20,
     },
 
     landingItemContainer: {
         flex: 1,
         justifyContent: 'center',
-        alignItems: 'center'
+        alignItems: 'center',
     },
     landingImage: {
         width: '100%',
         height: 300,
-        resizeMode: 'contain'
+        resizeMode: 'contain',
     },
     landingTitle: {
-        ...FontStyle.H2
+        ...FontStyle.H2,
     },
     landingDesc: {
         ...FontStyle.CAPTION,
         textAlign: 'center',
-        marginTop: 13
-    }
-})
+        marginTop: 13,
+    },
+});
