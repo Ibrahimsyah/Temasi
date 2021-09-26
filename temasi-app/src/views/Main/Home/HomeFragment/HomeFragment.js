@@ -8,6 +8,7 @@ import style from './style';
 import { Color } from '../../../../configs/style';
 import { generateGreeting } from '../../../../utils/time';
 import CardBantuan from '../../../../components/CardBantuan';
+import CardPermohonan from '../../../../components/CardPermohonan';
 
 const HomeFragment = () => {
   const greeting = generateGreeting();
@@ -57,7 +58,7 @@ const HomeFragment = () => {
         </View>
         <FlatList
           horizontal={true}
-          style={style.urgentList}
+          style={style.list}
           showsHorizontalScrollIndicator={false}
           data={Array(4)}
           renderItem={({ item }) => <CardBantuan />}
@@ -68,6 +69,9 @@ const HomeFragment = () => {
           <Pressable>
             <Text style={style.showMore}>Lihat Semua</Text>
           </Pressable>
+        </View>
+        <View style={style.list}>
+          {Array(4).fill(0).map((_, index) => <CardPermohonan key={index} />)}
         </View>
 
       </ScrollView>
