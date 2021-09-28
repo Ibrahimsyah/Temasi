@@ -1,6 +1,6 @@
 import Geolocation from '@react-native-community/geolocation';
 import React, {useState, useEffect} from 'react';
-import {View, Text, StatusBar} from 'react-native';
+import {View} from 'react-native';
 import MapView, {Marker} from 'react-native-maps';
 
 const Feed2 = () => {
