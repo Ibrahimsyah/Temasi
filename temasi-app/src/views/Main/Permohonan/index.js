@@ -19,7 +19,7 @@ const NotFound = () => {
 };
 
 export default () => {
-    const [data, setData] = useState(Array(10).fill(0));
+    const [data] = useState(Array(10).fill(0));
     return <>
         <ScrollView style={style.container} contentContainerStyle={style.contentContainer}>
             <Text style={style.title}>Permohonan Anda</Text>
