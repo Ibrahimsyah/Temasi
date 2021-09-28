@@ -3,7 +3,11 @@ import {Color, FontStyle} from '../../../configs/style';
 export default StyleSheet.create({
   container: {
     paddingHorizontal: 20,
-    backgroundColor: Color.LIGHT_GRAY
+    backgroundColor: Color.LIGHT_GRAY,
+  },
+
+  contentContainer:{
+    flexGrow: 1,
   },
 
   title: {

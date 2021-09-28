@@ -6,7 +6,9 @@ export default StyleSheet.create({
         paddingHorizontal: 20,
         backgroundColor: Color.LIGHT_GRAY,
     },
-    contentContainer: { flexGrow: 1 },
+    contentContainer: {
+        flexGrow: 1,
+    },
     title: {
         marginTop: 20,
         ...FontStyle.H2,

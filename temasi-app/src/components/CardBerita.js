@@ -31,6 +31,7 @@ const style = StyleSheet.create({
   timestamp: {
     ...FontStyle.CAPTION,
     fontStyle: 'italic',
+
   },
 });
 
@@ -42,8 +43,8 @@ export default props => {
       <TouchableOpacity style={style.container}>
         <Image source={{uri: image}} style={style.newsImage}/>
         <View style={style.rightSection}>
-          <Text style={style.title}>Analisis Data COVID-19 Indonesia (Update Per 19 September 2021)</Text>
-          <Text style={style.timestamp}>Rab, 22 Sep 2021 20:07:17 +0700</Text>
+          <Text style={style.title}>{title}</Text>
+          <Text style={style.timestamp}>{timestamp}</Text>
         </View>
       </TouchableOpacity>
     </>
