@@ -10,7 +10,7 @@ const style = StyleSheet.create({
     flexDirection: 'row',
   },
 
-  newsImage:{
+  newsImage: {
     width: 100,
     height: 100,
     resizeMode: 'cover',
@@ -25,7 +25,7 @@ const style = StyleSheet.create({
   },
 
   title: {
-      ...FontStyle.H4,
+    ...FontStyle.H4,
   },
 
   timestamp: {
@@ -36,12 +36,12 @@ const style = StyleSheet.create({
 });
 
 export default props => {
-  const {title, image = 'https://covid19.go.id/storage/app/uploads/public/615/2f1/ea5/6152f1ea505f0930846588.jpeg', timestamp} = props;
+  const {title, image, timestamp, onClick} = props;
 
   return (
     <>
-      <TouchableOpacity style={style.container}>
-        <Image source={{uri: image}} style={style.newsImage}/>
+      <TouchableOpacity style={style.container} onPress={onClick}>
+        <Image source={{uri: image}} style={style.newsImage} />
         <View style={style.rightSection}>
           <Text style={style.title}>{title}</Text>
           <Text style={style.timestamp}>{timestamp}</Text>
