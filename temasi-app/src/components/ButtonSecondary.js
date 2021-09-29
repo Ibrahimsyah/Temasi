@@ -6,12 +6,14 @@ const styles = StyleSheet.create({
     button: {
         borderRadius: 20,
         width: '100%',
-        backgroundColor: Color.PRIMARY,
+        backgroundColor: Color.WHITE,
+        borderWidth: 1,
+        borderColor: Color.PRIMARY,
         paddingVertical: 8,
     },
     text: {
         textAlign: 'center',
-        color: Color.WHITE,
+        color: Color.PRIMARY,
         fontFamily: 'Roboto',
         fontWeight: '500',
         fontSize: 20,

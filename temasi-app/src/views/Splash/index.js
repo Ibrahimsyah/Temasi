@@ -1,16 +1,16 @@
-import React, { useEffect } from 'react';
-import { Text, StatusBar, View, Image } from 'react-native';
-import { useNavigation, StackActions } from '@react-navigation/native';
+import React, {useEffect} from 'react';
+import {Text, StatusBar, View, Image} from 'react-native';
+import {useNavigation, StackActions} from '@react-navigation/native';
 import FadeInComponent from '../../components/animation/FadeInComponent';
-import { AppConfig } from '../../configs/app';
-import { Color } from '../../configs/style';
+import {AppConfig} from '../../configs/app';
+import {Color} from '../../configs/style';
 import style from './style';
-import { useDispatch } from 'react-redux';
+import {useDispatch} from 'react-redux';
 import storage from '../../providers/storage';
-import { ACCOUNT_STORAGE_KEY, APP_FIRST_USE } from '../../configs/storage';
-import { setAccount } from '../../stores/account.action';
+import {ACCOUNT_STORAGE_KEY, APP_FIRST_USE} from '../../configs/storage';
+import {setAccount} from '../../stores/account.action';
 
-const AppLogo = require('../../assets/app_logo.png');
+import AppLogo from '../../assets/app_logo.png';
 
 export default () => {
   const navigation = useNavigation();
