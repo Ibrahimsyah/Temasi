@@ -1,6 +1,6 @@
 import React from 'react';
 import {TouchableOpacity, StyleSheet, Text} from 'react-native';
-import {Color} from '../configs/style';
+import {Color, FontStyle} from '../configs/style';
 
 const styles = StyleSheet.create({
     button: {
@@ -10,11 +10,10 @@ const styles = StyleSheet.create({
         paddingVertical: 8,
     },
     text: {
-        textAlign: 'center',
+        ...FontStyle.H3,
+        textAlign:'center',
         color: Color.WHITE,
-        fontFamily: 'Roboto',
-        fontWeight: '500',
-        fontSize: 20,
+        fontWeight: 'bold',
     },
 });
 
