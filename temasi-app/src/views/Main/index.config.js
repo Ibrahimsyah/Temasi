@@ -1,8 +1,8 @@
 import React from 'react';
-import { default as MaterialCommunityIcon } from 'react-native-vector-icons/MaterialCommunityIcons';
-import { default as MaterialIcon } from 'react-native-vector-icons/MaterialIcons';
-import { default as FontAwesomeIcon } from 'react-native-vector-icons/FontAwesome';
-import { Color } from '../../configs/style';
+import {default as MaterialCommunityIcon} from 'react-native-vector-icons/MaterialCommunityIcons';
+import {default as MaterialIcon} from 'react-native-vector-icons/MaterialIcons';
+import {default as FontAwesomeIcon} from 'react-native-vector-icons/FontAwesome';
+import {Color} from '../../configs/style';
 import HomeScreen from './Home';
 import Informasi from './Informasi';
 import Permohonan from './Permohonan';
@@ -34,7 +34,7 @@ export default {
             component: HomeScreen,
             options: {
                 tabBarLabel: 'Donasi',
-                tabBarIcon: ({ color, size }) => (
+                tabBarIcon: ({color, size}) => (
                     <FontAwesomeIcon name="home" size={size} color={color} />
                 ),
             },
@@ -44,7 +44,7 @@ export default {
             component: Permohonan,
             options: {
                 tabBarLabel: 'Permohonan',
-                tabBarIcon: ({ color, size }) => (
+                tabBarIcon: ({color, size}) => (
                     <MaterialCommunityIcon name="heart" size={size} color={color} />
                 ),
             },
@@ -54,7 +54,7 @@ export default {
             component: Informasi,
             options: {
                 tabBarLabel: 'Informasi',
-                tabBarIcon: ({ color, size }) => (
+                tabBarIcon: ({color, size}) => (
                     <MaterialIcon name="explore" size={size} color={color} />
                 ),
             },
@@ -64,7 +64,7 @@ export default {
             component: Profil,
             options: {
                 tabBarLabel: 'Profil',
-                tabBarIcon: ({ color, size }) => (
+                tabBarIcon: ({color, size}) => (
                     <FontAwesomeIcon name="user" size={size} color={color} />
                 ),
             },

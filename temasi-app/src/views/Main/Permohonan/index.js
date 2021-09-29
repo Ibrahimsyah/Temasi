@@ -5,7 +5,7 @@ import FABPermohonan from '../../../components/FABPermohonan';
 import { TYPE_PLASMA } from '../../../configs/ItemTypes';
 import style from './style';
 
-const NotFoundImage = require('../../../assets/images/notFound.png');
+import NotFoundImage from '../../../assets/images/notFound.png';
 
 const NotFound = () => {
     return <>

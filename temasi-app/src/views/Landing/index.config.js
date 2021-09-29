@@ -1,7 +1,7 @@
-import { Color } from '../../configs/style';
+import {Color} from '../../configs/style';
 
-const imageLanding1 = require('../../assets/images/landing1.png');
-const imageLanding2 = require('../../assets/images/landing2.png');
+import imageLanding1 from '../../assets/images/landing1.png';
+import imageLanding2 from '../../assets/images/landing2.png';
 
 export default {
     carouselConfig: {
