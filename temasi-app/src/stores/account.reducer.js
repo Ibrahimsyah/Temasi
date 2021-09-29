@@ -3,7 +3,8 @@ import {ADD_ACCOUNT, GET_ACCOUNT, DELETE_ACCOUNT} from './ActionTypes';
 import {ACCOUNT_STORAGE_KEY} from '../configs/storage';
 
 const initState = {
-  account: null,
+  id: null,
+  token: null,
 };
 
 export default (state = initState, action) => {
@@ -11,14 +12,14 @@ export default (state = initState, action) => {
   switch (type) {
     case ADD_ACCOUNT: {
       storage.setData(ACCOUNT_STORAGE_KEY, payload);
-      return {...state, account: payload};
+      return {...state, ...payload};
     }
     case GET_ACCOUNT: {
       return state;
     }
     case DELETE_ACCOUNT: {
       storage.removeData(ACCOUNT_STORAGE_KEY);
-      return {account: null};
+      return initState;
     }
     default: {
       return state;

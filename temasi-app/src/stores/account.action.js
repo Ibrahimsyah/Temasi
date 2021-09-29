@@ -1,21 +1,20 @@
-import { GET_ACCOUNT, ADD_ACCOUNT, DELETE_ACCOUT } from './ActionTypes'
+import {GET_ACCOUNT, ADD_ACCOUNT, DELETE_ACCOUNT} from './ActionTypes';
 
 export const setAccount = account => {
-    console.log('account set:', account)
     return {
         type: ADD_ACCOUNT,
-        payload: account
-    }
-}
+        payload: account,
+    };
+};
 
 export const getAccount = () => {
     return {
-        type: GET_ACCOUNT
-    }
-}
+        type: GET_ACCOUNT,
+    };
+};
 
-export default deleteAccount = () => {
+export const deleteAccount = () => {
     return {
-        type: DELETE_ACCOUT
-    }
-}
+        type: DELETE_ACCOUNT,
+    };
+};
