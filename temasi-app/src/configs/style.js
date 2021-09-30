@@ -30,7 +30,7 @@ export const FontStyle = {
   H3: {
     fontFamily: 'Roboto',
     fontWeight: '500',
-    fontSize: 16,
+    fontSize: 18,
   },
   H4: {
     fontFamily: 'Roboto',

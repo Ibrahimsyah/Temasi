@@ -1,48 +1,21 @@
 import React, {useState} from 'react';
-import {View, Text, TouchableOpacity, StyleSheet, Image, Modal} from 'react-native';
-import {Color, FontStyle} from '../../configs/style';
+import {View, Text, TouchableOpacity, Image, Modal, ScrollView} from 'react-native';
 import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
 import ButtonPrimary from '../../components/ButtonPrimary';
+import Icon from 'react-native-vector-icons/MaterialIcons';
 import config from './index.config';
 import style from './style';
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: Color.LIGHT_GRAY,
-    padding: 20,
-  },
-  modal: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: 'rgba(0, 0, 0, 0.2)',
-  },
-  modalContent: {
-    width: '70%',
-    borderRadius: 8,
-    padding: 20,
-    backgroundColor: Color.WHITE,
-  },
-  modalTitle: {
-    ...FontStyle.H3,
-    fontWeight: 'bold',
-    marginBottom: 10,
-  },
-  modalButton: {
-    width: '100%',
-    marginTop: 8,
-  },
-  holder: {
-    borderRadius: 8,
-    padding: 20,
-    backgroundColor: Color.MED_GRAY,
-  },
-});
+import Header from '../../components/Header';
+import {useNavigation} from '@react-navigation/core';
+import CardsKategori from '../../components/CardsKategori';
+import Input from '../../components/Input';
 
 export default () => {
   const [image, setImage] = useState(null);
+  const [tipe, setTipe] = useState(-1);
+  const [judul, setJudul] = useState('');
   const [modalVisible, setModalVisible] = useState(false);
+  const navigation = useNavigation();
 
   const handleSetImage = () => {
     setModalVisible(true);
@@ -50,8 +23,8 @@ export default () => {
 
   const onPhotoReceived = data => {
     const {assets, didCancel} = data;
-    if (!didCancel){
-      console.log(assets);
+    if (!didCancel) {
+      setImage(assets[0].uri);
     }
   };
 
@@ -67,23 +40,44 @@ export default () => {
 
   return (
     <>
-      <View style={styles.container}>
-        <TouchableOpacity style={styles.holder} onPress={handleSetImage}>
-          <Text>Hehe</Text>
-          <Image source={{uri: image}} width={100} height={100} />
+      <ScrollView style={style.container}>
+        <Header navigator={navigation} isDark title="Buat Permohonan" />
+        <Text style={style.titleBig}>Jenis bantuan apa yang anda butuhkan?</Text>
+        <CardsKategori style={style.kategori} onChange={setTipe} value={tipe} />
+        <Text style={style.titleMed}>Judul Permohonan</Text>
+        <Input
+          style={style.input}
+          placeholder="Contoh: Vitamin dan Suplemen pasca COVID-19"
+          value={judul}
+          onChange={setJudul}
+        />
+        <Text style={style.titleBig}>Dokumen Pendukung</Text>
+        <Text style={style.description}>
+          Beri pendukung berupa foto agar para donatur mudah memverifikasi. Foto dapat berupa surat keterangan terkena COVID-19 atau surat keterangan dokter
+        </Text>
+
+
+        <TouchableOpacity style={style.holder} onPress={handleSetImage}>
+          {image ? <Image style={style.image} source={{uri: image}} /> :
+            <View style={style.imagePlaceholderContainer}>
+              <Icon name="assignment" style={style.placeholderIcon} />
+              <Text style={style.placeholderText}>Lampirkan foto dokumen pendukung </Text>
+            </View>
+          }
         </TouchableOpacity>
-      </View>
+        <Text style={style.titleMed}>Jangka Waktu Permohonan</Text>
+      </ScrollView>
       <Modal
         visible={modalVisible}
         transparent
         onDismiss={() => setModalVisible(false)}
         onRequestClose={() => setModalVisible(false)}
         animationType="fade">
-        <View style={styles.modal}>
-          <View style={styles.modalContent}>
-            <Text style={styles.modalTitle}>Pilih Gambar</Text>
-            <ButtonPrimary style={styles.modalButton} onClick={capturePhoto}>Ambil Gambar</ButtonPrimary>
-            <ButtonPrimary style={styles.modalButton} onClick={getPhotoFromGallery}>Pilih dari Galeri</ButtonPrimary>
+        <View style={style.modal}>
+          <View style={style.modalContent}>
+            <Text style={style.modalTitle}>Pilih Gambar</Text>
+            <ButtonPrimary style={style.modalButton} onClick={capturePhoto}>Ambil Gambar</ButtonPrimary>
+            <ButtonPrimary style={style.modalButton} onClick={getPhotoFromGallery}>Pilih dari Galeri</ButtonPrimary>
           </View>
         </View>
       </Modal>
