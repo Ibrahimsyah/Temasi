@@ -6,7 +6,7 @@ import {Color, FontStyle} from '../configs/style';
 const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
-    marginBottom: 15,
+    marginVertical: 15,
     alignItems: 'center',
     justifyContent: 'flex-start',
   },

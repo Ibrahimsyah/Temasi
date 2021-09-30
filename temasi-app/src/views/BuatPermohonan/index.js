@@ -9,11 +9,13 @@ import Header from '../../components/Header';
 import {useNavigation} from '@react-navigation/core';
 import CardsKategori from '../../components/CardsKategori';
 import Input from '../../components/Input';
+import CardsJangkaWaktu from '../../components/CardsJangkaWaktu';
 
 export default () => {
   const [image, setImage] = useState(null);
   const [tipe, setTipe] = useState(-1);
   const [judul, setJudul] = useState('');
+  const [jangkaWaktu, setJangkaWaktu] = useState(-1);
   const [modalVisible, setModalVisible] = useState(false);
   const navigation = useNavigation();
 
@@ -42,8 +44,10 @@ export default () => {
     <>
       <ScrollView style={style.container}>
         <Header navigator={navigation} isDark title="Buat Permohonan" />
+
         <Text style={style.titleBig}>Jenis bantuan apa yang anda butuhkan?</Text>
         <CardsKategori style={style.kategori} onChange={setTipe} value={tipe} />
+
         <Text style={style.titleMed}>Judul Permohonan</Text>
         <Input
           style={style.input}
@@ -51,12 +55,11 @@ export default () => {
           value={judul}
           onChange={setJudul}
         />
+
         <Text style={style.titleBig}>Dokumen Pendukung</Text>
         <Text style={style.description}>
           Beri pendukung berupa foto agar para donatur mudah memverifikasi. Foto dapat berupa surat keterangan terkena COVID-19 atau surat keterangan dokter
         </Text>
-
-
         <TouchableOpacity style={style.holder} onPress={handleSetImage}>
           {image ? <Image style={style.image} source={{uri: image}} /> :
             <View style={style.imagePlaceholderContainer}>
@@ -65,7 +68,9 @@ export default () => {
             </View>
           }
         </TouchableOpacity>
+
         <Text style={style.titleMed}>Jangka Waktu Permohonan</Text>
+        <CardsJangkaWaktu style={style.jangkaWaktu} value={jangkaWaktu} onChange={setJangkaWaktu} />
       </ScrollView>
       <Modal
         visible={modalVisible}

@@ -22,9 +22,9 @@ const styles = StyleSheet.create({
     padding: 8,
     borderRadius: 8,
     marginHorizontal: 3,
+    alignItems: 'center',
     borderWidth: 1,
     borderColor: !active ? Color.PRIMARY : Color.WHITE,
-    alignItems: 'center',
     backgroundColor: active ? Color.PRIMARY : Color.WHITE,
   }),
 
@@ -36,7 +36,7 @@ const styles = StyleSheet.create({
   text: (active) => ({
     ...FontStyle.LABEL_SMALL,
     color: active ? Color.WHITE : Color.PRIMARY,
-    textAlign: 'center'
+    textAlign: 'center',
   }),
 });
 

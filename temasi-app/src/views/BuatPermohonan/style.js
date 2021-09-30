@@ -33,7 +33,7 @@ export default StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: Color.LIGHT_GRAY,
-    padding: 20,
+    paddingHorizontal: 20,
   },
 
   modal: {
@@ -93,9 +93,13 @@ export default StyleSheet.create({
     fontSize: 30,
   },
 
-  placeholderText:{
+  placeholderText: {
     ...FontStyle.H4,
     fontWeight: 'bold',
     color: Color.PRIMARY,
+  },
+
+  jangkaWaktu: {
+    marginTop: 10,
   },
 });
