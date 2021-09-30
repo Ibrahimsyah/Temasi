@@ -19,6 +19,7 @@
     "mobx-persist": "^0.4.1",
     "react": "17.0.2",
     "react-native": "0.65.1",
+    "react-native-image-picker": "^4.1.1",
     "react-native-looped-carousel": "^0.1.13",
     "react-native-maps": "0.29.3",
     "react-native-rss-parser": "^1.5.1",
