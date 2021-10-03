@@ -5,6 +5,7 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 import Geolocation from '@react-native-community/geolocation';
 import MapView, {Marker} from 'react-native-maps';
 import CheckBox from '@react-native-community/checkbox';
+import RNAndroidLocationEnabler from 'react-native-android-location-enabler';
 import config from './index.config';
 import style from './style';
 import ButtonPrimary from '../../components/ButtonPrimary';
@@ -54,12 +55,24 @@ export default () => {
   };
 
   useEffect(() => {
-    Geolocation.getCurrentPosition(info =>
-      setPosition({
-        latitude: info.coords.latitude,
-        longitude: info.coords.longitude,
-      }),
-    );
+    const getCurrentLocation = () => {
+      Geolocation.getCurrentPosition(info => {
+        setPosition({
+          latitude: info.coords.latitude,
+          longitude: info.coords.longitude,
+        });
+      },
+        error => {console.log(error);},
+        {enableHighAccuracy: true, timeout: 20000, maximumAge: 1000}
+      );
+    };
+
+    RNAndroidLocationEnabler.promptForEnableLocationIfNeeded({
+      interval: 10000,
+      fastInterval: 5000,
+    }).then(data => {
+      getCurrentLocation();
+    });
   }, []);
 
   return (
@@ -117,8 +130,8 @@ export default () => {
               initialRegion={{
                 latitude: position.latitude,
                 longitude: position.longitude,
-                longitudeDelta: 0.03,
-                latitudeDelta: 0.03,
+                longitudeDelta: 0.003,
+                latitudeDelta: 0.003,
               }}>
               <Marker
                 coordinate={{

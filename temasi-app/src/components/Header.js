@@ -4,12 +4,13 @@ import Icon from 'react-native-vector-icons/FontAwesome5';
 import {Color, FontStyle} from '../configs/style';
 
 const styles = StyleSheet.create({
-  container: {
+  container: withPadding => ({
+    marginHorizontal: withPadding ? 20 : 0,
     flexDirection: 'row',
     marginVertical: 15,
     alignItems: 'center',
     justifyContent: 'flex-start',
-  },
+  }),
 
   backIcon: (isDark) => ({
     fontSize: 20,
@@ -25,14 +26,14 @@ const styles = StyleSheet.create({
 });
 
 export default props => {
-  const {navigator, title, isDark = true} = props;
+  const {navigator, title, isDark = false, withPadding = true} = props;
 
   const onBack = () => {
     navigator?.goBack();
   };
 
   return (
-    <View style={styles.container}>
+    <View style={styles.container(withPadding)}>
       <Icon name="arrow-left" style={styles.backIcon(isDark)} onPress={onBack}/>
       <Text style={styles.title(isDark)}>{title}</Text>
     </View>

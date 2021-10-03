@@ -98,7 +98,7 @@ export default props => {
     const { iconBgColor, icon, color, category } = generateCategoryStyle(type);
     return <>
         <TouchableOpacity style={style.container}>
-            <View style={style.leftSection}>
+            <View>
                 <View style={{ ...style.iconBackground, backgroundColor: iconBgColor }}>
                     {icon}
                 </View>
