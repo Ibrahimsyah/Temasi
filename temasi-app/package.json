@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "android": "react-native run-android",
+    "android": "adb reverse tcp:8081 tcp:8081 && react-native run-android",
     "ios": "react-native run-ios",
     "start": "react-native start",
     "test": "jest",
@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "@react-native-async-storage/async-storage": "^1.15.8",
+    "@react-native-community/checkbox": "^0.5.8",
     "@react-native-community/geolocation": "^2.0.2",
     "@react-navigation/bottom-tabs": "^6.0.5",
     "@react-navigation/native": "^6.0.2",
@@ -19,12 +20,14 @@
     "mobx-persist": "^0.4.1",
     "react": "17.0.2",
     "react-native": "0.65.1",
+    "react-native-image-picker": "^4.1.1",
     "react-native-looped-carousel": "^0.1.13",
     "react-native-maps": "0.29.3",
     "react-native-rss-parser": "^1.5.1",
     "react-native-safe-area-context": "^3.3.0",
     "react-native-screens": "^3.6.0",
     "react-native-vector-icons": "^8.1.0",
+    "react-native-webview": "^11.13.1",
     "react-redux": "^7.2.5",
     "redux": "^4.1.1"
   },
