@@ -1,7 +1,13 @@
 import {StyleSheet} from 'react-native';
+import {TYPE_PLASMA} from '../../configs/ItemTypes';
 import {Color, FontStyle} from '../../configs/style';
 
 export default StyleSheet.create({
+  container: type => ({
+    flex: 1,
+    backgroundColor: type === TYPE_PLASMA ? Color.MED_RED : Color.PRIMARY,
+  }),
+
   mainContainer: {
     flex: 1,
     marginTop: 15,
@@ -105,11 +111,6 @@ export default StyleSheet.create({
     ...FontStyle.CAPTION,
     color: Color.DARKER_GRAY,
     marginTop: 6,
-  },
-
-  container: {
-    flex: 1,
-    backgroundColor: Color.MED_RED,
   },
 
   mapContainer: {

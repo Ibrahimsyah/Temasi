@@ -1,16 +1,12 @@
 import React, {useState, useEffect, useMemo} from 'react';
-import {View, Text, TouchableOpacity, Image, Modal, ScrollView, StatusBar, ActivityIndicator} from 'react-native';
-import Icon from 'react-native-vector-icons/MaterialIcons';
+import {View, Text, TouchableOpacity, Image, ScrollView, StatusBar, ActivityIndicator, Pressable} from 'react-native';
+import ImageView from 'react-native-image-viewing';
 import MapView, {Marker} from 'react-native-maps';
 import CheckBox from '@react-native-community/checkbox';
 import style from './style';
 import ButtonPrimary from '../../components/ButtonPrimary';
 import Header from '../../components/Header';
 import {useNavigation} from '@react-navigation/core';
-import CardsKategori from '../../components/CardsKategori';
-import Input from '../../components/Input';
-import CardsGolonganDarah from '../../components/CardsGolonganDarah';
-import CardsRhesusDarah from '../../components/CardsRhesusDarah';
 import {OKSIGEN, PANGAN_SUPLEMEN, PLASMA, TYPE_OKSIGEN, TYPE_PANGAN_SUPLEMEN, TYPE_PLASMA} from '../../configs/ItemTypes';
 import {Color} from '../../configs/style';
 import {default as FontAwesome5Icon} from 'react-native-vector-icons/FontAwesome5';
@@ -64,9 +60,10 @@ export default () => {
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState(initState);
   const [agreement, setAgreement] = useState(false);
+  const [imageFull, setImageFull] = useState(false);
   const navigation = useNavigation();
 
-  const tipe = TYPE_PLASMA;
+  const tipe = TYPE_OKSIGEN;
   const title = 'Dibutuhkan tabung oksigen dan perlengkapan';
   const distance = '3 KM';
   const time = '3 hari Lagi';
@@ -91,8 +88,8 @@ export default () => {
 
   return (
     <>
-      <StatusBar backgroundColor={Color.MED_RED} />
-      <ScrollView style={style.container} contentContainerStyle={style.contentContainer}>
+      <StatusBar backgroundColor={tipe === TYPE_PLASMA ? Color.MED_RED : Color.PRIMARY} />
+      <ScrollView style={style.container(tipe)} contentContainerStyle={style.contentContainer}>
         <Header navigator={navigation} withPadding title="Detail" />
 
         <View style={style.mainContainer}>
@@ -126,7 +123,20 @@ export default () => {
               </View>
               <Text style={style.titleBig}>Dokumen Pendukung</Text>
 
-              {data.document && <Image style={{...style.image}} source={{uri: data.document}} />}
+              {data.document && (
+                <>
+                  <Pressable onPress={() => setImageFull(true)}>
+                    <Image style={style.image} source={{uri: data.document}} />
+                  </Pressable>
+                  <ImageView
+                    images={[{uri: data.document}]}
+                    swipeToCloseEnabled={false}
+                    imageIndex={0}
+                    visible={imageFull}
+                    onRequestClose={() => setImageFull(false)}
+                  />
+                </>
+              )}
               <Text style={style.imageCaption}>Tekan Gambar Untuk Memperbesar</Text>
 
               <Text style={style.titleMed}>Lokasi Pemohon</Text>
