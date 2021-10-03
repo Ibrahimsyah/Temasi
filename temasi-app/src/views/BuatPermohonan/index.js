@@ -65,13 +65,13 @@ export default () => {
         error => {console.log(error);},
         {enableHighAccuracy: true, timeout: 20000, maximumAge: 1000}
       );
-    }
+    };
 
     RNAndroidLocationEnabler.promptForEnableLocationIfNeeded({
       interval: 10000,
       fastInterval: 5000,
     }).then(data => {
-      getCurrentLocation()
+      getCurrentLocation();
     });
   }, []);
 
@@ -130,8 +130,8 @@ export default () => {
               initialRegion={{
                 latitude: position.latitude,
                 longitude: position.longitude,
-                longitudeDelta: 0.03,
-                latitudeDelta: 0.03,
+                longitudeDelta: 0.003,
+                latitudeDelta: 0.003,
               }}>
               <Marker
                 coordinate={{
