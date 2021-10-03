@@ -36,6 +36,37 @@ export default StyleSheet.create({
     paddingHorizontal: 20,
   },
 
+  mapContainer: {
+    width: '100%',
+    marginTop: 20,
+    marginBottom: 8,
+    height: 200,
+    overflow: 'hidden',
+    borderRadius: 8,
+  },
+
+  map: {
+    height: '100%',
+  },
+
+  buttonSubmit: {
+    marginVertical: 20,
+  },
+
+  checkboxContainer: {
+    width: '100%',
+    flexDirection: 'row',
+    marginTop: 20,
+    justifyContent: 'flex-start',
+  },
+
+  agreementText: {
+    paddingRight: 40,
+    width: '100%',
+    ...FontStyle.CAPTION,
+    color: Color.BLACK,
+  },
+
   modal: {
     flex: 1,
     justifyContent: 'center',

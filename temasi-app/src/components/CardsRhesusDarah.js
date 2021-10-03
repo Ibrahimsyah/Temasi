@@ -32,17 +32,18 @@ const styles = StyleSheet.create({
   }),
 
   container: {
+    marginTop: 20,
     flexDirection: 'row',
   },
 });
 
 const Card = props => {
-  const {selected, value, onChange} = props;
+  const {selected, value, label, onChange} = props;
 
   return (
     <Pressable onPress={onChange} style={styles.cardContainer(selected)}>
       <Text style={styles.cardText(selected)}>{value}</Text>
-      <Text style={styles.cardLabel(selected)}>Hari</Text>
+      <Text style={styles.cardLabel(selected)}>{label}</Text>
     </Pressable>
   );
 };
@@ -52,9 +53,8 @@ export default props => {
 
   return (
     <View style={{...styles.container, ...style}}>
-      <Card value={1} selected={value === 1} onChange={() => onChange(1)}/>
-      <Card value={3} selected={value === 3} onChange={() => onChange(3)}/>
-      <Card value={5} selected={value === 5} onChange={() => onChange(5)}/>
+      <Card value="+" label="Positif" selected={value === '+'} onChange={() => onChange('+')} />
+      <Card value="-" label="Negatif" selected={value === '-'} onChange={() => onChange('-')} />
     </View>
   );
 };

@@ -9,6 +9,13 @@ const styles = StyleSheet.create({
         backgroundColor: Color.PRIMARY,
         paddingVertical: 8,
     },
+    buttonDisabled: {
+        borderRadius: 20,
+        width: '100%',
+        backgroundColor: Color.DARK_GRAY,
+
+        paddingVertical: 8,
+    },
     text: {
         ...FontStyle.H3,
         textAlign:'center',
@@ -18,10 +25,11 @@ const styles = StyleSheet.create({
 });
 
 export default (props) => {
-    const {children, onClick, style} = props;
+    const {children, onClick, style, disabled = false} = props;
 
+    const buttonStyle = disabled ? styles.buttonDisabled : styles.button;
     return <>
-        <TouchableOpacity onPress={onClick} style={{...styles.button, ...style}}>
+        <TouchableOpacity onPress={onClick} style={{...buttonStyle, ...style}} disabled={disabled}>
             <Text style={styles.text}>{children}</Text>
         </TouchableOpacity>
     </>;

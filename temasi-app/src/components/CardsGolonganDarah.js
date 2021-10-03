@@ -18,12 +18,6 @@ const styles = StyleSheet.create({
     backgroundColor: active ? Color.PRIMARY : Color.WHITE,
   }),
 
-  cardLabel: (active) => ({
-    ...FontStyle.LABEL_SMALL,
-    color: active ? Color.WHITE : Color.PRIMARY,
-    textAlign: 'center',
-  }),
-
   cardText: (active) => ({
     ...FontStyle.H2,
     fontWeight: 'bold',
@@ -32,6 +26,7 @@ const styles = StyleSheet.create({
   }),
 
   container: {
+    marginTop: 20,
     flexDirection: 'row',
   },
 });
@@ -42,7 +37,6 @@ const Card = props => {
   return (
     <Pressable onPress={onChange} style={styles.cardContainer(selected)}>
       <Text style={styles.cardText(selected)}>{value}</Text>
-      <Text style={styles.cardLabel(selected)}>Hari</Text>
     </Pressable>
   );
 };
@@ -52,9 +46,10 @@ export default props => {
 
   return (
     <View style={{...styles.container, ...style}}>
-      <Card value={1} selected={value === 1} onChange={() => onChange(1)}/>
-      <Card value={3} selected={value === 3} onChange={() => onChange(3)}/>
-      <Card value={5} selected={value === 5} onChange={() => onChange(5)}/>
+      <Card value="A" selected={value === 'A'} onChange={() => onChange("A")} />
+      <Card value="B" selected={value === 'B'} onChange={() => onChange("B")} />
+      <Card value="AB" selected={value === 'AB'} onChange={() => onChange("AB")} />
+      <Card value="O" selected={value === 'O'} onChange={() => onChange("O")} />
     </View>
   );
 };

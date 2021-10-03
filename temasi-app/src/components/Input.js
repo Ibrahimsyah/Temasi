@@ -17,6 +17,8 @@ export default props => {
 
   return (
     <TextInput
+      multiline
+      textAlignVertical="top"
       style={{...styles.input, ...style}}
       placeholder={placeholder}
       placeholderTextColor={Color.DARK_GRAY}
