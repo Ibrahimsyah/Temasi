@@ -4,7 +4,7 @@ import HomeScreen from '../views/Main';
 import SplashScreen from '../views/Splash';
 
 export default {
-  defaultRouteName: 'BuatPermohonanScreen',
+  defaultRouteName: 'SplashScreen',
   screenOptions: {
     headerShown: false,
   },

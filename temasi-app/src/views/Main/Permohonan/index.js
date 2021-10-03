@@ -6,6 +6,7 @@ import { TYPE_PLASMA } from '../../../configs/ItemTypes';
 import style from './style';
 
 import NotFoundImage from '../../../assets/images/notFound.png';
+import {useNavigation} from '@react-navigation/core';
 
 const NotFound = () => {
     return <>
@@ -20,6 +21,12 @@ const NotFound = () => {
 
 export default () => {
     const [data] = useState(Array(10).fill(0));
+    const navigation = useNavigation();
+
+    const onCreatePermohonan = () => {
+        navigation.navigate('BuatPermohonanScreen');
+    };
+
     return <>
         <ScrollView style={style.container} contentContainerStyle={style.contentContainer}>
             <Text style={style.title}>Permohonan Anda</Text>
@@ -27,6 +34,6 @@ export default () => {
                 <CardPermohonan type={TYPE_PLASMA} key={index} />
             ))}
         </ScrollView>
-        <FABPermohonan />
+        <FABPermohonan onClick={onCreatePermohonan}/>
     </>;
 };
