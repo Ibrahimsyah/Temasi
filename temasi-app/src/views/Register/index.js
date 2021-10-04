@@ -7,6 +7,8 @@ import {
   ScrollView,
   StatusBar,
   TouchableOpacity,
+  Pressable,
+  Image,
 } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import Input from '../../components/Input';
@@ -16,10 +18,13 @@ import { isEmpty } from '../../utils/validation';
 import style from './style';
 import { setAccount } from '../../stores/account.action';
 import { useEffect } from 'react';
+import CardsGender from '../../components/CardsGender';
+import profilePlaceholder from '../../assets/images/profilePlaceholder.png';
 
 export default () => {
   const [fullName, setFullName] = useState('');
   const [phone, setPhone] = useState('');
+  const [isMale, setIsMale] = useState(-1);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
@@ -30,8 +35,15 @@ export default () => {
   const dispatch = useDispatch();
 
   const isFormFilled = useMemo(() => {
-    return !isEmpty(email) && !isEmpty(password);
-  }, [email, password]);
+    return (
+      !isEmpty(email) &&
+      !isEmpty(password) &&
+      !isEmpty(confirmPassword) &&
+      !isEmpty(fullName) &&
+      !isEmpty(phone) &&
+      isMale !== -1
+    );
+  }, [email, password, confirmPassword, fullName, phone, isMale]);
 
   const onRegisterClick = () => {
     setLoading(true);
@@ -63,12 +75,16 @@ export default () => {
     <>
       <StatusBar backgroundColor={Color.LIGHT_GRAY} barStyle="dark-content" />
       <ScrollView
-        contentContainerStyle={style.container}
-        showsVerticalScrollIndicator={false}>
+        style={style.container}
+        showsVerticalScrollIndicator={false}
+        contentContainerStyle={style.contentContainer}>
         <View style={style.title}>
           <Text style={style.title1}>Daftar</Text>
           <Text style={style.title2}> Akun Baru</Text>
         </View>
+        <Pressable style={style.profilePicHolder}>
+          <Image source={profilePlaceholder} style={style.profilePic} />
+        </Pressable>
         <Input
           style={style.input}
           value={fullName}
@@ -80,6 +96,11 @@ export default () => {
           value={phone}
           onChange={setPhone}
           placeholder="Nomor Telepon (WhatsApp)"
+        />
+        <CardsGender
+          value={isMale}
+          onChange={setIsMale}
+          style={style.genderChooser}
         />
         <Input
           style={style.input}
@@ -105,7 +126,7 @@ export default () => {
         <ButtonPrimary
           disabled={!isFormFilled || loading}
           onClick={onRegisterClick}>
-          {loading ? 'Mohon Tunggu' : 'Masuk'}
+          {loading ? 'Mohon Tunggu' : 'Daftar'}
         </ButtonPrimary>
         <View style={style.footer}>
           <Text style={style.footer1}>Sudah Memiliki Akun? </Text>

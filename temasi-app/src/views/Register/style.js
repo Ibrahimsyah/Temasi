@@ -4,13 +4,26 @@ import { Color, FontStyle } from '../../configs/style';
 export default StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
     backgroundColor: Color.LIGHT_GRAY,
     paddingHorizontal: 37,
   },
 
+  contentContainer: {
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+
+  profilePicHolder: {
+    marginBottom: 27,
+  },
+
+  profilePic: {
+    width: 100,
+    height: 100,
+  },
+
   title: {
+    marginTop: 50,
     flexDirection: 'row',
     justifyContent: 'center',
     marginBottom: 23,
@@ -30,10 +43,15 @@ export default StyleSheet.create({
     marginBottom: 14,
   },
 
+  genderChooser: {
+    paddingHorizontal: 20,
+    marginBottom: 14,
+  },
+
   footer: {
     flexDirection: 'row',
     justifyContent: 'center',
-    marginTop: 20,
+    marginVertical: 20,
   },
 
   footer1: {
