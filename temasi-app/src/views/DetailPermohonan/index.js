@@ -10,7 +10,6 @@ import {
 } from 'react-native';
 import ImageView from 'react-native-image-viewing';
 import MapView, { Marker } from 'react-native-maps';
-import CheckBox from '@react-native-community/checkbox';
 import style from './style';
 import ButtonPrimary from '../../components/ButtonPrimary';
 import Header from '../../components/Header';
@@ -27,6 +26,8 @@ import { Color } from '../../configs/style';
 import { default as FontAwesome5Icon } from 'react-native-vector-icons/FontAwesome5';
 import { default as MaterialCommunityIcon } from 'react-native-vector-icons/MaterialCommunityIcons';
 import { default as MaterialIcon } from 'react-native-vector-icons/MaterialIcons';
+import config from './index.config';
+import CheckBox from '../../components/CheckBox';
 
 const generateCategoryStyle = itemType => {
   let iconBgColor;
@@ -79,24 +80,19 @@ const generateCategoryStyle = itemType => {
   };
 };
 
-const initState = {
-  user_name: '',
-  user_profile: null,
-  document: null,
-  story: '',
-  latitude: null,
-  longitude: null,
-  note: '',
-};
-
 export default () => {
   const [loading, setLoading] = useState(false);
-  const [data, setData] = useState(initState);
+  const [data, setData] = useState(config.initState);
+  const [screeningData1, setScreeningData1] = useState(false);
+  const [screeningData2, setScreeningData2] = useState(false);
+  const [screeningData3, setScreeningData3] = useState(false);
+  const [screeningData4, setScreeningData4] = useState(false);
+  const [screeningData5, setScreeningData5] = useState(false);
   const [agreement, setAgreement] = useState(false);
   const [imageFull, setImageFull] = useState(false);
   const navigation = useNavigation();
 
-  const tipe = TYPE_OKSIGEN;
+  const tipe = TYPE_PLASMA;
   const title = 'Dibutuhkan tabung oksigen dan perlengkapan';
   const distance = '3 KM';
   const time = '3 hari Lagi';
@@ -104,6 +100,31 @@ export default () => {
     () => generateCategoryStyle(tipe),
     [tipe],
   );
+
+  const isCheckBoxFilled = useMemo(() => {
+    let result;
+    result = agreement;
+
+    if (tipe === TYPE_PLASMA) {
+      result =
+        result &&
+        screeningData1 &&
+        screeningData2 &&
+        screeningData3 &&
+        screeningData4 &&
+        screeningData5;
+    }
+
+    return result;
+  }, [
+    tipe,
+    screeningData1,
+    screeningData2,
+    screeningData3,
+    screeningData4,
+    screeningData5,
+    agreement,
+  ]);
 
   useEffect(() => {
     setLoading(true);
@@ -121,7 +142,7 @@ export default () => {
         note: 'Beban administrasi dan biaya akan saya tanggung. Donatur tidak perlu mengeluarkan biaya apapun',
       });
       setLoading(false);
-    }, 3000);
+    }, 10);
   }, []);
 
   return (
@@ -136,14 +157,12 @@ export default () => {
 
         <View style={style.mainContainer}>
           <View style={style.header}>
-            <View style={style.leftSection}>
-              <View
-                style={{
-                  ...style.iconBackground,
-                  backgroundColor: iconBgColor,
-                }}>
-                {icon}
-              </View>
+            <View
+              style={{
+                ...style.iconBackground,
+                backgroundColor: iconBgColor,
+              }}>
+              {icon}
             </View>
             <View style={style.rightSection}>
               <Text style={{ ...style.category, color: color }}>
@@ -164,8 +183,7 @@ export default () => {
             <ActivityIndicator color={color} />
           ) : (
             <>
-              <Text style={style.story}>{data.story}</Text>
-
+              {data.story && <Text style={style.story}>{data.story}</Text>}
               <View style={style.profile}>
                 {data.user_profile && (
                   <Image
@@ -173,6 +191,10 @@ export default () => {
                     source={{ uri: data.user_profile }}
                   />
                 )}
+                <View style={style.profileDesc}>
+                  <Text style={style.profileLabel}>Pemohon</Text>
+                  <Text style={style.profileName}>{data.user_name}</Text>
+                </View>
               </View>
               <Text style={style.titleBig}>Dokumen Pendukung</Text>
 
@@ -226,14 +248,40 @@ export default () => {
                 </>
               )}
 
-              <View style={style.checkboxContainer}>
-                <CheckBox value={agreement} onValueChange={setAgreement} />
-                <Text style={style.agreementText}>
+              <CheckBox value={screeningData1} onChange={setScreeningData1}>
+                <Text>Saya benar benar memiliki darah AB+</Text>
+              </CheckBox>
+              <CheckBox value={screeningData2} onChange={setScreeningData2}>
+                <Text>Saya berusia 18 - 60 Tahun</Text>
+              </CheckBox>
+              <CheckBox value={screeningData3} onChange={setScreeningData3}>
+                <Text>Saya memiliki berat badan {'>'}= 50 Kg</Text>
+              </CheckBox>
+              <CheckBox value={screeningData4} onChange={setScreeningData4}>
+                <Text>
+                  Saya pernah terkena COVID-19 dalam 3 bulan terakhir dan telah
+                  dinyatakan sembuh (memiliki surat keterangan sembuh)
+                </Text>
+              </CheckBox>
+              <CheckBox value={screeningData5} onChange={setScreeningData5}>
+                <Text>
+                  Saya dulu mengalami gejala sedang - berat saat melakukan
+                  isolasi COVID-19
+                </Text>
+              </CheckBox>
+
+              <CheckBox
+                value={agreement}
+                onChange={setAgreement}
+                style={style.agreement}>
+                <Text>
                   Saya menyatakan bahwa saya bersedia menyalurkan bantuan kepada{' '}
                   {data.user_name}
                 </Text>
-              </View>
-              <ButtonPrimary style={style.buttonSubmit} disabled={!agreement}>
+              </CheckBox>
+              <ButtonPrimary
+                style={style.buttonSubmit}
+                disabled={!isCheckBoxFilled}>
                 Salurkan Bantuan
               </ButtonPrimary>
             </>

@@ -103,8 +103,29 @@ export default StyleSheet.create({
     color: Color.BLACK,
   },
 
-  input: {
-    marginTop: 10,
+  profile: {
+    marginTop: 20,
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+
+  profilePhoto: {
+    width: 34,
+    height: 34,
+    borderRadius: 34,
+  },
+
+  profileDesc: {
+    marginLeft: 10,
+  },
+
+  profileLabel: {
+    ...FontStyle.LABEL_SMALL,
+  },
+
+  profileName: {
+    ...FontStyle.BODY,
+    fontWeight: 'bold',
   },
 
   description: {
@@ -126,47 +147,12 @@ export default StyleSheet.create({
     height: '100%',
   },
 
+  agreement: {
+    marginTop: 30,
+  },
+
   buttonSubmit: {
     marginVertical: 20,
-  },
-
-  checkboxContainer: {
-    width: '100%',
-    flexDirection: 'row',
-    marginTop: 20,
-    justifyContent: 'flex-start',
-  },
-
-  agreementText: {
-    paddingRight: 40,
-    width: '100%',
-    ...FontStyle.CAPTION,
-    color: Color.BLACK,
-  },
-
-  modal: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: 'rgba(0, 0, 0, 0.2)',
-  },
-
-  modalContent: {
-    width: '70%',
-    borderRadius: 8,
-    padding: 20,
-    backgroundColor: Color.WHITE,
-  },
-
-  modalTitle: {
-    ...FontStyle.H3,
-    fontWeight: 'bold',
-    marginBottom: 10,
-  },
-
-  modalButton: {
-    width: '100%',
-    marginTop: 8,
   },
 
   holder: {
@@ -190,33 +176,5 @@ export default StyleSheet.create({
     color: Color.DARKER_GRAY,
     textAlign: 'center',
     marginTop: 5,
-  },
-
-  imagePlaceholderContainer: {
-    flex: 1,
-    borderRadius: 8,
-    justifyContent: 'space-evenly',
-    alignItems: 'center',
-    borderStyle: 'dashed',
-    borderWidth: 3,
-    borderColor: Color.DARK_GRAY,
-    marginVertical: 13,
-    marginHorizontal: 18,
-    backgroundColor: Color.MED_GRAY,
-  },
-
-  placeholderIcon: {
-    color: Color.PRIMARY,
-    fontSize: 30,
-  },
-
-  placeholderText: {
-    ...FontStyle.H4,
-    fontWeight: 'bold',
-    color: Color.PRIMARY,
-  },
-
-  jangkaWaktu: {
-    marginTop: 10,
   },
 });
