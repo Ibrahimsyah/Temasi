@@ -10,14 +10,16 @@ import { generateGreeting } from '../../../../utils/time';
 import CardBantuan from '../../../../components/CardBantuan';
 import CardPermohonan from '../../../../components/CardPermohonan';
 import config from './index.config';
+import { useNavigation } from '@react-navigation/core';
 
 const HomeFragment = () => {
   const [data, setData] = useState(config.initState);
+  const navigation = useNavigation();
 
   const greeting = generateGreeting();
 
   const onPermohonanClick = item => {
-    console.log(item);
+    navigation.navigate('DetailPermohonan', item);
   };
 
   useEffect(() => {

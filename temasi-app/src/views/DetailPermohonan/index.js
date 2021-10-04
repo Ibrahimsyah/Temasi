@@ -13,7 +13,7 @@ import MapView, { Marker } from 'react-native-maps';
 import style from './style';
 import ButtonPrimary from '../../components/ButtonPrimary';
 import Header from '../../components/Header';
-import { useNavigation } from '@react-navigation/core';
+import { useNavigation, useRoute } from '@react-navigation/core';
 import {
   OKSIGEN,
   PANGAN_SUPLEMEN,
@@ -91,21 +91,19 @@ export default () => {
   const [agreement, setAgreement] = useState(false);
   const [imageFull, setImageFull] = useState(false);
   const navigation = useNavigation();
+  const router = useRoute();
+  const { type, title, distance, time } = router.params;
 
-  const tipe = TYPE_PLASMA;
-  const title = 'Dibutuhkan tabung oksigen dan perlengkapan';
-  const distance = '3 KM';
-  const time = '3 hari Lagi';
   const { iconBgColor, icon, category, color } = useMemo(
-    () => generateCategoryStyle(tipe),
-    [tipe],
+    () => generateCategoryStyle(type),
+    [type],
   );
 
   const isCheckBoxFilled = useMemo(() => {
     let result;
     result = agreement;
 
-    if (tipe === TYPE_PLASMA) {
+    if (type === TYPE_PLASMA) {
       result =
         result &&
         screeningData1 &&
@@ -117,7 +115,7 @@ export default () => {
 
     return result;
   }, [
-    tipe,
+    type,
     screeningData1,
     screeningData2,
     screeningData3,
@@ -148,10 +146,10 @@ export default () => {
   return (
     <>
       <StatusBar
-        backgroundColor={tipe === TYPE_PLASMA ? Color.MED_RED : Color.PRIMARY}
+        backgroundColor={type === TYPE_PLASMA ? Color.MED_RED : Color.PRIMARY}
       />
       <ScrollView
-        style={style.container(tipe)}
+        style={style.container(type)}
         contentContainerStyle={style.contentContainer}>
         <Header navigator={navigation} withPadding title="Detail" />
 
@@ -239,36 +237,35 @@ export default () => {
                   </MapView>
                 </View>
               )}
-              {tipe === TYPE_PLASMA && (
+              {type === TYPE_PLASMA && (
                 <>
                   <Text style={style.titleBig}>
                     Informasi Penanggung Administrasi
                   </Text>
                   <Text style={style.description}>{data.note}</Text>
+                  <CheckBox value={screeningData1} onChange={setScreeningData1}>
+                    <Text>Saya benar benar memiliki darah AB+</Text>
+                  </CheckBox>
+                  <CheckBox value={screeningData2} onChange={setScreeningData2}>
+                    <Text>Saya berusia 18 - 60 Tahun</Text>
+                  </CheckBox>
+                  <CheckBox value={screeningData3} onChange={setScreeningData3}>
+                    <Text>Saya memiliki berat badan {'>'}= 50 Kg</Text>
+                  </CheckBox>
+                  <CheckBox value={screeningData4} onChange={setScreeningData4}>
+                    <Text>
+                      Saya pernah terkena COVID-19 dalam 3 bulan terakhir dan
+                      telah dinyatakan sembuh (memiliki surat keterangan sembuh)
+                    </Text>
+                  </CheckBox>
+                  <CheckBox value={screeningData5} onChange={setScreeningData5}>
+                    <Text>
+                      Saya dulu mengalami gejala sedang - berat saat melakukan
+                      isolasi COVID-19
+                    </Text>
+                  </CheckBox>
                 </>
               )}
-
-              <CheckBox value={screeningData1} onChange={setScreeningData1}>
-                <Text>Saya benar benar memiliki darah AB+</Text>
-              </CheckBox>
-              <CheckBox value={screeningData2} onChange={setScreeningData2}>
-                <Text>Saya berusia 18 - 60 Tahun</Text>
-              </CheckBox>
-              <CheckBox value={screeningData3} onChange={setScreeningData3}>
-                <Text>Saya memiliki berat badan {'>'}= 50 Kg</Text>
-              </CheckBox>
-              <CheckBox value={screeningData4} onChange={setScreeningData4}>
-                <Text>
-                  Saya pernah terkena COVID-19 dalam 3 bulan terakhir dan telah
-                  dinyatakan sembuh (memiliki surat keterangan sembuh)
-                </Text>
-              </CheckBox>
-              <CheckBox value={screeningData5} onChange={setScreeningData5}>
-                <Text>
-                  Saya dulu mengalami gejala sedang - berat saat melakukan
-                  isolasi COVID-19
-                </Text>
-              </CheckBox>
 
               <CheckBox
                 value={agreement}
