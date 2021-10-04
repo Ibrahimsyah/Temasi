@@ -11,15 +11,21 @@ import CardBantuan from '../../../../components/CardBantuan';
 import CardPermohonan from '../../../../components/CardPermohonan';
 import config from './index.config';
 import { useNavigation } from '@react-navigation/core';
+import { useSelector } from 'react-redux';
 
 const HomeFragment = () => {
   const [data, setData] = useState(config.initState);
   const navigation = useNavigation();
+  const account = useSelector(state => state.account);
 
   const greeting = generateGreeting();
 
   const onPermohonanClick = item => {
-    navigation.navigate('DetailPermohonan', item);
+    if (account.id) {
+      navigation.navigate('DetailPermohonan', item);
+    } else {
+      navigation.navigate('Profil');
+    }
   };
 
   useEffect(() => {
