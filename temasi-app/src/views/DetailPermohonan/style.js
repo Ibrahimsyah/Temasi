@@ -1,6 +1,6 @@
-import {StyleSheet} from 'react-native';
-import {TYPE_PLASMA} from '../../configs/ItemTypes';
-import {Color, FontStyle} from '../../configs/style';
+import { StyleSheet } from 'react-native';
+import { TYPE_PLASMA } from '../../configs/ItemTypes';
+import { Color, FontStyle } from '../../configs/style';
 
 export default StyleSheet.create({
   container: type => ({

@@ -1,5 +1,5 @@
-import React, {useRef, useEffect} from 'react';
-import {Animated} from 'react-native';
+import React, { useRef, useEffect } from 'react';
+import { Animated } from 'react-native';
 
 export default props => {
   const fadeAnim = useRef(new Animated.Value(0)).current;

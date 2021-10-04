@@ -1,6 +1,6 @@
 import React from 'react';
-import {Text, View, StyleSheet, Image, TouchableOpacity} from 'react-native';
-import {Color, FontStyle} from '../configs/style';
+import { Text, View, StyleSheet, Image, TouchableOpacity } from 'react-native';
+import { Color, FontStyle } from '../configs/style';
 
 const style = StyleSheet.create({
   container: {
@@ -31,17 +31,16 @@ const style = StyleSheet.create({
   timestamp: {
     ...FontStyle.CAPTION,
     fontStyle: 'italic',
-
   },
 });
 
 export default props => {
-  const {title, image, timestamp, onClick} = props;
+  const { title, image, timestamp, onClick } = props;
 
   return (
     <>
       <TouchableOpacity style={style.container} onPress={onClick}>
-        <Image source={{uri: image}} style={style.newsImage} />
+        <Image source={{ uri: image }} style={style.newsImage} />
         <View style={style.rightSection}>
           <Text style={style.title}>{title}</Text>
           <Text style={style.timestamp}>{timestamp}</Text>

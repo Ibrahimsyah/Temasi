@@ -9,32 +9,38 @@ import config from './index.config';
 import style from './style';
 
 const LandingItem = props => {
-    const { image, title, description } = props;
-    return <>
-        <View style={style.landingItemContainer}>
-            <Image source={image} style={style.landingImage} />
-            <Text style={style.landingTitle}>{title}</Text>
-            <Text style={style.landingDesc}>{description}</Text>
-        </View>
-    </>;
+  const { image, title, description } = props;
+  return (
+    <>
+      <View style={style.landingItemContainer}>
+        <Image source={image} style={style.landingImage} />
+        <Text style={style.landingTitle}>{title}</Text>
+        <Text style={style.landingDesc}>{description}</Text>
+      </View>
+    </>
+  );
 };
 
 export default () => {
-    const navigation = useNavigation();
+  const navigation = useNavigation();
 
-    const onButtonClick = () => {
-        storage.setData(APP_FIRST_USE, false);
-        const navAction = StackActions.replace('HomeScreen');
-        navigation.dispatch(navAction);
-    };
+  const onButtonClick = () => {
+    storage.setData(APP_FIRST_USE, false);
+    const navAction = StackActions.replace('HomeScreen');
+    navigation.dispatch(navAction);
+  };
 
-    return <>
-        <StatusBar {...config.statusBarStyle} />
-        <View style={style.landingView}>
-            <Carousel {...config.carouselConfig}>
-                {config.carouselItems.map(item => <LandingItem key={item.id} {...item} />)}
-            </Carousel>
-            <ButtonPrimary onClick={onButtonClick}>Lanjutkan</ButtonPrimary>
-        </View>
-    </>;
+  return (
+    <>
+      <StatusBar {...config.statusBarStyle} />
+      <View style={style.landingView}>
+        <Carousel {...config.carouselConfig}>
+          {config.carouselItems.map(item => (
+            <LandingItem key={item.id} {...item} />
+          ))}
+        </Carousel>
+        <ButtonPrimary onClick={onButtonClick}>Lanjutkan</ButtonPrimary>
+      </View>
+    </>
+  );
 };

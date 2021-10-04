@@ -31,19 +31,28 @@ const HomeFragment = () => {
           <View style={style.panelGrid}>
             <Pressable style={style.panelItem}>
               <View style={style.iconBackground}>
-                <MaterialIcon name="local-hospital" style={{ ...style.icon, color: Color.MED_BLUE }} />
+                <MaterialIcon
+                  name="local-hospital"
+                  style={{ ...style.icon, color: Color.MED_BLUE }}
+                />
               </View>
               <Text style={style.panelItemTitle}>Bahan Pangan & Suplemen</Text>
             </Pressable>
             <Pressable style={style.panelItem}>
               <View style={style.iconBackground}>
-                <MaterialCommunityIcon name="diving-scuba-tank" style={{ ...style.icon, color: Color.PRIMARY }} />
+                <MaterialCommunityIcon
+                  name="diving-scuba-tank"
+                  style={{ ...style.icon, color: Color.PRIMARY }}
+                />
               </View>
               <Text style={style.panelItemTitle}>Tabung Oksigen</Text>
             </Pressable>
             <Pressable style={style.panelItem}>
               <View style={style.iconBackground}>
-                <FontAwesome5Icon name="tint" style={{ ...style.icon, color: Color.MED_RED }} />
+                <FontAwesome5Icon
+                  name="tint"
+                  style={{ ...style.icon, color: Color.MED_RED }}
+                />
               </View>
               <Text style={style.panelItemTitle}>Plasma Konvalesen</Text>
             </Pressable>
@@ -71,9 +80,12 @@ const HomeFragment = () => {
           </Pressable>
         </View>
         <View style={style.list}>
-          {Array(4).fill(0).map((_, index) => <CardPermohonan key={index} />)}
+          {Array(4)
+            .fill(0)
+            .map((_, index) => (
+              <CardPermohonan key={index} />
+            ))}
         </View>
-
       </ScrollView>
     </>
   );

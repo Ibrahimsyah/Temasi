@@ -6,34 +6,45 @@ import { TYPE_PLASMA } from '../../../configs/ItemTypes';
 import style from './style';
 
 import NotFoundImage from '../../../assets/images/notFound.png';
-import {useNavigation} from '@react-navigation/core';
+import { useNavigation } from '@react-navigation/core';
 
 const NotFound = () => {
-    return <>
-        <View style={style.notFoundContainer}>
-            <Image source={NotFoundImage} style={style.notFoundImage} />
-            <Text style={style.notFoundText}>
-                Anda atau kerabat anda membutuhkan bantuan isolasi mandiri? Segera buat permohonan dan temukan orang baik yang akan membantu anda
-            </Text>
-        </View>
-    </>;
+  return (
+    <>
+      <View style={style.notFoundContainer}>
+        <Image source={NotFoundImage} style={style.notFoundImage} />
+        <Text style={style.notFoundText}>
+          Anda atau kerabat anda membutuhkan bantuan isolasi mandiri? Segera
+          buat permohonan dan temukan orang baik yang akan membantu anda
+        </Text>
+      </View>
+    </>
+  );
 };
 
 export default () => {
-    const [data] = useState(Array(10).fill(0));
-    const navigation = useNavigation();
+  const [data] = useState(Array(10).fill(0));
+  const navigation = useNavigation();
 
-    const onCreatePermohonan = () => {
-        navigation.navigate('BuatPermohonanScreen');
-    };
+  const onCreatePermohonan = () => {
+    navigation.navigate('BuatPermohonanScreen');
+  };
 
-    return <>
-        <ScrollView style={style.container} contentContainerStyle={style.contentContainer}>
-            <Text style={style.title}>Permohonan Anda</Text>
-            {!data.length ? <NotFound /> : data.map((_, index) => (
-                <CardPermohonan type={TYPE_PLASMA} key={index} />
-            ))}
-        </ScrollView>
-        <FABPermohonan onClick={onCreatePermohonan}/>
-    </>;
+  return (
+    <>
+      <ScrollView
+        style={style.container}
+        contentContainerStyle={style.contentContainer}>
+        <Text style={style.title}>Permohonan Anda</Text>
+        {!data.length ? (
+          <NotFound />
+        ) : (
+          data.map((_, index) => (
+            <CardPermohonan type={TYPE_PLASMA} key={index} />
+          ))
+        )}
+      </ScrollView>
+      <FABPermohonan onClick={onCreatePermohonan} />
+    </>
+  );
 };

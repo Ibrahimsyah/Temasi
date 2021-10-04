@@ -37,7 +37,7 @@ export const FontStyle = {
     fontWeight: '500',
     fontSize: 14,
   },
-  BODY:{
+  BODY: {
     fontFamily: 'Roboto',
     fontSize: 12,
   },
@@ -52,11 +52,11 @@ export const FontStyle = {
     fontWeight: '500',
     fontSize: 16,
   },
-  LABEL_SMALL:{
+  LABEL_SMALL: {
     fontFamily: 'Roboto',
     fontSize: 10,
   },
-  LABEL_CATEGORY:{
+  LABEL_CATEGORY: {
     fontFamily: 'Roboto',
     fontSize: 10,
     fontWeight: 'bold',

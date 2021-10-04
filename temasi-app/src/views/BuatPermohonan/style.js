@@ -1,5 +1,5 @@
-import {StyleSheet} from 'react-native';
-import {Color, FontStyle} from '../../configs/style';
+import { StyleSheet } from 'react-native';
+import { Color, FontStyle } from '../../configs/style';
 
 export default StyleSheet.create({
   titleBig: {

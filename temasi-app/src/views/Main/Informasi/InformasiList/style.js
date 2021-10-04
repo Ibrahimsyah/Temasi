@@ -1,12 +1,12 @@
-import {StyleSheet} from 'react-native';
-import {Color, FontStyle} from '../../../../configs/style';
+import { StyleSheet } from 'react-native';
+import { Color, FontStyle } from '../../../../configs/style';
 export default StyleSheet.create({
   container: {
     paddingHorizontal: 20,
     backgroundColor: Color.LIGHT_GRAY,
   },
 
-  contentContainer:{
+  contentContainer: {
     flexGrow: 1,
   },
 

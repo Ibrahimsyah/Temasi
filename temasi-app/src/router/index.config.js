@@ -10,10 +10,10 @@ export default {
     headerShown: false,
   },
   routes: [
-    {name: 'SplashScreen', screen: SplashScreen},
-    {name: 'HomeScreen', screen: HomeScreen},
-    {name: 'LandingScreen', screen: LandingScreen},
-    {name: 'BuatPermohonanScreen', screen: BuatPermohonan},
-    {name: 'DetailPermohonan', screen: DetailPermohonan}
+    { name: 'SplashScreen', screen: SplashScreen },
+    { name: 'HomeScreen', screen: HomeScreen },
+    { name: 'LandingScreen', screen: LandingScreen },
+    { name: 'BuatPermohonanScreen', screen: BuatPermohonan },
+    { name: 'DetailPermohonan', screen: DetailPermohonan },
   ],
 };

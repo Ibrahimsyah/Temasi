@@ -1,6 +1,6 @@
 import React from 'react';
-import {View, Text, StyleSheet} from 'react-native';
-import {Color, FontStyle} from '../configs/style';
+import { View, Text, StyleSheet } from 'react-native';
+import { Color, FontStyle } from '../configs/style';
 
 const styles = StyleSheet.create({
   container: {
@@ -13,7 +13,7 @@ const styles = StyleSheet.create({
     width: 130,
   },
 
-  value:{
+  value: {
     ...FontStyle.H1,
     color: Color.PRIMARY,
   },
@@ -25,11 +25,11 @@ const styles = StyleSheet.create({
 });
 
 export default props => {
-  const {style, value, label} = props;
+  const { style, value, label } = props;
 
   return (
     <>
-      <View style={{...style, ...styles.container}}>
+      <View style={{ ...style, ...styles.container }}>
         <Text style={styles.value}>{value}</Text>
         <Text style={styles.label}>{label}</Text>
       </View>
