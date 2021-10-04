@@ -13,11 +13,11 @@ const styles = StyleSheet.create({
 });
 
 export default props => {
-  const { style, placeholder, value, onChange } = props;
+  const { style, placeholder, value, onChange, ...rest } = props;
 
   return (
     <TextInput
-      multiline
+      {...rest}
       textAlignVertical="top"
       style={{ ...styles.input, ...style }}
       placeholder={placeholder}

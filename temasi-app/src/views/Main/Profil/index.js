@@ -7,19 +7,16 @@ import NoAccountImage from '../../../assets/images/noLogin.png';
 import UserPhotoNull from '../../../assets/images/userPhotoNull.png';
 import GridInfo from '../../../components/GridInfo';
 import { useDispatch, useSelector } from 'react-redux';
-import { deleteAccount, setAccount } from '../../../stores/account.action';
+import { deleteAccount } from '../../../stores/account.action';
+import { useNavigation } from '@react-navigation/core';
 
 const AccountNotFound = () => {
-  const dispatch = useDispatch();
+  const navigation = useNavigation();
 
   const onLogin = () => {
-    dispatch(
-      setAccount({
-        id: 'hehe',
-        token: 'boss',
-      }),
-    );
+    navigation.navigate('LoginScreen');
   };
+
   return (
     <View style={style.noAccountContainer}>
       <Image source={NoAccountImage} />
