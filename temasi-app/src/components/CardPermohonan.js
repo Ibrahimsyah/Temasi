@@ -117,17 +117,23 @@ const style = StyleSheet.create({
 });
 
 export default props => {
-  const {
-    type = TYPE_OKSIGEN,
-    title = 'Tabung Oksigen dengan Perlengkapan',
-    distance = '0.2 KM',
-    time = '3 Hari Lagi',
-  } = props;
+  const { onClick, type, title, distance, time } = props;
 
   const { iconBgColor, icon, color, category } = generateCategoryStyle(type);
+
+  const onClickHandler = () => {
+    const data = {
+      type,
+      title,
+      distance,
+      time,
+    };
+
+    onClick(data);
+  };
   return (
     <>
-      <TouchableOpacity style={style.container}>
+      <TouchableOpacity style={style.container} onPress={onClickHandler}>
         <View>
           <View
             style={{ ...style.iconBackground, backgroundColor: iconBgColor }}>

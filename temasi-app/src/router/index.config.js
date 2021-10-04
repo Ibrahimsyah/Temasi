@@ -5,7 +5,7 @@ import SplashScreen from '../views/Splash';
 import DetailPermohonan from '../views/DetailPermohonan';
 
 export default {
-  defaultRouteName: 'DetailPermohonan',
+  defaultRouteName: 'SplashScreen',
   screenOptions: {
     headerShown: false,
   },

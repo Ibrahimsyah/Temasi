@@ -128,16 +128,21 @@ const renderCategoryAndIcon = itemType => {
 };
 
 export default props => {
-  const {
-    type = TYPE_PLASMA,
-    title = 'Plasma Darah Golongan AB+',
-    distance = '0.2 KM',
-    time = '3 Hari Lagi',
-  } = props;
+  const { onClick, type, title, distance, time } = props;
 
+  const onClickHandler = () => {
+    const data = {
+      type,
+      title,
+      distance,
+      time,
+    };
+
+    onClick(data);
+  };
   return (
     <>
-      <TouchableOpacity style={style.cardContainer}>
+      <TouchableOpacity style={style.cardContainer} onPress={onClickHandler}>
         {renderCategoryAndIcon(type)}
         <Text style={style.itemTitle}>{title}</Text>
         <View style={style.cardFooter}>

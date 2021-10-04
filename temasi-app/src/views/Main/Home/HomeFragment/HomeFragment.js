@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { default as FontAwesomeIcon } from 'react-native-vector-icons/FontAwesome';
 import { default as FontAwesome5Icon } from 'react-native-vector-icons/FontAwesome5';
 import { default as MaterialCommunityIcon } from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -9,10 +9,22 @@ import { Color } from '../../../../configs/style';
 import { generateGreeting } from '../../../../utils/time';
 import CardBantuan from '../../../../components/CardBantuan';
 import CardPermohonan from '../../../../components/CardPermohonan';
+import config from './index.config';
 
 const HomeFragment = () => {
+  const [data, setData] = useState(config.initState);
+
   const greeting = generateGreeting();
 
+  const onPermohonanClick = item => {
+    console.log(item);
+  };
+
+  useEffect(() => {
+    setTimeout(() => {
+      setData(config.dummyState);
+    }, 100);
+  }, []);
   return (
     <>
       <ScrollView style={style.container}>
@@ -69,8 +81,10 @@ const HomeFragment = () => {
           horizontal={true}
           style={style.list}
           showsHorizontalScrollIndicator={false}
-          data={Array(4)}
-          renderItem={({ item }) => <CardBantuan />}
+          data={data.permohonanUrgent}
+          renderItem={({ item }) => (
+            <CardBantuan {...item} onClick={onPermohonanClick} key={item.id} />
+          )}
         />
 
         <View style={style.sectionHeader}>
@@ -80,11 +94,13 @@ const HomeFragment = () => {
           </Pressable>
         </View>
         <View style={style.list}>
-          {Array(4)
-            .fill(0)
-            .map((_, index) => (
-              <CardPermohonan key={index} />
-            ))}
+          {data.permohonanLatest.map(item => (
+            <CardPermohonan
+              {...item}
+              onClick={onPermohonanClick}
+              key={item.id}
+            />
+          ))}
         </View>
       </ScrollView>
     </>
