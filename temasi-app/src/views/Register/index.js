@@ -45,7 +45,7 @@ export default () => {
     );
   }, [email, password, confirmPassword, fullName, phone, isMale]);
 
-  const onRegisterClick = () => {
+  const onRegister = () => {
     setLoading(true);
     setTimeout(() => {
       dispatch(
@@ -58,7 +58,7 @@ export default () => {
     }, 3000);
   };
 
-  const onLoginClick = () => {
+  const onLogin = () => {
     navigation.navigate('LoginScreen');
   };
 
@@ -123,14 +123,12 @@ export default () => {
           onChange={setConfirmPassword}
           placeholder="Ulangi Kata Sandi"
         />
-        <ButtonPrimary
-          disabled={!isFormFilled || loading}
-          onClick={onRegisterClick}>
+        <ButtonPrimary disabled={!isFormFilled || loading} onClick={onRegister}>
           {loading ? 'Mohon Tunggu' : 'Daftar'}
         </ButtonPrimary>
         <View style={style.footer}>
           <Text style={style.footer1}>Sudah Memiliki Akun? </Text>
-          <TouchableOpacity onPress={onLoginClick}>
+          <TouchableOpacity onPress={onLogin}>
             <Text style={style.footer2}>Login Sekarang</Text>
           </TouchableOpacity>
         </View>

@@ -17,6 +17,11 @@ const AccountNotFound = () => {
     navigation.navigate('LoginScreen');
   };
 
+  const onRegister = () => {
+    console.log('hehe');
+    navigation.navigate('RegisterScreen');
+  };
+
   return (
     <View style={style.noAccountContainer}>
       <Image source={NoAccountImage} />
@@ -28,7 +33,9 @@ const AccountNotFound = () => {
         <ButtonPrimary style={style.buttonFirst} onClick={onLogin}>
           Masuk
         </ButtonPrimary>
-        <ButtonSecondary style={style.buttonSecond}>Daftar</ButtonSecondary>
+        <ButtonSecondary style={style.buttonSecond} onClick={onRegister}>
+          Daftar
+        </ButtonSecondary>
       </View>
     </View>
   );

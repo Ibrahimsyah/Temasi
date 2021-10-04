@@ -30,11 +30,11 @@ export default () => {
     return !isEmpty(email) && !isEmpty(password);
   }, [email, password]);
 
-  const onRegisterClick = () => {
-    console.log('goto register');
+  const onRegister = () => {
+    navigation.navigate('RegisterScreen');
   };
 
-  const onLoginClick = () => {
+  const onLogin = () => {
     setLoading(true);
     setTimeout(() => {
       dispatch(
@@ -80,14 +80,12 @@ export default () => {
           onChange={setPassword}
           placeholder="Kata Sandi"
         />
-        <ButtonPrimary
-          disabled={!isFormFilled || loading}
-          onClick={onLoginClick}>
+        <ButtonPrimary disabled={!isFormFilled || loading} onClick={onLogin}>
           {loading ? 'Mohon Tunggu' : 'Masuk'}
         </ButtonPrimary>
         <View style={style.footer}>
           <Text style={style.footer1}>Belum Memiliki Akun? </Text>
-          <TouchableOpacity onPress={onRegisterClick}>
+          <TouchableOpacity onPress={onRegister}>
             <Text style={style.footer2}>Daftar Sekarang</Text>
           </TouchableOpacity>
         </View>

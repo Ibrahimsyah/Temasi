@@ -7,7 +7,7 @@ import LoginScreen from '../views/Login';
 import RegisterScreen from '../views/Register';
 
 export default {
-  defaultRouteName: 'RegisterScreen',
+  defaultRouteName: 'SplashScreen',
   screenOptions: {
     headerShown: false,
   },
