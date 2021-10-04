@@ -3,10 +3,11 @@ import LandingScreen from '../views/Landing';
 import HomeScreen from '../views/Main';
 import SplashScreen from '../views/Splash';
 import DetailPermohonan from '../views/DetailPermohonan';
-import Login from '../views/Login';
+import LoginScreen from '../views/Login';
+import RegisterScreen from '../views/Register';
 
 export default {
-  defaultRouteName: 'SplashScreen',
+  defaultRouteName: 'RegisterScreen',
   screenOptions: {
     headerShown: false,
   },
@@ -16,6 +17,7 @@ export default {
     { name: 'LandingScreen', screen: LandingScreen },
     { name: 'BuatPermohonanScreen', screen: BuatPermohonan },
     { name: 'DetailPermohonan', screen: DetailPermohonan },
-    { name: 'LoginScreen', screen: Login },
+    { name: 'LoginScreen', screen: LoginScreen },
+    { name: 'RegisterScreen', screen: RegisterScreen },
   ],
 };
