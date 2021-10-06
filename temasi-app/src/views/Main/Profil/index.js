@@ -18,7 +18,6 @@ const AccountNotFound = () => {
   };
 
   const onRegister = () => {
-    console.log('hehe');
     navigation.navigate('RegisterScreen');
   };
 
