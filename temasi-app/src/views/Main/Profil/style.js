@@ -1,5 +1,5 @@
-import {StyleSheet} from 'react-native';
-import {Color, FontStyle} from '../../../configs/style';
+import { StyleSheet } from 'react-native';
+import { Color, FontStyle } from '../../../configs/style';
 
 export default StyleSheet.create({
   noAccountContainer: {
@@ -70,7 +70,7 @@ export default StyleSheet.create({
 
   profileLabel: {
     ...FontStyle.LABEL_SMALL,
-    marginTop:24,
+    marginTop: 24,
     fontWeight: 'bold',
     color: Color.DARKER_GRAY,
   },

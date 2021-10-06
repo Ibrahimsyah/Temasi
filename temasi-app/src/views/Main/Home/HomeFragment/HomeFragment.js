@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { default as FontAwesomeIcon } from 'react-native-vector-icons/FontAwesome';
 import { default as FontAwesome5Icon } from 'react-native-vector-icons/FontAwesome5';
 import { default as MaterialCommunityIcon } from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -9,10 +9,30 @@ import { Color } from '../../../../configs/style';
 import { generateGreeting } from '../../../../utils/time';
 import CardBantuan from '../../../../components/CardBantuan';
 import CardPermohonan from '../../../../components/CardPermohonan';
+import config from './index.config';
+import { useNavigation } from '@react-navigation/core';
+import { useSelector } from 'react-redux';
 
 const HomeFragment = () => {
+  const [data, setData] = useState(config.initState);
+  const navigation = useNavigation();
+  const account = useSelector(state => state.account);
+
   const greeting = generateGreeting();
 
+  const onPermohonanClick = item => {
+    if (account.id) {
+      navigation.navigate('DetailPermohonan', item);
+    } else {
+      navigation.navigate('Profil');
+    }
+  };
+
+  useEffect(() => {
+    setTimeout(() => {
+      setData(config.dummyState);
+    }, 100);
+  }, []);
   return (
     <>
       <ScrollView style={style.container}>
@@ -31,19 +51,28 @@ const HomeFragment = () => {
           <View style={style.panelGrid}>
             <Pressable style={style.panelItem}>
               <View style={style.iconBackground}>
-                <MaterialIcon name="local-hospital" style={{ ...style.icon, color: Color.MED_BLUE }} />
+                <MaterialIcon
+                  name="local-hospital"
+                  style={{ ...style.icon, color: Color.MED_BLUE }}
+                />
               </View>
               <Text style={style.panelItemTitle}>Bahan Pangan & Suplemen</Text>
             </Pressable>
             <Pressable style={style.panelItem}>
               <View style={style.iconBackground}>
-                <MaterialCommunityIcon name="diving-scuba-tank" style={{ ...style.icon, color: Color.PRIMARY }} />
+                <MaterialCommunityIcon
+                  name="diving-scuba-tank"
+                  style={{ ...style.icon, color: Color.PRIMARY }}
+                />
               </View>
               <Text style={style.panelItemTitle}>Tabung Oksigen</Text>
             </Pressable>
             <Pressable style={style.panelItem}>
               <View style={style.iconBackground}>
-                <FontAwesome5Icon name="tint" style={{ ...style.icon, color: Color.MED_RED }} />
+                <FontAwesome5Icon
+                  name="tint"
+                  style={{ ...style.icon, color: Color.MED_RED }}
+                />
               </View>
               <Text style={style.panelItemTitle}>Plasma Konvalesen</Text>
             </Pressable>
@@ -60,8 +89,10 @@ const HomeFragment = () => {
           horizontal={true}
           style={style.list}
           showsHorizontalScrollIndicator={false}
-          data={Array(4)}
-          renderItem={({ item }) => <CardBantuan />}
+          data={data.permohonanUrgent}
+          renderItem={({ item }) => (
+            <CardBantuan {...item} onClick={onPermohonanClick} key={item.id} />
+          )}
         />
 
         <View style={style.sectionHeader}>
@@ -71,9 +102,14 @@ const HomeFragment = () => {
           </Pressable>
         </View>
         <View style={style.list}>
-          {Array(4).fill(0).map((_, index) => <CardPermohonan key={index} />)}
+          {data.permohonanLatest.map(item => (
+            <CardPermohonan
+              {...item}
+              onClick={onPermohonanClick}
+              key={item.id}
+            />
+          ))}
         </View>
-
       </ScrollView>
     </>
   );

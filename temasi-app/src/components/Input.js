@@ -1,6 +1,6 @@
 import React from 'react';
-import {TextInput, View, StyleSheet} from 'react-native';
-import {Color} from '../configs/style';
+import { TextInput, StyleSheet } from 'react-native';
+import { Color } from '../configs/style';
 
 const styles = StyleSheet.create({
   input: {
@@ -13,17 +13,18 @@ const styles = StyleSheet.create({
 });
 
 export default props => {
-  const {style, placeholder, value, onChange} = props;
+  const { style, placeholder, value, onChange, ...rest } = props;
 
   return (
     <TextInput
-      multiline
+      {...rest}
       textAlignVertical="top"
-      style={{...styles.input, ...style}}
+      style={{ ...styles.input, ...style }}
       placeholder={placeholder}
       placeholderTextColor={Color.DARK_GRAY}
       autoCorrect={false}
       onChangeText={onChange}
-      value={value} />
+      value={value}
+    />
   );
 };

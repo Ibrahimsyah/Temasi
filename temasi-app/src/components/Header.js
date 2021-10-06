@@ -1,7 +1,7 @@
 import React from 'react';
-import {Text, View, StyleSheet} from 'react-native';
+import { Text, View, StyleSheet } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome5';
-import {Color, FontStyle} from '../configs/style';
+import { Color, FontStyle } from '../configs/style';
 
 const styles = StyleSheet.create({
   container: withPadding => ({
@@ -12,12 +12,12 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-start',
   }),
 
-  backIcon: (isDark) => ({
+  backIcon: isDark => ({
     fontSize: 20,
     color: !isDark ? Color.WHITE : Color.BLACK,
   }),
 
-  title: (isDark) => ({
+  title: isDark => ({
     ...FontStyle.H2,
     color: !isDark ? Color.WHITE : Color.BLACK,
 
@@ -26,7 +26,7 @@ const styles = StyleSheet.create({
 });
 
 export default props => {
-  const {navigator, title, isDark = false, withPadding = true} = props;
+  const { navigator, title, isDark = false, withPadding = true } = props;
 
   const onBack = () => {
     navigator?.goBack();
@@ -34,7 +34,11 @@ export default props => {
 
   return (
     <View style={styles.container(withPadding)}>
-      <Icon name="arrow-left" style={styles.backIcon(isDark)} onPress={onBack}/>
+      <Icon
+        name="arrow-left"
+        style={styles.backIcon(isDark)}
+        onPress={onBack}
+      />
       <Text style={styles.title(isDark)}>{title}</Text>
     </View>
   );

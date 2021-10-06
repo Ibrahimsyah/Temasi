@@ -1,6 +1,6 @@
 import React from 'react';
-import {StyleSheet, View, Pressable, Text} from 'react-native';
-import {Color, FontStyle} from '../configs/style';
+import { StyleSheet, View, Pressable, Text } from 'react-native';
+import { Color, FontStyle } from '../configs/style';
 
 const styles = StyleSheet.create({
   cardContainer: active => ({
@@ -18,7 +18,7 @@ const styles = StyleSheet.create({
     backgroundColor: active ? Color.PRIMARY : Color.WHITE,
   }),
 
-  cardText: (active) => ({
+  cardText: active => ({
     ...FontStyle.H2,
     fontWeight: 'bold',
     color: active ? Color.WHITE : Color.PRIMARY,
@@ -32,7 +32,7 @@ const styles = StyleSheet.create({
 });
 
 const Card = props => {
-  const {selected, value, onChange} = props;
+  const { selected, value, onChange } = props;
 
   return (
     <Pressable onPress={onChange} style={styles.cardContainer(selected)}>
@@ -42,14 +42,18 @@ const Card = props => {
 };
 
 export default props => {
-  const {style, value, onChange} = props;
+  const { style, value, onChange } = props;
 
   return (
-    <View style={{...styles.container, ...style}}>
-      <Card value="A" selected={value === 'A'} onChange={() => onChange("A")} />
-      <Card value="B" selected={value === 'B'} onChange={() => onChange("B")} />
-      <Card value="AB" selected={value === 'AB'} onChange={() => onChange("AB")} />
-      <Card value="O" selected={value === 'O'} onChange={() => onChange("O")} />
+    <View style={{ ...styles.container, ...style }}>
+      <Card value="A" selected={value === 'A'} onChange={() => onChange('A')} />
+      <Card value="B" selected={value === 'B'} onChange={() => onChange('B')} />
+      <Card
+        value="AB"
+        selected={value === 'AB'}
+        onChange={() => onChange('AB')}
+      />
+      <Card value="O" selected={value === 'O'} onChange={() => onChange('O')} />
     </View>
   );
 };
