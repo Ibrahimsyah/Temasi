@@ -1,6 +1,6 @@
 
 const storeOptimizedImage = (file) => {
-  return file;
+  return `/media/${file.filename}`;
 };
 
 module.exports = {

@@ -8,7 +8,9 @@ const uploader = multer({storage: storage});
 
 const uploadPhotoHandler = (req, res) => {
   const result = UploadController.storeOptimizedImage(req.file);
-  res.send(result);
+  res.json({
+    document_url: result,
+  });
 };
 
 router.post('/', uploader.single('photo'), uploadPhotoHandler);
