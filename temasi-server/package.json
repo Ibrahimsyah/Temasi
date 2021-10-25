@@ -7,7 +7,9 @@
   "author": "Ibrahimsyah Zairussalam",
   "license": "MIT",
   "scripts": {
-    "dev": "sequelize-cli db:migrate && nodemon index.ts --transpile-only",
+    "dev": "nodemon index.js",
+    "migrate": "sequelize-cli db:migrate",
+    "migrate:undo": "sequelize-cli db:migrate:undo",
     "start": "node index.ts"
   },
   "devDependencies": {
