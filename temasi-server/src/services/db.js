@@ -1,6 +1,6 @@
 const {Sequelize, DataTypes} = require('sequelize');
 
-const db = new Sequelize('postgresql://postgres:temasi-db-secret-password@localhost:5454/temasi-db');
+const db = new Sequelize('postgresql://postgres:temasi-db-secret-password@localhost:5454/temasi-db', {logging: false});
 
 const Pengguna = db.define('pengguna', {
   id: {
