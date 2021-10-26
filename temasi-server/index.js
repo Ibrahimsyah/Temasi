@@ -1,29 +1,31 @@
-require('dotenv').config();
 const express = require('express');
 const morgan = require('morgan');
 
-const {commonApi, uploadApi, exceptionApi} = require('./src/apis');
+const {PORT, ENV} = require('./src/config');
+const {commonApi, uploadApi, authApi} = require('./src/apis');
+const {notFound, errorHandler} = require('./src/util/middleware');
 require('./src/services/db');
 
-const startServer = async () => {
-  const port = process.env.PORT;
-  const app = express();
-  app.use(morgan('dev'));
-  app.use(express.json());
+const port = PORT;
+const app = express();
+ENV !== 'TEST' && app.use(morgan('dev'));
+app.use(express.json());
 
-  // static file api
-  app.use('/media', express.static('./media'));
+// static file api
+app.use('/media', express.static('./media'));
 
-  // Register routes for each api
-  app.use('/', commonApi);
-  app.use('/upload', uploadApi);
+// Register routes for each api
+app.use('/', commonApi);
+app.use('/auth', authApi);
+app.use('/upload', uploadApi);
 
-  // Api fallback
-  app.use(exceptionApi);
+// Api fallback
+app.use(notFound);
+app.use(errorHandler);
 
-  app.listen(port, () => {
-    console.log('Server is running at port', port);
-  });
-};
+app.listen(port, () => {
+  console.log('Server is running at port', port);
+});
 
-startServer();
+
+module.exports = app;
