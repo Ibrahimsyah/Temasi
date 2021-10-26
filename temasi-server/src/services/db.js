@@ -1,6 +1,7 @@
 const {Sequelize, DataTypes} = require('sequelize');
+const {DSN, ENV} = require('../config');
 
-const db = new Sequelize('postgresql://postgres:temasi-db-secret-password@localhost:5454/temasi-db', {logging: false});
+const db = new Sequelize(DSN, {logging: false});
 
 const Pengguna = db.define('pengguna', {
   id: {
@@ -130,9 +131,9 @@ Promise.all([
   Donasi.sync(),
   db.authenticate(),
 ]).then(() => {
-  console.log('Connected to DB');
+  ENV !== 'TEST' && console.log('Connected to DB');
 }).catch((err) => {
-  console.error(err);
+  ENV !== 'TEST' && console.error(err);
 });
 
 module.exports = {db, Donasi, Pengguna, Permohonan, Profil};
