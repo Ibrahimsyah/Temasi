@@ -13,6 +13,7 @@
     "new-cap":"off",
     "max-len":"off",
     "valid-jsdoc":"off",
-    "camelcase": "off"
+    "camelcase": "off",
+    "no-throw-literal":"off"
   }
 }

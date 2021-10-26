@@ -10,12 +10,13 @@ chai.use(chaiHttp);
 
 describe('AuthAPI', () => {
   beforeEach((done) => {
-    Pengguna.destroy({truncate: true});
-    Profil.destroy({truncate: true});
-    done();
+    Promise.all([
+      Pengguna.destroy({where: {}}),
+      Profil.destroy({where: {}}),
+    ]).then(() => done()).catch((err) => console.log(err));
   });
 
-  const dataIncompleteError = 'data belum lengkap';
+  const dataIncompleteError = 'Data belum lengkap';
 
   describe('POST /auth/register', () => {
     it('should return error if data is incomplete', () => {
@@ -43,7 +44,7 @@ describe('AuthAPI', () => {
       chai.request(server)
           .post('/auth/register')
           .send(payload)
-          .end((_, res) => {
+          .end((res) => {
             res.should.have.status(201);
             res.body.should.have.property('userId');
             res.body.should.have.property('name');
@@ -51,6 +52,41 @@ describe('AuthAPI', () => {
             res.body.should.have.property('phoneNumber');
             res.body.should.have.property('token');
           });
+    });
+  });
+
+  describe('POST /auth/login', () => {
+    it('should show login success with token', async () => {
+      const pengguna = {
+        id: 'useas',
+        email: 'test@gmail.com',
+        password: '$2b$10$O/loc/FYkXzusbROaCLl3OILyZog/fO4c5Q1cjcWNuot6TyWSt3k.',
+      };
+
+      const profil = {
+        pengguna_id: 'useas',
+        full_name: 'fullName 1',
+        phone_number: '12131213',
+        is_male: 1,
+      };
+
+      await Pengguna.create(pengguna);
+      await Profil.create(profil);
+
+      const loginPayload = {
+        email: 'test@gmail.com',
+        password: 'asdzxca',
+      };
+
+      const res = await chai.request(server)
+          .post('/auth/login')
+          .send(loginPayload);
+      res.should.have.status(200);
+      res.body.should.have.property('userId');
+      res.body.should.have.property('name');
+      res.body.should.have.property('email');
+      res.body.should.have.property('phoneNumber');
+      res.body.should.have.property('token');
     });
   });
 });
