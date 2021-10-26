@@ -4,6 +4,7 @@ const chai = require('chai');
 const chaiHttp = require('chai-http');
 const server = require('../index');
 const {Pengguna, Profil} = require('../src/services/db');
+const {DataIncompleteError, LoginError, UserNotFoundError} = require('../src/util/error');
 chai.should();
 
 chai.use(chaiHttp);
@@ -16,8 +17,6 @@ describe('AuthAPI', () => {
     ]).then(() => done()).catch((err) => console.log(err));
   });
 
-  const dataIncompleteError = 'Data belum lengkap';
-
   describe('POST /auth/register', () => {
     it('should return error if data is incomplete', () => {
       const payload = {};
@@ -25,9 +24,9 @@ describe('AuthAPI', () => {
           .post('/auth/register')
           .send(payload)
           .end((_, res) => {
-            res.should.have.status(400);
+            res.should.have.status(DataIncompleteError.statusCode);
             res.body.should.have.property('error');
-            expect(res.body.error).to.eq(dataIncompleteError);
+            expect(res.body.error).to.eq(DataIncompleteError.message);
           });
     });
 
@@ -87,6 +86,48 @@ describe('AuthAPI', () => {
       res.body.should.have.property('email');
       res.body.should.have.property('phoneNumber');
       res.body.should.have.property('token');
+    });
+
+    it('should show login error if the password is wrong', async () => {
+      const pengguna = {
+        id: 'useas',
+        email: 'test@gmail.com',
+        password: '$2b$10$O/loc/FYkXzusbROaCLl3OILyZog/fO4c5Q1cjcWNuot6TyWSt3k.',
+      };
+
+      const profil = {
+        pengguna_id: 'useas',
+        full_name: 'fullName 1',
+        phone_number: '12131213',
+        is_male: 1,
+      };
+
+      await Pengguna.create(pengguna);
+      await Profil.create(profil);
+
+      const loginPayload = {
+        email: 'test@gmail.com',
+        password: 'asdzxcas',
+      };
+
+      const res = await chai.request(server)
+          .post('/auth/login')
+          .send(loginPayload);
+      res.should.have.status(LoginError.statusCode);
+      expect(res.body.error).to.eq(LoginError.message);
+    });
+
+    it('should show login error if the account is not exist', async () => {
+      const loginPayload = {
+        email: 'test@gmail.com',
+        password: 'asdzxcas',
+      };
+
+      const res = await chai.request(server)
+          .post('/auth/login')
+          .send(loginPayload);
+      res.should.have.status(UserNotFoundError.statusCode);
+      expect(res.body.error).to.eq(UserNotFoundError.message);
     });
   });
 });

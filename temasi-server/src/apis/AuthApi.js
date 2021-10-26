@@ -44,7 +44,6 @@ const loginHandler = async (req, res) => {
       res.json(result);
     }
   } catch (err) {
-    console.log(err);
     handleError(res, err);
   }
 };
