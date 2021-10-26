@@ -2,7 +2,8 @@ const express = require('express');
 const morgan = require('morgan');
 
 const {PORT, ENV} = require('./src/config');
-const {commonApi, uploadApi, exceptionApi, authApi} = require('./src/apis');
+const {commonApi, uploadApi, authApi} = require('./src/apis');
+const {notFound, errorHandler} = require('./src/util/middleware');
 require('./src/services/db');
 
 const port = PORT;
@@ -19,7 +20,8 @@ app.use('/auth', authApi);
 app.use('/upload', uploadApi);
 
 // Api fallback
-app.use(exceptionApi);
+app.use(notFound);
+app.use(errorHandler);
 
 app.listen(port, () => {
   console.log('Server is running at port', port);

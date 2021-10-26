@@ -28,7 +28,7 @@ const registerHandler = async (req, res) => {
   }
 };
 
-const loginHandler = async (req, res) => {
+const loginHandler = async (req, res, next) => {
   try {
     const payload = req.body;
     const {
@@ -44,7 +44,7 @@ const loginHandler = async (req, res) => {
       res.json(result);
     }
   } catch (err) {
-    handleError(res, err);
+    next(err);
   }
 };
 

@@ -19,16 +19,9 @@ const DataIncompleteError = {
   message: 'Data belum lengkap',
 };
 
-const handleError = (res, error) => {
-  res.status(error.statusCode);
-  res.json({
-    error: error.message,
-  });
-};
 module.exports = {
   DataIncompleteError,
   LoginError,
   UserExistsError,
   UserNotFoundError,
-  handleError,
 };
