@@ -19,9 +19,15 @@ const DataIncompleteError = {
   message: 'Data belum lengkap',
 };
 
+const UnauthorizedError = {
+  statusCode: 403,
+  message: 'Silahkan masuk terlebih dahulu',
+};
+
 module.exports = {
   DataIncompleteError,
   LoginError,
   UserExistsError,
   UserNotFoundError,
+  UnauthorizedError,
 };
