@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
 import { Image, ScrollView, Text, View } from 'react-native';
+import { useNavigation } from '@react-navigation/core';
+
 import CardPermohonan from '../../../components/CardPermohonan';
 import FABPermohonan from '../../../components/FABPermohonan';
-import { TYPE_PLASMA } from '../../../configs/ItemTypes';
-import style from './style';
-
 import NotFoundImage from '../../../assets/images/notFound.png';
-import { useNavigation } from '@react-navigation/core';
+
+import style from './style';
+import config from './index.config';
 
 const NotFound = () => {
   return (
@@ -23,8 +24,10 @@ const NotFound = () => {
 };
 
 export default () => {
-  const [data] = useState(Array(10).fill(0));
+  const [data] = useState(config.permohonanLatest);
   const navigation = useNavigation();
+
+  const onPermohonanClick = item => {};
 
   const onCreatePermohonan = () => {
     navigation.navigate('BuatPermohonanScreen');
@@ -39,8 +42,8 @@ export default () => {
         {!data.length ? (
           <NotFound />
         ) : (
-          data.map((_, index) => (
-            <CardPermohonan type={TYPE_PLASMA} key={index} />
+          data.map((item, index) => (
+            <CardPermohonan {...item} key={index} onClick={onPermohonanClick} />
           ))
         )}
       </ScrollView>
