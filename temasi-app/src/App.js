@@ -1,11 +1,17 @@
 import React from 'react';
-import { GlobalRouter } from './router/GlobalRouter';
-import { createStore } from 'redux';
-import reducer from './stores';
+import { createStore, applyMiddleware } from 'redux';
+import createSagaMiddleware from 'redux-saga';
 import { Provider } from 'react-redux';
 
+import { GlobalRouter } from './router/GlobalRouter';
+import reducer from './stores';
+import sagas from './stores/sagas';
+
 export default () => {
-  const store = createStore(reducer);
+  const sagaMiddleware = createSagaMiddleware();
+  const store = createStore(reducer, applyMiddleware(sagaMiddleware));
+  sagaMiddleware.run(sagas);
+
   return (
     <Provider store={store}>
       <GlobalRouter />

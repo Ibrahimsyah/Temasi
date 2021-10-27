@@ -124,6 +124,9 @@ export default () => {
     agreement,
   ]);
 
+  const onSalurkanBantuan = () => {
+    navigation.navigate('PenyaluranDonasi');
+  };
   useEffect(() => {
     setLoading(true);
     setTimeout(() => {
@@ -132,7 +135,7 @@ export default () => {
         user_profile:
           'https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png',
         document:
-          'https://s3-alpha-sig.figma.com/img/4b84/c7bf/816e9b2a58591842d4ef5cc68d38be69?Expires=1633910400&Signature=MWkmg6g~gPiOlLAyqQVKi~U9e5so382lp65AUGtj5QoaNPkU05g2fJnjvnu-atixTZSpKiCSI7s~pajVDdMHbjwptpErSJXQGpuMrlmx2e1ov9cq1c0Wzvox1yyHFN8qDvwWgDyJX7eld6gKGgIdepY3PNYKvBuLvaIn6HOAJrL2hfPYcdpK4xMoqVjmdtXtEyUevMw5-js-xfclXdER3fUWMzCJG2TbI26vtI3E2CcFwzuy2AeKchR6e8XiX9xU23m7nztjsFKdUKMxNP9zeOOimzzqcxgZewDKIghNjw9gNsHh0vNBn7wGv3BRv-AOfGjonjnZgPXI6KfhHgdj9A__&Key-Pair-Id=APKAINTVSUGEWH5XD5UA',
+          'https://p4.wallpaperbetter.com/wallpaper/956/82/396/earth-ocean-california-coast-wallpaper-preview.jpg',
         story:
           'Saya sudah menjalani isolasi selama 5 hari dan merasa sesak nafas Saya sudah menjalani isolasi selama 5 hari dan merasa sesak nafas Saya sudah menjalani isolasi selama 5 hari dan merasa sesak nafas Saya sudah menjalani isolasi selama 5 hari dan merasa sesak nafas Saya sudah menjalani isolasi selama 5 hari dan merasa sesak nafas',
         latitude: -7.86730328266399,
@@ -147,6 +150,7 @@ export default () => {
     <>
       <StatusBar
         backgroundColor={type === TYPE_PLASMA ? Color.MED_RED : Color.PRIMARY}
+        barStyle="light-content"
       />
       <ScrollView
         style={style.container(type)}
@@ -278,6 +282,7 @@ export default () => {
               </CheckBox>
               <ButtonPrimary
                 style={style.buttonSubmit}
+                onClick={onSalurkanBantuan}
                 disabled={!isCheckBoxFilled}>
                 Salurkan Bantuan
               </ButtonPrimary>
