@@ -4,6 +4,7 @@ import { ACCOUNT_STORAGE_KEY } from '../configs/storage';
 
 const initState = {
   id: null,
+  fullName: '',
   token: null,
 };
 

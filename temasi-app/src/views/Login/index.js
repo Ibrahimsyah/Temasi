@@ -40,6 +40,7 @@ export default () => {
       dispatch(
         setAccount({
           id: 'id1',
+          fullName: 'Ibrahimsyah Zairussalam',
           token: 'token1',
         }),
       );

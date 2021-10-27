@@ -36,8 +36,12 @@ const HomeFragment = () => {
   return (
     <>
       <ScrollView style={style.container}>
-        <Text style={style.greeting}>{greeting}</Text>
-        <Text style={style.userName}>Ibrahimsyah Zairussalam</Text>
+        {account.id && (
+          <>
+            <Text style={style.greeting}>{greeting}</Text>
+            <Text style={style.userName}>{account.fullName}</Text>
+          </>
+        )}
 
         <Pressable style={style.searchBar}>
           <View style={style.searchContainer}>
