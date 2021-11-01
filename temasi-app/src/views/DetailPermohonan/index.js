@@ -28,6 +28,7 @@ import { default as MaterialCommunityIcon } from 'react-native-vector-icons/Mate
 import { default as MaterialIcon } from 'react-native-vector-icons/MaterialIcons';
 import config from './index.config';
 import CheckBox from '../../components/CheckBox';
+import { Map } from '../../components/Map';
 
 const generateCategoryStyle = itemType => {
   let iconBgColor;
@@ -222,25 +223,12 @@ export default () => {
               </Text>
 
               <Text style={style.titleMed}>Lokasi Pemohon</Text>
-              {data.longitude && data.latitude && (
-                <View pointerEvents="none" style={style.mapContainer}>
-                  <MapView
-                    style={style.map}
-                    initialRegion={{
-                      latitude: data.latitude,
-                      longitude: data.longitude,
-                      longitudeDelta: 0.003,
-                      latitudeDelta: 0.003,
-                    }}>
-                    <Marker
-                      coordinate={{
-                        latitude: data.latitude,
-                        longitude: data.longitude,
-                      }}
-                    />
-                  </MapView>
-                </View>
-              )}
+              <Map
+                position={{
+                  latitude: data.latitude,
+                  longitude: data.longitude,
+                }}
+              />
               {type === TYPE_PLASMA && (
                 <>
                   <Text style={style.titleBig}>

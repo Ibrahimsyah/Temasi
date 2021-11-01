@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet, Pressable, Linking, Platform } from 'react-native';
 import MapView, { Marker } from 'react-native-maps';
 
 const styles = StyleSheet.create({
@@ -18,11 +18,30 @@ const styles = StyleSheet.create({
 });
 
 export const Map = ({ position }) => {
+  console.log('MAP');
+  const onMapPress = () => {
+    console.log('pressed');
+    const scheme = Platform.select({
+      ios: 'maps:0,0?q=',
+      android: 'geo:0,0?q=',
+    });
+    const latLng = `${position.latitude},${position.longitude}`;
+    const label = 'Directions';
+    const url = Platform.select({
+      ios: `${scheme}${label}@${latLng}`,
+      android: `${scheme}${latLng}(${label})`,
+    });
+    Linking.openURL(url);
+  };
   return (
-    <View pointerEvents="none" style={styles.mapContainer}>
+    <Pressable style={styles.mapContainer}>
       {position && (
         <MapView
+          onPress={onMapPress}
           style={styles.map}
+          scrollEnabled={false}
+          zoomEnabled={false}
+          pitchEnabled={false}
           initialRegion={{
             latitude: position.latitude,
             longitude: position.longitude,
@@ -37,6 +56,6 @@ export const Map = ({ position }) => {
           />
         </MapView>
       )}
-    </View>
+    </Pressable>
   );
 };
