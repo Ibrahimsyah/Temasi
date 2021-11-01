@@ -3,6 +3,9 @@ import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 import { default as FontAwesome5Icon } from 'react-native-vector-icons/FontAwesome5';
 import { default as MaterialCommunityIcon } from 'react-native-vector-icons/MaterialCommunityIcons';
 import { default as MaterialIcon } from 'react-native-vector-icons/MaterialIcons';
+import { useNavigation } from '@react-navigation/core';
+import { useSelector } from 'react-redux';
+
 import {
   OKSIGEN,
   PANGAN_SUPLEMEN,
@@ -128,7 +131,10 @@ const renderCategoryAndIcon = itemType => {
 };
 
 export default props => {
-  const { onClick, type, title, distance, time } = props;
+  const { type, title, distance, time } = props;
+
+  const navigation = useNavigation();
+  const account = useSelector(state => state.account);
 
   const onClickHandler = () => {
     const data = {
@@ -138,7 +144,11 @@ export default props => {
       time,
     };
 
-    onClick(data);
+    if (account.id) {
+      navigation.navigate('DetailPermohonan', data);
+    } else {
+      navigation.navigate('Profil');
+    }
   };
   return (
     <>

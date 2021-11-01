@@ -14,21 +14,4 @@ export default StyleSheet.create({
     ...FontStyle.H2,
     marginBottom: 27,
   },
-  notFoundContainer: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  notFoundImage: {
-    width: '100%',
-    height: 250,
-    marginHorizontal: 20,
-    resizeMode: 'contain',
-  },
-  notFoundText: {
-    ...FontStyle.CAPTION,
-    color: Color.DARKER_GRAY,
-    textAlign: 'center',
-    marginTop: 24,
-  },
 });

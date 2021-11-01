@@ -1,27 +1,13 @@
 import React, { useState } from 'react';
-import { Image, ScrollView, Text, View } from 'react-native';
+import { ScrollView, Text } from 'react-native';
 import { useNavigation } from '@react-navigation/core';
 
 import CardPermohonan from '../../../components/CardPermohonan';
 import FABPermohonan from '../../../components/FABPermohonan';
-import NotFoundImage from '../../../assets/images/notFound.png';
 
 import style from './style';
 import config from './index.config';
-
-const NotFound = () => {
-  return (
-    <>
-      <View style={style.notFoundContainer}>
-        <Image source={NotFoundImage} style={style.notFoundImage} />
-        <Text style={style.notFoundText}>
-          Anda atau kerabat anda membutuhkan bantuan isolasi mandiri? Segera
-          buat permohonan dan temukan orang baik yang akan membantu anda
-        </Text>
-      </View>
-    </>
-  );
-};
+import NotFound from '../../../components/NotFound';
 
 export default () => {
   const [data] = useState(config.permohonanLatest);
@@ -40,7 +26,7 @@ export default () => {
         contentContainerStyle={style.contentContainer}>
         <Text style={style.title}>Permohonan Anda</Text>
         {!data.length ? (
-          <NotFound />
+          <NotFound message="Anda atau kerabat anda membutuhkan bantuan isolasi mandiri? Segera buat permohonan dan temukan orang baik yang akan membantu anda" />
         ) : (
           data.map((item, index) => (
             <CardPermohonan {...item} key={index} onClick={onPermohonanClick} />
