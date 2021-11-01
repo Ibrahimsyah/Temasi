@@ -14,6 +14,7 @@ import CardPermohonan from '../../../../components/CardPermohonan';
 
 import style from './style';
 import config from './index.config';
+import { Notification } from '../../../../components/Notification';
 
 const greeting = generateGreeting();
 const HomeFragment = () => {
@@ -46,6 +47,10 @@ const HomeFragment = () => {
             <Text style={style.searchHint}>Coba cari "Tabung Oksigen"</Text>
           </View>
         </Pressable>
+
+        <Notification>
+          Anda memiliki 1 Bantuan yang akan anda salurkan
+        </Notification>
 
         <View style={style.mainPanel}>
           <Text style={style.panelTitle}>Yuk Bantu Mereka</Text>
