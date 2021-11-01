@@ -12,7 +12,6 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 import Geolocation from '@react-native-community/geolocation';
 import CheckBox from '@react-native-community/checkbox';
 import RNAndroidLocationEnabler from 'react-native-android-location-enabler';
-import { useNavigation } from '@react-navigation/core';
 
 import ButtonPrimary from '../../components/ButtonPrimary';
 import Header from '../../components/Header';
@@ -21,11 +20,11 @@ import Input from '../../components/Input';
 import CardsJangkaWaktu from '../../components/CardsJangkaWaktu';
 import CardsGolonganDarah from '../../components/CardsGolonganDarah';
 import CardsRhesusDarah from '../../components/CardsRhesusDarah';
+import { Map } from '../../components/Map';
 import { TYPE_PLASMA } from '../../configs/ItemTypes';
 
 import config from './index.config';
 import style from './style';
-import { Map } from '../../components/Map';
 
 export default () => {
   const [image, setImage] = useState(null);
@@ -40,7 +39,6 @@ export default () => {
   const [administration, setAdministration] = useState('');
   const [description, setDescription] = useState('');
   const [agreement, setAgreement] = useState(false);
-  const navigation = useNavigation();
 
   const handleSetImage = () => {
     setModalVisible(true);
@@ -90,7 +88,7 @@ export default () => {
   return (
     <>
       <ScrollView style={style.container}>
-        <Header navigator={navigation} isDark title="Buat Permohonan" />
+        <Header isDark title="Buat Permohonan" />
 
         <Text style={style.titleBig}>
           Jenis bantuan apa yang anda butuhkan?

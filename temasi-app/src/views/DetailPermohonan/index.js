@@ -9,11 +9,11 @@ import {
   Pressable,
 } from 'react-native';
 import ImageView from 'react-native-image-viewing';
-import MapView, { Marker } from 'react-native-maps';
-import style from './style';
-import ButtonPrimary from '../../components/ButtonPrimary';
-import Header from '../../components/Header';
 import { useNavigation, useRoute } from '@react-navigation/core';
+import { default as FontAwesome5Icon } from 'react-native-vector-icons/FontAwesome5';
+import { default as MaterialCommunityIcon } from 'react-native-vector-icons/MaterialCommunityIcons';
+import { default as MaterialIcon } from 'react-native-vector-icons/MaterialIcons';
+
 import {
   OKSIGEN,
   PANGAN_SUPLEMEN,
@@ -23,12 +23,13 @@ import {
   TYPE_PLASMA,
 } from '../../configs/ItemTypes';
 import { Color } from '../../configs/style';
-import { default as FontAwesome5Icon } from 'react-native-vector-icons/FontAwesome5';
-import { default as MaterialCommunityIcon } from 'react-native-vector-icons/MaterialCommunityIcons';
-import { default as MaterialIcon } from 'react-native-vector-icons/MaterialIcons';
-import config from './index.config';
+import ButtonPrimary from '../../components/ButtonPrimary';
+import Header from '../../components/Header';
 import CheckBox from '../../components/CheckBox';
 import { Map } from '../../components/Map';
+
+import config from './index.config';
+import style from './style';
 
 const generateCategoryStyle = itemType => {
   let iconBgColor;
@@ -158,7 +159,7 @@ export default () => {
       <ScrollView
         style={style.container(type)}
         contentContainerStyle={style.contentContainer}>
-        <Header navigator={navigation} withPadding title="Detail" />
+        <Header withPadding title="Detail" />
 
         <View style={style.mainContainer}>
           <View style={style.header}>

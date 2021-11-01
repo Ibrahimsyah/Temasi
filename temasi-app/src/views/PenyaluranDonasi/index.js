@@ -1,6 +1,6 @@
 import React, { useState, useMemo } from 'react';
 import { View, ScrollView, StatusBar, Text } from 'react-native';
-import { useNavigation, useRoute } from '@react-navigation/core';
+import { useRoute } from '@react-navigation/core';
 import { default as FontAwesome5Icon } from 'react-native-vector-icons/FontAwesome5';
 import { default as MaterialCommunityIcon } from 'react-native-vector-icons/MaterialCommunityIcons';
 import { default as MaterialIcon } from 'react-native-vector-icons/MaterialIcons';
@@ -74,7 +74,6 @@ const generateCategoryStyle = itemType => {
 
 export default () => {
   const [type] = useState(TYPE_OKSIGEN);
-  const navigation = useNavigation();
   const route = useRoute();
 
   const { isAfterAccept } = route.params || {};
@@ -100,7 +99,7 @@ export default () => {
       <ScrollView
         style={style.container}
         contentContainerStyle={style.contentContainer}>
-        <Header navigator={navigation} withPadding title="Penyaluran Donasi" />
+        <Header withPadding title="Penyaluran Donasi" />
 
         <View style={style.mainContainer}>
           {isAfterAccept && (

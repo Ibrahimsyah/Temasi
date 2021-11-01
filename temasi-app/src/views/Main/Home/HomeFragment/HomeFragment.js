@@ -17,13 +17,17 @@ import config from './index.config';
 import { Notification } from '../../../../components/Notification';
 
 const greeting = generateGreeting();
-const HomeFragment = () => {
+export default () => {
   const [data, setData] = useState(config.initState);
   const navigation = useNavigation();
   const account = useSelector(state => state.account);
 
   const onSearchClick = () => {
     navigation.navigate('SearchFragment');
+  };
+
+  const onNotificationClick = () => {
+    navigation.navigate('DonasiFragment');
   };
 
   useEffect(() => {
@@ -48,8 +52,8 @@ const HomeFragment = () => {
           </View>
         </Pressable>
 
-        <Notification>
-          Anda memiliki 1 Bantuan yang akan anda salurkan
+        <Notification onClick={onNotificationClick}>
+          Anda memiliki 1 bantuan yang akan anda salurkan
         </Notification>
 
         <View style={style.mainPanel}>
@@ -114,5 +118,3 @@ const HomeFragment = () => {
     </>
   );
 };
-
-export default HomeFragment;

@@ -120,7 +120,7 @@ const style = StyleSheet.create({
 });
 
 export default props => {
-  const { type, title, distance, time } = props;
+  const { onClick, type, title, distance, time } = props;
 
   const { iconBgColor, icon, color, category } = useMemo(
     () => generateCategoryStyle(type),
@@ -146,7 +146,9 @@ export default props => {
   };
   return (
     <>
-      <TouchableOpacity style={style.container} onPress={onClickHandler}>
+      <TouchableOpacity
+        style={style.container}
+        onPress={onClick || onClickHandler}>
         <View>
           <View
             style={{ ...style.iconBackground, backgroundColor: iconBgColor }}>
@@ -157,11 +159,13 @@ export default props => {
           <Text style={{ ...style.category, color: color }}>{category}</Text>
           <Text style={style.title}>{title}</Text>
           <View style={style.itemFooter}>
-            <View style={style.footerLeft}>
-              <MaterialIcon name="location-on" style={style.locationIcon} />
-              <Text style={style.location}>{distance}</Text>
-            </View>
-            <Text style={style.time}>{time}</Text>
+            {distance && (
+              <View style={style.footerLeft}>
+                <MaterialIcon name="location-on" style={style.locationIcon} />
+                <Text style={style.location}>{distance}</Text>
+              </View>
+            )}
+            {time && <Text style={style.time}>{time}</Text>}
           </View>
         </View>
       </TouchableOpacity>

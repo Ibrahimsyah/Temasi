@@ -1,6 +1,8 @@
 import React from 'react';
 import { Text, View, StyleSheet } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome5';
+import { useNavigation } from '@react-navigation/core';
+
 import { Color, FontStyle } from '../configs/style';
 
 const styles = StyleSheet.create({
@@ -26,10 +28,12 @@ const styles = StyleSheet.create({
 });
 
 export default props => {
-  const { navigator, title, isDark = false, withPadding = true } = props;
+  const { title, isDark = false, withPadding = true } = props;
+
+  const navigation = useNavigation();
 
   const onBack = () => {
-    navigator?.goBack();
+    navigation.goBack();
   };
 
   return (
