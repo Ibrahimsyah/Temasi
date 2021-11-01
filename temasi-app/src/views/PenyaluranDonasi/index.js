@@ -4,10 +4,10 @@ import { useNavigation, useRoute } from '@react-navigation/core';
 import { default as FontAwesome5Icon } from 'react-native-vector-icons/FontAwesome5';
 import { default as MaterialCommunityIcon } from 'react-native-vector-icons/MaterialCommunityIcons';
 import { default as MaterialIcon } from 'react-native-vector-icons/MaterialIcons';
+import MapView, { Marker } from 'react-native-maps';
 
 import ButtonPrimary from '../../components/ButtonPrimary';
 import ButtonSecondary from '../../components/ButtonSecondary';
-
 import Header from '../../components/Header';
 import {
   OKSIGEN,
@@ -18,7 +18,9 @@ import {
   TYPE_PLASMA,
 } from '../../configs/ItemTypes';
 import { Color } from '../../configs/style';
+
 import style from './style';
+import { Map } from '../../components/Map';
 
 const generateCategoryStyle = itemType => {
   let iconBgColor;
@@ -72,8 +74,18 @@ const generateCategoryStyle = itemType => {
 };
 
 export default () => {
-  const [type, setType] = useState(TYPE_OKSIGEN);
+  const [type] = useState(TYPE_OKSIGEN);
   const navigation = useNavigation();
+
+  const position = {
+    latitude: -7.867439569730554,
+    longitude: 112.68013360023379,
+  };
+
+  const detailLokasi =
+    'Lorem Ipsum Dolor Site AmetLorem Ipsum Dolor Site AmetLorem Ipsum Dolor Site AmetLorem Ipsum Dolor Site Amet ';
+
+  const catatan = 'Lorem Ipsum Dolor Sit Amet Amet Amet';
 
   const { iconBgColor, icon, category, color } = useMemo(
     () => generateCategoryStyle(type),
@@ -119,10 +131,14 @@ export default () => {
             </View>
           </View>
           <Text style={style.titleMed}>Lokasi Pemohon</Text>
+          <Map position={position} />
           <Text style={style.titleMed}>Detail Lokasi</Text>
+          <Text style={style.body}>{detailLokasi}</Text>
+          <Text style={style.titleMed}>Catatan Pemohon</Text>
+          <Text style={style.body}>{catatan}</Text>
           <Text style={style.titleBig}>Hubungi Pemohon</Text>
-          <ButtonPrimary>Telepon</ButtonPrimary>
-          <ButtonSecondary>WhatsApp</ButtonSecondary>
+          <ButtonPrimary style={style.buttonAction}>Telepon</ButtonPrimary>
+          <ButtonSecondary style={style.buttonAction}>WhatsApp</ButtonSecondary>
         </View>
       </ScrollView>
     </>

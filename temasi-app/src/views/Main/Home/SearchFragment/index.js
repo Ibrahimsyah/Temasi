@@ -5,7 +5,6 @@ import { default as FontAwesomeIcon } from 'react-native-vector-icons/FontAwesom
 import NotFound from '../../../../components/NotFound';
 
 import styles from './style';
-import config from './index.config';
 import CardPermohonan from '../../../../components/CardPermohonan';
 
 export default () => {

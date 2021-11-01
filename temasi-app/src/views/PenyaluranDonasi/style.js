@@ -47,6 +47,7 @@ export default StyleSheet.create({
     fontWeight: 'bold',
     color: Color.BLACK,
     marginTop: 20,
+    marginBottom: 10,
   },
 
   titleMed: {
@@ -54,6 +55,11 @@ export default StyleSheet.create({
     fontWeight: 'bold',
     color: Color.BLACK,
     marginTop: 16,
+  },
+
+  body: {
+    ...FontStyle.body,
+    color: Color.DARKER_GRAY,
   },
 
   header: {
@@ -94,108 +100,13 @@ export default StyleSheet.create({
     marginTop: 2,
   },
 
-  itemFooter: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    marginTop: 8,
-  },
-
-  footerLeft: {
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-
-  locationIcon: {
-    fontSize: 10,
-  },
-
-  location: {
-    ...FontStyle.LABEL_SMALL,
-    marginLeft: 4,
-  },
-
-  time: {
-    ...FontStyle.LABEL_SMALL,
-    color: Color.DARKER_GRAY,
-  },
-
-  story: {
-    ...FontStyle.CAPTION,
-    color: Color.BLACK,
-  },
-
-  profile: {
-    marginTop: 20,
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-
-  profilePhoto: {
-    width: 34,
-    height: 34,
-    borderRadius: 34,
-  },
-
-  profileDesc: {
-    marginLeft: 10,
-  },
-
-  profileLabel: {
-    ...FontStyle.LABEL_SMALL,
-  },
-
-  profileName: {
-    ...FontStyle.BODY,
-    fontWeight: 'bold',
-  },
-
   description: {
     ...FontStyle.CAPTION,
     color: Color.DARKER_GRAY,
     marginTop: 6,
   },
 
-  mapContainer: {
-    width: '100%',
-    marginTop: 20,
-    marginBottom: 8,
-    height: 200,
-    overflow: 'hidden',
-    borderRadius: 8,
-  },
-
-  map: {
-    height: '100%',
-  },
-
-  agreement: {
-    marginTop: 30,
-  },
-
-  buttonSubmit: {
-    marginVertical: 20,
-  },
-
-  holder: {
-    marginTop: 18,
-    borderRadius: 16,
-    height: 150,
-    backgroundColor: Color.MED_GRAY,
-    overflow: 'hidden',
-  },
-
-  image: {
-    width: '100%',
-    height: 174,
-    borderRadius: 16,
-    marginTop: 12,
-    backgroundColor: Color.MED_RED,
-  },
-
-  imageCaption: {
-    ...FontStyle.LABEL_SMALL,
-    color: Color.DARKER_GRAY,
-    textAlign: 'center',
-    marginTop: 5,
+  buttonAction: {
+    marginVertical: 5,
   },
 });
