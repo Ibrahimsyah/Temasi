@@ -1,30 +1,19 @@
 import React, { useState } from 'react';
-import { Image, ScrollView, Text, View } from 'react-native';
-import CardPermohonan from '../../../components/CardPermohonan';
-import FABPermohonan from '../../../components/FABPermohonan';
-import { TYPE_PLASMA } from '../../../configs/ItemTypes';
-import style from './style';
-
-import NotFoundImage from '../../../assets/images/notFound.png';
+import { ScrollView, Text } from 'react-native';
 import { useNavigation } from '@react-navigation/core';
 
-const NotFound = () => {
-  return (
-    <>
-      <View style={style.notFoundContainer}>
-        <Image source={NotFoundImage} style={style.notFoundImage} />
-        <Text style={style.notFoundText}>
-          Anda atau kerabat anda membutuhkan bantuan isolasi mandiri? Segera
-          buat permohonan dan temukan orang baik yang akan membantu anda
-        </Text>
-      </View>
-    </>
-  );
-};
+import CardPermohonan from '../../../components/CardPermohonan';
+import FABPermohonan from '../../../components/FABPermohonan';
+
+import style from './style';
+import config from './index.config';
+import NotFound from '../../../components/NotFound';
 
 export default () => {
-  const [data] = useState(Array(10).fill(0));
+  const [data] = useState(config.permohonanLatest);
   const navigation = useNavigation();
+
+  const onPermohonanClick = item => {};
 
   const onCreatePermohonan = () => {
     navigation.navigate('BuatPermohonanScreen');
@@ -37,10 +26,10 @@ export default () => {
         contentContainerStyle={style.contentContainer}>
         <Text style={style.title}>Permohonan Anda</Text>
         {!data.length ? (
-          <NotFound />
+          <NotFound message="Anda atau kerabat anda membutuhkan bantuan isolasi mandiri? Segera buat permohonan dan temukan orang baik yang akan membantu anda" />
         ) : (
-          data.map((_, index) => (
-            <CardPermohonan type={TYPE_PLASMA} key={index} />
+          data.map((item, index) => (
+            <CardPermohonan {...item} key={index} onClick={onPermohonanClick} />
           ))
         )}
       </ScrollView>

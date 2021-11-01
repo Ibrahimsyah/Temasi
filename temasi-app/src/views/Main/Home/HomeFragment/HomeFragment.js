@@ -4,28 +4,30 @@ import { default as FontAwesome5Icon } from 'react-native-vector-icons/FontAweso
 import { default as MaterialCommunityIcon } from 'react-native-vector-icons/MaterialCommunityIcons';
 import { default as MaterialIcon } from 'react-native-vector-icons/MaterialIcons';
 import { View, Text, Pressable, ScrollView, FlatList } from 'react-native';
-import style from './style';
+import { useNavigation } from '@react-navigation/core';
+import { useSelector } from 'react-redux';
+
 import { Color } from '../../../../configs/style';
 import { generateGreeting } from '../../../../utils/time';
 import CardBantuan from '../../../../components/CardBantuan';
 import CardPermohonan from '../../../../components/CardPermohonan';
-import config from './index.config';
-import { useNavigation } from '@react-navigation/core';
-import { useSelector } from 'react-redux';
 
-const HomeFragment = () => {
+import style from './style';
+import config from './index.config';
+import { Notification } from '../../../../components/Notification';
+
+const greeting = generateGreeting();
+export default () => {
   const [data, setData] = useState(config.initState);
   const navigation = useNavigation();
   const account = useSelector(state => state.account);
 
-  const greeting = generateGreeting();
+  const onSearchClick = () => {
+    navigation.navigate('SearchFragment');
+  };
 
-  const onPermohonanClick = item => {
-    if (account.id) {
-      navigation.navigate('DetailPermohonan', item);
-    } else {
-      navigation.navigate('Profil');
-    }
+  const onNotificationClick = () => {
+    navigation.navigate('DonasiFragment');
   };
 
   useEffect(() => {
@@ -36,15 +38,23 @@ const HomeFragment = () => {
   return (
     <>
       <ScrollView style={style.container}>
-        <Text style={style.greeting}>{greeting}</Text>
-        <Text style={style.userName}>Ibrahimsyah Zairussalam</Text>
+        {account.id && (
+          <>
+            <Text style={style.greeting}>{greeting}</Text>
+            <Text style={style.userName}>{account.fullName}</Text>
+          </>
+        )}
 
-        <Pressable style={style.searchBar}>
+        <Pressable style={style.searchBar} onPress={onSearchClick}>
           <View style={style.searchContainer}>
             <FontAwesomeIcon name="search" style={style.searchIcon} />
             <Text style={style.searchHint}>Coba cari "Tabung Oksigen"</Text>
           </View>
         </Pressable>
+
+        <Notification onClick={onNotificationClick}>
+          Anda memiliki 1 bantuan yang akan anda salurkan
+        </Notification>
 
         <View style={style.mainPanel}>
           <Text style={style.panelTitle}>Yuk Bantu Mereka</Text>
@@ -90,9 +100,7 @@ const HomeFragment = () => {
           style={style.list}
           showsHorizontalScrollIndicator={false}
           data={data.permohonanUrgent}
-          renderItem={({ item }) => (
-            <CardBantuan {...item} onClick={onPermohonanClick} key={item.id} />
-          )}
+          renderItem={({ item }) => <CardBantuan {...item} key={item.id} />}
         />
 
         <View style={style.sectionHeader}>
@@ -103,16 +111,10 @@ const HomeFragment = () => {
         </View>
         <View style={style.list}>
           {data.permohonanLatest.map(item => (
-            <CardPermohonan
-              {...item}
-              onClick={onPermohonanClick}
-              key={item.id}
-            />
+            <CardPermohonan {...item} key={item.id} />
           ))}
         </View>
       </ScrollView>
     </>
   );
 };
-
-export default HomeFragment;

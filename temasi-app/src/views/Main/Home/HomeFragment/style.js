@@ -47,7 +47,6 @@ export default StyleSheet.create({
     alignItems: 'center',
   },
   mainPanel: {
-    marginTop: 24,
     borderRadius: 8,
     backgroundColor: Color.PRIMARY,
     paddingHorizontal: 23,

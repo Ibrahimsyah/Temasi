@@ -5,6 +5,7 @@ import SplashScreen from '../views/Splash';
 import DetailPermohonan from '../views/DetailPermohonan';
 import LoginScreen from '../views/Login';
 import RegisterScreen from '../views/Register';
+import PenyaluranDonasiScreen from '../views/PenyaluranDonasi';
 
 export default {
   defaultRouteName: 'SplashScreen',
@@ -19,5 +20,6 @@ export default {
     { name: 'DetailPermohonan', screen: DetailPermohonan },
     { name: 'LoginScreen', screen: LoginScreen },
     { name: 'RegisterScreen', screen: RegisterScreen },
+    { name: 'PenyaluranDonasi', screen: PenyaluranDonasiScreen },
   ],
 };

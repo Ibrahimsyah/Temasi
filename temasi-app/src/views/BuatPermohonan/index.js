@@ -10,20 +10,21 @@ import {
 import { launchCamera, launchImageLibrary } from 'react-native-image-picker';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import Geolocation from '@react-native-community/geolocation';
-import MapView, { Marker } from 'react-native-maps';
 import CheckBox from '@react-native-community/checkbox';
 import RNAndroidLocationEnabler from 'react-native-android-location-enabler';
-import config from './index.config';
-import style from './style';
+
 import ButtonPrimary from '../../components/ButtonPrimary';
 import Header from '../../components/Header';
-import { useNavigation } from '@react-navigation/core';
 import CardsKategori from '../../components/CardsKategori';
 import Input from '../../components/Input';
 import CardsJangkaWaktu from '../../components/CardsJangkaWaktu';
 import CardsGolonganDarah from '../../components/CardsGolonganDarah';
 import CardsRhesusDarah from '../../components/CardsRhesusDarah';
+import { Map } from '../../components/Map';
 import { TYPE_PLASMA } from '../../configs/ItemTypes';
+
+import config from './index.config';
+import style from './style';
 
 export default () => {
   const [image, setImage] = useState(null);
@@ -38,7 +39,6 @@ export default () => {
   const [administration, setAdministration] = useState('');
   const [description, setDescription] = useState('');
   const [agreement, setAgreement] = useState(false);
-  const navigation = useNavigation();
 
   const handleSetImage = () => {
     setModalVisible(true);
@@ -88,7 +88,7 @@ export default () => {
   return (
     <>
       <ScrollView style={style.container}>
-        <Header navigator={navigation} isDark title="Buat Permohonan" />
+        <Header isDark title="Buat Permohonan" />
 
         <Text style={style.titleBig}>
           Jenis bantuan apa yang anda butuhkan?
@@ -145,25 +145,7 @@ export default () => {
         />
 
         <Text style={style.titleMed}>Beri Informasi Tempat Tinggal Anda</Text>
-        <View pointerEvents="none" style={style.mapContainer}>
-          {position && (
-            <MapView
-              style={style.map}
-              initialRegion={{
-                latitude: position.latitude,
-                longitude: position.longitude,
-                longitudeDelta: 0.003,
-                latitudeDelta: 0.003,
-              }}>
-              <Marker
-                coordinate={{
-                  latitude: position.latitude,
-                  longitude: position.longitude,
-                }}
-              />
-            </MapView>
-          )}
-        </View>
+        <Map position={position} />
         <Text style={style.description}>
           Beri informasi detail lokasi sebagai penanda tempat tinggal anda
         </Text>

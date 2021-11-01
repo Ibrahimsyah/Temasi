@@ -1,8 +1,11 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
 import { default as FontAwesome5Icon } from 'react-native-vector-icons/FontAwesome5';
 import { default as MaterialCommunityIcon } from 'react-native-vector-icons/MaterialCommunityIcons';
 import { default as MaterialIcon } from 'react-native-vector-icons/MaterialIcons';
+import { useNavigation } from '@react-navigation/core';
+import { useSelector } from 'react-redux';
+
 import {
   OKSIGEN,
   PANGAN_SUPLEMEN,
@@ -119,7 +122,13 @@ const style = StyleSheet.create({
 export default props => {
   const { onClick, type, title, distance, time } = props;
 
-  const { iconBgColor, icon, color, category } = generateCategoryStyle(type);
+  const { iconBgColor, icon, color, category } = useMemo(
+    () => generateCategoryStyle(type),
+    [type],
+  );
+
+  const navigation = useNavigation();
+  const account = useSelector(state => state.account);
 
   const onClickHandler = () => {
     const data = {
@@ -129,11 +138,17 @@ export default props => {
       time,
     };
 
-    onClick(data);
+    if (account.id) {
+      navigation.navigate('DetailPermohonan', data);
+    } else {
+      navigation.navigate('Profil');
+    }
   };
   return (
     <>
-      <TouchableOpacity style={style.container} onPress={onClickHandler}>
+      <TouchableOpacity
+        style={style.container}
+        onPress={onClick || onClickHandler}>
         <View>
           <View
             style={{ ...style.iconBackground, backgroundColor: iconBgColor }}>
@@ -144,11 +159,13 @@ export default props => {
           <Text style={{ ...style.category, color: color }}>{category}</Text>
           <Text style={style.title}>{title}</Text>
           <View style={style.itemFooter}>
-            <View style={style.footerLeft}>
-              <MaterialIcon name="location-on" style={style.locationIcon} />
-              <Text style={style.location}>{distance}</Text>
-            </View>
-            <Text style={style.time}>{time}</Text>
+            {distance && (
+              <View style={style.footerLeft}>
+                <MaterialIcon name="location-on" style={style.locationIcon} />
+                <Text style={style.location}>{distance}</Text>
+              </View>
+            )}
+            {time && <Text style={style.time}>{time}</Text>}
           </View>
         </View>
       </TouchableOpacity>

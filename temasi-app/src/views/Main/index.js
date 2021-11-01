@@ -13,7 +13,7 @@ export default () => {
       interval: 10000,
       fastInterval: 5000,
     }).then(data => {
-      console.log(data);
+      //TODO: Save to State
     });
   }, []);
   return (

@@ -36,19 +36,6 @@ export default StyleSheet.create({
     paddingHorizontal: 20,
   },
 
-  mapContainer: {
-    width: '100%',
-    marginTop: 20,
-    marginBottom: 8,
-    height: 200,
-    overflow: 'hidden',
-    borderRadius: 8,
-  },
-
-  map: {
-    height: '100%',
-  },
-
   buttonSubmit: {
     marginVertical: 20,
   },

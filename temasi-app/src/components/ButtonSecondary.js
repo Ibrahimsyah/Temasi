@@ -22,7 +22,6 @@ const styles = StyleSheet.create({
 export default props => {
   const { children, onClick, style } = props;
 
-  console.log('onClick:', onClick);
   return (
     <>
       <TouchableOpacity
