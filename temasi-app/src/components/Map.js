@@ -18,9 +18,7 @@ const styles = StyleSheet.create({
 });
 
 export const Map = ({ position }) => {
-  console.log('MAP');
   const onMapPress = () => {
-    console.log('pressed');
     const scheme = Platform.select({
       ios: 'maps:0,0?q=',
       android: 'geo:0,0?q=',

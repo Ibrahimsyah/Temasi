@@ -4,7 +4,6 @@ import { useNavigation, useRoute } from '@react-navigation/core';
 import { default as FontAwesome5Icon } from 'react-native-vector-icons/FontAwesome5';
 import { default as MaterialCommunityIcon } from 'react-native-vector-icons/MaterialCommunityIcons';
 import { default as MaterialIcon } from 'react-native-vector-icons/MaterialIcons';
-import MapView, { Marker } from 'react-native-maps';
 
 import ButtonPrimary from '../../components/ButtonPrimary';
 import ButtonSecondary from '../../components/ButtonSecondary';
@@ -76,6 +75,9 @@ const generateCategoryStyle = itemType => {
 export default () => {
   const [type] = useState(TYPE_OKSIGEN);
   const navigation = useNavigation();
+  const route = useRoute();
+
+  const { isAfterAccept } = route.params || {};
 
   const position = {
     latitude: -7.867439569730554,
@@ -101,16 +103,20 @@ export default () => {
         <Header navigator={navigation} withPadding title="Penyaluran Donasi" />
 
         <View style={style.mainContainer}>
-          <FontAwesome5Icon
-            name="check-circle"
-            color={Color.PRIMARY}
-            size={60}
-            style={style.checkLogo}
-          />
-          <Text style={style.checkDescription}>
-            Terima kasih telah bersedia membantu, silahkan salurkan bantuan anda
-            ke alamat pemohon bantuan
-          </Text>
+          {isAfterAccept && (
+            <>
+              <FontAwesome5Icon
+                name="check-circle"
+                color={Color.PRIMARY}
+                size={60}
+                style={style.checkLogo}
+              />
+              <Text style={style.checkDescription}>
+                Terima kasih telah bersedia membantu, silahkan salurkan bantuan
+                anda ke alamat pemohon bantuan
+              </Text>
+            </>
+          )}
 
           <Text style={style.titleMed}>Detail Permohonan</Text>
           <View style={style.permohonanDescription}>

@@ -126,7 +126,9 @@ export default () => {
   ]);
 
   const onSalurkanBantuan = () => {
-    navigation.navigate('PenyaluranDonasi');
+    navigation.navigate('PenyaluranDonasi', {
+      isAfterAccept: true,
+    });
   };
   useEffect(() => {
     setLoading(true);
