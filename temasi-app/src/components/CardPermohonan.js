@@ -1,70 +1,12 @@
 import React, { useMemo } from 'react';
 import { StyleSheet, View, Text, Pressable } from 'react-native';
-import { default as FontAwesome5Icon } from 'react-native-vector-icons/FontAwesome5';
-import { default as MaterialCommunityIcon } from 'react-native-vector-icons/MaterialCommunityIcons';
 import { default as MaterialIcon } from 'react-native-vector-icons/MaterialIcons';
 import { useNavigation } from '@react-navigation/core';
 import { useSelector } from 'react-redux';
 
-import {
-  OKSIGEN,
-  PANGAN_SUPLEMEN,
-  PLASMA,
-  TYPE_OKSIGEN,
-  TYPE_PANGAN_SUPLEMEN,
-} from '../configs/ItemTypes';
 import { Color, FontStyle } from '../configs/style';
-
-const generateCategoryStyle = itemType => {
-  let iconBgColor;
-  let color;
-  let icon;
-  let category;
-  switch (itemType) {
-    case TYPE_PANGAN_SUPLEMEN: {
-      iconBgColor = Color.LIGHT_BLUE;
-      color = Color.MED_BLUE;
-      icon = (
-        <MaterialIcon
-          name="local-hospital"
-          style={{ ...style.icon, color: Color.MED_BLUE }}
-        />
-      );
-      category = PANGAN_SUPLEMEN;
-      break;
-    }
-    case TYPE_OKSIGEN: {
-      iconBgColor = Color.LIGHT_GREEN;
-      color = Color.PRIMARY;
-      icon = (
-        <MaterialCommunityIcon
-          name="diving-scuba-tank"
-          style={{ ...style.icon, color: Color.PRIMARY }}
-        />
-      );
-      category = OKSIGEN;
-      break;
-    }
-    default: {
-      iconBgColor = Color.LIGHT_RED;
-      color = Color.MED_RED;
-      icon = (
-        <FontAwesome5Icon
-          name="tint"
-          style={{ ...style.icon, color: Color.MED_RED }}
-        />
-      );
-      category = PLASMA;
-      break;
-    }
-  }
-  return {
-    iconBgColor,
-    icon,
-    color,
-    category,
-  };
-};
+import { STATUS_DELIVERED, STATUS_MATCHED, STATUS_MESSAGE } from '../configs';
+import { generateCategoryStyle } from '../utils/style';
 
 const style = StyleSheet.create({
   container: {
@@ -93,18 +35,34 @@ const style = StyleSheet.create({
   leftSection: {
     flex: 1,
   },
-  statusContainer: pending => ({
-    padding: 5,
-    backgroundColor: pending ? Color.MED_RED : Color.LIGHT_GREEN,
-    marginBottom: 5,
-    borderRadius: 5,
-  }),
-  status: pending => ({
-    color: pending ? Color.WHITE : Color.BLACK,
-    fontWeight: 'bold',
-    fontSize: 12,
-    textAlign: 'center',
-  }),
+  statusContainer: status => {
+    let color;
+    if (status === STATUS_DELIVERED || status === STATUS_MATCHED) {
+      color = Color.LIGHT_GREEN;
+    } else {
+      color = Color.MED_RED;
+    }
+    return {
+      padding: 5,
+      backgroundColor: color,
+      marginBottom: 5,
+      borderRadius: 5,
+    };
+  },
+  status: status => {
+    let color;
+    if (status === STATUS_DELIVERED || status === STATUS_MATCHED) {
+      color = Color.BLACK;
+    } else {
+      color = Color.WHITE;
+    }
+    return {
+      color: color,
+      fontWeight: 'bold',
+      fontSize: 12,
+      textAlign: 'center',
+    };
+  },
   category: {
     ...FontStyle.LABEL_CATEGORY,
   },
@@ -135,7 +93,7 @@ const style = StyleSheet.create({
 });
 
 export default props => {
-  const { onClick, type, title, distance, time, isPending, status } = props;
+  const { onClick, type, title, distance, time, status } = props;
 
   const { iconBgColor, icon, color, category } = useMemo(
     () => generateCategoryStyle(type),
@@ -151,7 +109,12 @@ export default props => {
       title,
       distance,
       time,
+      status,
     };
+
+    if (onClick) {
+      return onClick(data);
+    }
 
     if (account.id) {
       navigation.navigate('DetailPermohonan', data);
@@ -161,7 +124,7 @@ export default props => {
   };
   return (
     <>
-      <Pressable style={style.container} onPress={onClick || onClickHandler}>
+      <Pressable style={style.container} onPress={onClickHandler}>
         <View>
           <View
             style={{ ...style.iconBackground, backgroundColor: iconBgColor }}>
@@ -170,8 +133,8 @@ export default props => {
         </View>
         <View style={style.rightSection}>
           {status && (
-            <View style={style.statusContainer(isPending)}>
-              <Text style={style.status(isPending)}>{status}</Text>
+            <View style={style.statusContainer(status)}>
+              <Text style={style.status(status)}>{STATUS_MESSAGE[status]}</Text>
             </View>
           )}
           <Text style={{ ...style.category, color: color }}>{category}</Text>

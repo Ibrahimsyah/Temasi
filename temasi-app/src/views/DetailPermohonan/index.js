@@ -10,77 +10,17 @@ import {
 } from 'react-native';
 import ImageView from 'react-native-image-viewing';
 import { useNavigation, useRoute } from '@react-navigation/core';
-import { default as FontAwesome5Icon } from 'react-native-vector-icons/FontAwesome5';
-import { default as MaterialCommunityIcon } from 'react-native-vector-icons/MaterialCommunityIcons';
-import { default as MaterialIcon } from 'react-native-vector-icons/MaterialIcons';
 
-import {
-  OKSIGEN,
-  PANGAN_SUPLEMEN,
-  PLASMA,
-  TYPE_OKSIGEN,
-  TYPE_PANGAN_SUPLEMEN,
-  TYPE_PLASMA,
-} from '../../configs/ItemTypes';
-import { Color } from '../../configs/style';
 import ButtonPrimary from '../../components/ButtonPrimary';
 import Header from '../../components/Header';
 import CheckBox from '../../components/CheckBox';
 import { Map } from '../../components/Map';
+import { TYPE_PLASMA } from '../../configs/ItemTypes';
+import { generateCategoryStyle } from '../../utils/style';
 
 import config from './index.config';
 import style from './style';
-
-const generateCategoryStyle = itemType => {
-  let iconBgColor;
-  let color;
-  let icon;
-  let category;
-  switch (itemType) {
-    case TYPE_PANGAN_SUPLEMEN: {
-      iconBgColor = Color.LIGHT_BLUE;
-      color = Color.MED_BLUE;
-      icon = (
-        <MaterialIcon
-          name="local-hospital"
-          style={{ ...style.icon, color: Color.MED_BLUE }}
-        />
-      );
-      category = PANGAN_SUPLEMEN;
-      break;
-    }
-    case TYPE_OKSIGEN: {
-      iconBgColor = Color.LIGHT_GREEN;
-      color = Color.PRIMARY;
-      icon = (
-        <MaterialCommunityIcon
-          name="diving-scuba-tank"
-          style={{ ...style.icon, color: Color.PRIMARY }}
-        />
-      );
-      category = OKSIGEN;
-      break;
-    }
-    default: {
-      iconBgColor = Color.LIGHT_RED;
-      color = Color.MED_RED;
-      icon = (
-        <FontAwesome5Icon
-          name="tint"
-          style={{ ...style.icon, color: Color.MED_RED }}
-        />
-      );
-      category = PLASMA;
-      break;
-    }
-  }
-  return {
-    iconBgColor,
-    icon,
-    color,
-    category,
-  };
-};
+import PermohonanDetail from '../../components/PermohonanDetail';
 
 export default () => {
   const [loading, setLoading] = useState(false);
@@ -94,12 +34,9 @@ export default () => {
   const [imageFull, setImageFull] = useState(false);
   const navigation = useNavigation();
   const router = useRoute();
-  const { type, title, distance, time } = router.params;
+  const { type } = router.params;
 
-  const { iconBgColor, icon, category, color } = useMemo(
-    () => generateCategoryStyle(type),
-    [type],
-  );
+  const { color } = useMemo(() => generateCategoryStyle(type), [type]);
 
   const isCheckBoxFilled = useMemo(() => {
     let result;
@@ -152,38 +89,14 @@ export default () => {
 
   return (
     <>
-      <StatusBar
-        backgroundColor={type === TYPE_PLASMA ? Color.MED_RED : Color.PRIMARY}
-        barStyle="light-content"
-      />
+      <StatusBar backgroundColor={color} barStyle="light-content" />
       <ScrollView
         style={style.container(type)}
         contentContainerStyle={style.contentContainer}>
         <Header withPadding title="Detail" />
 
         <View style={style.mainContainer}>
-          <View style={style.header}>
-            <View
-              style={{
-                ...style.iconBackground,
-                backgroundColor: iconBgColor,
-              }}>
-              {icon}
-            </View>
-            <View style={style.rightSection}>
-              <Text style={{ ...style.category, color: color }}>
-                {category}
-              </Text>
-              <Text style={style.title}>{title}</Text>
-              <View style={style.itemFooter}>
-                <View style={style.footerLeft}>
-                  <MaterialIcon name="location-on" style={style.locationIcon} />
-                  <Text style={style.location}>{distance}</Text>
-                </View>
-                <Text style={style.time}>{time}</Text>
-              </View>
-            </View>
-          </View>
+          <PermohonanDetail {...router.params} />
 
           {loading ? (
             <ActivityIndicator color={color} />

@@ -89,7 +89,6 @@ export default () => {
     <>
       <ScrollView style={style.container}>
         <Header isDark title="Buat Permohonan" />
-
         <Text style={style.titleBig}>
           Jenis bantuan apa yang anda butuhkan?
         </Text>

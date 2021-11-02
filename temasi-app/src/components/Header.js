@@ -28,8 +28,7 @@ const styles = StyleSheet.create({
 });
 
 export default props => {
-  const { title, isDark = false, withPadding = true } = props;
-
+  const { title, isDark = false, withPadding = false } = props;
   const navigation = useNavigation();
 
   const onBack = () => {

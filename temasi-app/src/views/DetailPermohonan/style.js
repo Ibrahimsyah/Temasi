@@ -1,12 +1,20 @@
 import { StyleSheet } from 'react-native';
-import { TYPE_PLASMA } from '../../configs/ItemTypes';
+import { TYPE_OKSIGEN, TYPE_PLASMA } from '../../configs/ItemTypes';
 import { Color, FontStyle } from '../../configs/style';
 
 export default StyleSheet.create({
-  container: type => ({
-    flex: 1,
-    backgroundColor: type === TYPE_PLASMA ? Color.MED_RED : Color.PRIMARY,
-  }),
+  container: type => {
+    const color =
+      type === TYPE_PLASMA
+        ? Color.MED_RED
+        : type === TYPE_OKSIGEN
+        ? Color.PRIMARY
+        : Color.MED_BLUE;
+    return {
+      flex: 1,
+      backgroundColor: color,
+    };
+  },
 
   mainContainer: {
     flex: 1,
@@ -33,69 +41,6 @@ export default StyleSheet.create({
     fontWeight: 'bold',
     color: Color.BLACK,
     marginTop: 16,
-  },
-
-  header: {
-    backgroundColor: Color.WHITE,
-    borderRadius: 8,
-    paddingHorizontal: 16,
-    paddingVertical: 18,
-    marginBottom: 8,
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-
-  iconBackground: {
-    padding: 10,
-    width: 72,
-    height: 72,
-    borderRadius: 50,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-
-  icon: {
-    fontSize: 30,
-  },
-
-  rightSection: {
-    flex: 1,
-    marginLeft: 14,
-  },
-
-  category: {
-    ...FontStyle.LABEL_CATEGORY,
-  },
-
-  title: {
-    ...FontStyle.H3,
-    fontSize: 16,
-    marginTop: 2,
-  },
-
-  itemFooter: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    marginTop: 8,
-  },
-
-  footerLeft: {
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-
-  locationIcon: {
-    fontSize: 10,
-  },
-
-  location: {
-    ...FontStyle.LABEL_SMALL,
-    marginLeft: 4,
-  },
-
-  time: {
-    ...FontStyle.LABEL_SMALL,
-    color: Color.DARKER_GRAY,
   },
 
   story: {

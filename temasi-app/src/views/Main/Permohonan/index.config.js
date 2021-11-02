@@ -1,3 +1,5 @@
+import { STATUS_MATCHED } from '../../../configs';
+
 export default {
   permohonanLatest: [
     {
@@ -5,8 +7,7 @@ export default {
       type: 2,
       title: 'Plasma Darah Golongan AB+',
       time: '3 Hari Lagi',
-      isPending: false,
-      status: 'Terdapat donatur yang bersedia membantu',
+      status: STATUS_MATCHED,
     },
     {
       id: 2,

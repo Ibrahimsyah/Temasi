@@ -81,10 +81,6 @@ export default StyleSheet.create({
     justifyContent: 'center',
   },
 
-  icon: {
-    fontSize: 30,
-  },
-
   rightSection: {
     flex: 1,
     marginLeft: 14,
