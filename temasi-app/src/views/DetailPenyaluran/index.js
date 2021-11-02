@@ -39,7 +39,7 @@ export default () => {
           </Text>
         </View>
         <ButtonPrimary style={style.btnAction}>
-          Konfirmasi bantuan
+          Konfirmasi Bantuan
         </ButtonPrimary>
       </ScrollView>
     </>
