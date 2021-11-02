@@ -1,5 +1,5 @@
 import React, { useMemo } from 'react';
-import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
+import { StyleSheet, View, Text, Pressable } from 'react-native';
 import { default as FontAwesome5Icon } from 'react-native-vector-icons/FontAwesome5';
 import { default as MaterialCommunityIcon } from 'react-native-vector-icons/MaterialCommunityIcons';
 import { default as MaterialIcon } from 'react-native-vector-icons/MaterialIcons';
@@ -87,9 +87,24 @@ const style = StyleSheet.create({
     fontSize: 30,
   },
   rightSection: {
-    flex: 1,
+    flex: 3,
     marginLeft: 14,
   },
+  leftSection: {
+    flex: 1,
+  },
+  statusContainer: pending => ({
+    padding: 5,
+    backgroundColor: pending ? Color.MED_RED : Color.LIGHT_GREEN,
+    marginBottom: 5,
+    borderRadius: 5,
+  }),
+  status: pending => ({
+    color: pending ? Color.WHITE : Color.BLACK,
+    fontWeight: 'bold',
+    fontSize: 12,
+    textAlign: 'center',
+  }),
   category: {
     ...FontStyle.LABEL_CATEGORY,
   },
@@ -120,7 +135,7 @@ const style = StyleSheet.create({
 });
 
 export default props => {
-  const { onClick, type, title, distance, time } = props;
+  const { onClick, type, title, distance, time, isPending, status } = props;
 
   const { iconBgColor, icon, color, category } = useMemo(
     () => generateCategoryStyle(type),
@@ -146,9 +161,7 @@ export default props => {
   };
   return (
     <>
-      <TouchableOpacity
-        style={style.container}
-        onPress={onClick || onClickHandler}>
+      <Pressable style={style.container} onPress={onClick || onClickHandler}>
         <View>
           <View
             style={{ ...style.iconBackground, backgroundColor: iconBgColor }}>
@@ -156,6 +169,11 @@ export default props => {
           </View>
         </View>
         <View style={style.rightSection}>
+          {status && (
+            <View style={style.statusContainer(isPending)}>
+              <Text style={style.status(isPending)}>{status}</Text>
+            </View>
+          )}
           <Text style={{ ...style.category, color: color }}>{category}</Text>
           <Text style={style.title}>{title}</Text>
           <View style={style.itemFooter}>
@@ -168,7 +186,7 @@ export default props => {
             {time && <Text style={style.time}>{time}</Text>}
           </View>
         </View>
-      </TouchableOpacity>
+      </Pressable>
     </>
   );
 };

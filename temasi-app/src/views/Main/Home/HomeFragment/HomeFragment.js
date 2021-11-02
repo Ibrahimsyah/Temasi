@@ -53,7 +53,7 @@ export default () => {
         </Pressable>
 
         <Notification onClick={onNotificationClick}>
-          Anda memiliki 1 bantuan yang akan anda salurkan
+          Lihat Status Donasi Anda
         </Notification>
 
         <View style={style.mainPanel}>

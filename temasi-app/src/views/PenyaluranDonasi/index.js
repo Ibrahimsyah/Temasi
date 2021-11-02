@@ -141,6 +141,18 @@ export default () => {
           <Text style={style.body}>{detailLokasi}</Text>
           <Text style={style.titleMed}>Catatan Pemohon</Text>
           <Text style={style.body}>{catatan}</Text>
+          <View style={style.tutorialContainer}>
+            <Text>
+              {'\u2022 Pastikan bantuan sesuai dengan kebutuhan pemohon \n\n'}
+              {
+                '\u2022 Patuhi protokol kesehatan dengan memakai masker dan jaga jarak dengan penerima\n\n'
+              }
+              {
+                '\u2022 Ingatkan penerima bantuan untuk mengonfirmasi bantuan telah diterima \n\n'
+              }
+              {'\u2022 Cuci tangan dan bersihkan diri setiba dirumah '}
+            </Text>
+          </View>
           <Text style={style.titleBig}>Hubungi Pemohon</Text>
           <ButtonPrimary style={style.buttonAction}>Telepon</ButtonPrimary>
           <ButtonSecondary style={style.buttonAction}>WhatsApp</ButtonSecondary>

@@ -19,7 +19,7 @@ export default () => {
   };
   return (
     <>
-      <Header title="Donasi Aktif Anda" isDark />
+      <Header title="Donasi Anda" isDark />
       <View style={styles.container}>
         <ScrollView showsVerticalScrollIndicator={false}>
           {data.map((item, index) => (

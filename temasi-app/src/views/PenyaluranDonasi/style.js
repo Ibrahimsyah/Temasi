@@ -109,4 +109,11 @@ export default StyleSheet.create({
   buttonAction: {
     marginVertical: 5,
   },
+
+  tutorialContainer: {
+    backgroundColor: Color.LIGHT_GREEN,
+    padding: 10,
+    borderRadius: 10,
+    marginTop: 20,
+  },
 });
