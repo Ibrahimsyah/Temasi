@@ -1,7 +1,7 @@
-class UserRepository {
-  getAllUser = async () => {
+const getAllUser = async () => {
 
-  }
-}
+};
 
-export default UserRepository;
+module.exports = {
+  getAllUser,
+};

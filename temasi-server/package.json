@@ -9,7 +9,7 @@
   "scripts": {
     "dev": "nodemon index.js",
     "start": "node index.js",
-    "test": "mocha"
+    "test": "PORT=3001 mocha"
   },
   "devDependencies": {
     "chai": "^4.3.4",

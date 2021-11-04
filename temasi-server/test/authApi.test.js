@@ -3,7 +3,7 @@ const {expect} = require('chai');
 const chai = require('chai');
 const chaiHttp = require('chai-http');
 const server = require('../index');
-const {Pengguna, Profil} = require('../src/services/db');
+const {Pengguna} = require('../src/services/db');
 const {DataIncompleteError, LoginError, UserNotFoundError} = require('../src/util/error');
 chai.should();
 
@@ -13,7 +13,6 @@ describe('AuthAPI', () => {
   beforeEach((done) => {
     Promise.all([
       Pengguna.destroy({where: {}}),
-      Profil.destroy({where: {}}),
     ]).then(() => done()).catch((err) => console.log(err));
   });
 
@@ -60,9 +59,6 @@ describe('AuthAPI', () => {
         id: 'useas',
         email: 'test@gmail.com',
         password: '$2b$10$O/loc/FYkXzusbROaCLl3OILyZog/fO4c5Q1cjcWNuot6TyWSt3k.',
-      };
-
-      const profil = {
         pengguna_id: 'useas',
         full_name: 'fullName 1',
         phone_number: '12131213',
@@ -70,7 +66,6 @@ describe('AuthAPI', () => {
       };
 
       await Pengguna.create(pengguna);
-      await Profil.create(profil);
 
       const loginPayload = {
         email: 'test@gmail.com',
@@ -93,9 +88,6 @@ describe('AuthAPI', () => {
         id: 'useas',
         email: 'test@gmail.com',
         password: '$2b$10$O/loc/FYkXzusbROaCLl3OILyZog/fO4c5Q1cjcWNuot6TyWSt3k.',
-      };
-
-      const profil = {
         pengguna_id: 'useas',
         full_name: 'fullName 1',
         phone_number: '12131213',
@@ -103,7 +95,6 @@ describe('AuthAPI', () => {
       };
 
       await Pengguna.create(pengguna);
-      await Profil.create(profil);
 
       const loginPayload = {
         email: 'test@gmail.com',

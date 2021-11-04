@@ -1,7 +1,7 @@
 const {nanoid} = require('nanoid');
 const bcrypt = require('bcrypt');
 
-const {Pengguna, Profil} = require('../services/db');
+const {Pengguna} = require('../services/db');
 const {SALT_ROUND} = require('../config');
 const {generateToken} = require('../util/tokenizer');
 const {UserNotFoundError, LoginError, UserExistsError} = require('../util/error');
@@ -25,9 +25,6 @@ const registerUser = async (payload) => {
     id: userId,
     email,
     password: hashedPassword,
-  };
-
-  const profil = {
     pengguna_id: userId,
     full_name,
     phone_number,
@@ -35,7 +32,6 @@ const registerUser = async (payload) => {
   };
 
   await Pengguna.create(pengguna);
-  await Profil.create(profil);
 
   const token = generateToken({userId});
 
@@ -57,14 +53,13 @@ const loginUser = async (payload) => {
   const isPasswordMatched = await bcrypt.compare(password, account.password);
   if (!isPasswordMatched) throw LoginError;
 
-  const profile = await Profil.findOne({where: {pengguna_id: account.id}, raw: true});
   const token = generateToken({userId: account.id});
 
   return {
-    name: profile.full_name,
+    name: account.full_name,
     email,
     userId: account.id,
-    phoneNumber: profile.phone_number,
+    phoneNumber: account.phone_number,
     token,
   };
 };
