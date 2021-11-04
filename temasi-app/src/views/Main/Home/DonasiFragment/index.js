@@ -19,8 +19,8 @@ export default () => {
   };
   return (
     <>
-      <Header title="Donasi Aktif Anda" isDark />
       <View style={styles.container}>
+        <Header title="Donasi Anda" isDark />
         <ScrollView showsVerticalScrollIndicator={false}>
           {data.map((item, index) => (
             <CardPermohonan key={index} {...item} onClick={onPermohonanClick} />

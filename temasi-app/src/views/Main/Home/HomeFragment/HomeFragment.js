@@ -7,14 +7,14 @@ import { View, Text, Pressable, ScrollView, FlatList } from 'react-native';
 import { useNavigation } from '@react-navigation/core';
 import { useSelector } from 'react-redux';
 
-import { Color } from '../../../../configs/style';
-import { generateGreeting } from '../../../../utils/time';
 import CardBantuan from '../../../../components/CardBantuan';
 import CardPermohonan from '../../../../components/CardPermohonan';
+import { Notification } from '../../../../components/Notification';
+import { generateGreeting } from '../../../../utils/time';
+import { Color } from '../../../../config/style';
 
 import style from './style';
 import config from './index.config';
-import { Notification } from '../../../../components/Notification';
 
 const greeting = generateGreeting();
 export default () => {
@@ -38,10 +38,10 @@ export default () => {
   return (
     <>
       <ScrollView style={style.container}>
-        {account.id && (
+        {account.userId && (
           <>
             <Text style={style.greeting}>{greeting}</Text>
-            <Text style={style.userName}>{account.fullName}</Text>
+            <Text style={style.userName}>{account.name}</Text>
           </>
         )}
 
@@ -53,7 +53,7 @@ export default () => {
         </Pressable>
 
         <Notification onClick={onNotificationClick}>
-          Anda memiliki 1 bantuan yang akan anda salurkan
+          Lihat Status Donasi Anda
         </Notification>
 
         <View style={style.mainPanel}>

@@ -8,12 +8,18 @@ import FABPermohonan from '../../../components/FABPermohonan';
 import style from './style';
 import config from './index.config';
 import NotFound from '../../../components/NotFound';
+import { STATUS_MATCHED } from '../../../config';
 
 export default () => {
   const [data] = useState(config.permohonanLatest);
   const navigation = useNavigation();
 
-  const onPermohonanClick = item => {};
+  const onPermohonanClick = item => {
+    console.log(item);
+    if (item.status === STATUS_MATCHED) {
+      navigation.navigate('DetailPenyaluran', item);
+    }
+  };
 
   const onCreatePermohonan = () => {
     navigation.navigate('BuatPermohonanScreen');

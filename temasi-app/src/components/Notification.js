@@ -1,8 +1,7 @@
 import React from 'react';
 import { TouchableOpacity, StyleSheet, Text } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import { Color } from '../configs/style';
-import style from '../views/Main/Home/HomeFragment/style';
+import { Color } from '../config/style';
 
 const styles = StyleSheet.create({
   container: {
@@ -14,7 +13,7 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     borderRadius: 10,
     marginVertical: 10,
-    backgroundColor: Color.MED_RED,
+    backgroundColor: Color.MED_GREEN,
   },
   icon: {
     color: Color.WHITE,

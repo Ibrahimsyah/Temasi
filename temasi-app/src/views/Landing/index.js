@@ -3,8 +3,8 @@ import React from 'react';
 import { Image, Text, View, StatusBar } from 'react-native';
 import Carousel from 'react-native-looped-carousel';
 import ButtonPrimary from '../../components/ButtonPrimary';
-import { APP_FIRST_USE } from '../../configs/storage';
-import storage from '../../providers/storage';
+import { APP_FIRST_USE } from '../../config/storage';
+import storage from '../../provider/storage';
 import config from './index.config';
 import style from './style';
 

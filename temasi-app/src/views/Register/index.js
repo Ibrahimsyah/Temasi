@@ -13,10 +13,10 @@ import {
 import { useDispatch, useSelector } from 'react-redux';
 import Input from '../../components/Input';
 import ButtonPrimary from '../../components/ButtonPrimary';
-import { Color } from '../../configs/style';
+import { Color } from '../../config/style';
 import { isEmpty } from '../../utils/validation';
 import style from './style';
-import { setAccount } from '../../stores/account.action';
+import { setAccount } from '../../store/account.action';
 import { useEffect } from 'react';
 import CardsGender from '../../components/CardsGender';
 import profilePlaceholder from '../../assets/images/profilePlaceholder.png';

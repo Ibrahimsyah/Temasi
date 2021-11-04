@@ -3,7 +3,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import RNAndroidLocationEnabler from 'react-native-android-location-enabler';
 import config from './index.config';
 import { StatusBar } from 'react-native';
-import { Color } from '../../configs/style';
+import { Color } from '../../config/style';
 
 const Tab = createBottomTabNavigator();
 

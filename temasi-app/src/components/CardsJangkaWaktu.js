@@ -1,6 +1,6 @@
 import React from 'react';
 import { StyleSheet, View, Pressable, Text } from 'react-native';
-import { Color, FontStyle } from '../configs/style';
+import { Color, FontStyle } from '../config/style';
 
 const styles = StyleSheet.create({
   cardContainer: active => ({

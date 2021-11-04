@@ -1,70 +1,12 @@
 import React, { useMemo } from 'react';
-import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
-import { default as FontAwesome5Icon } from 'react-native-vector-icons/FontAwesome5';
-import { default as MaterialCommunityIcon } from 'react-native-vector-icons/MaterialCommunityIcons';
+import { StyleSheet, View, Text, Pressable } from 'react-native';
 import { default as MaterialIcon } from 'react-native-vector-icons/MaterialIcons';
 import { useNavigation } from '@react-navigation/core';
 import { useSelector } from 'react-redux';
 
-import {
-  OKSIGEN,
-  PANGAN_SUPLEMEN,
-  PLASMA,
-  TYPE_OKSIGEN,
-  TYPE_PANGAN_SUPLEMEN,
-} from '../configs/ItemTypes';
-import { Color, FontStyle } from '../configs/style';
-
-const generateCategoryStyle = itemType => {
-  let iconBgColor;
-  let color;
-  let icon;
-  let category;
-  switch (itemType) {
-    case TYPE_PANGAN_SUPLEMEN: {
-      iconBgColor = Color.LIGHT_BLUE;
-      color = Color.MED_BLUE;
-      icon = (
-        <MaterialIcon
-          name="local-hospital"
-          style={{ ...style.icon, color: Color.MED_BLUE }}
-        />
-      );
-      category = PANGAN_SUPLEMEN;
-      break;
-    }
-    case TYPE_OKSIGEN: {
-      iconBgColor = Color.LIGHT_GREEN;
-      color = Color.PRIMARY;
-      icon = (
-        <MaterialCommunityIcon
-          name="diving-scuba-tank"
-          style={{ ...style.icon, color: Color.PRIMARY }}
-        />
-      );
-      category = OKSIGEN;
-      break;
-    }
-    default: {
-      iconBgColor = Color.LIGHT_RED;
-      color = Color.MED_RED;
-      icon = (
-        <FontAwesome5Icon
-          name="tint"
-          style={{ ...style.icon, color: Color.MED_RED }}
-        />
-      );
-      category = PLASMA;
-      break;
-    }
-  }
-  return {
-    iconBgColor,
-    icon,
-    color,
-    category,
-  };
-};
+import { Color, FontStyle } from '../config/style';
+import { STATUS_DELIVERED, STATUS_MATCHED, STATUS_MESSAGE } from '../config';
+import { generateCategoryStyle } from '../utils/style';
 
 const style = StyleSheet.create({
   container: {
@@ -87,8 +29,39 @@ const style = StyleSheet.create({
     fontSize: 30,
   },
   rightSection: {
-    flex: 1,
+    flex: 3,
     marginLeft: 14,
+  },
+  leftSection: {
+    flex: 1,
+  },
+  statusContainer: status => {
+    let color;
+    if (status === STATUS_DELIVERED || status === STATUS_MATCHED) {
+      color = Color.LIGHT_GREEN;
+    } else {
+      color = Color.MED_RED;
+    }
+    return {
+      padding: 5,
+      backgroundColor: color,
+      marginBottom: 5,
+      borderRadius: 5,
+    };
+  },
+  status: status => {
+    let color;
+    if (status === STATUS_DELIVERED || status === STATUS_MATCHED) {
+      color = Color.BLACK;
+    } else {
+      color = Color.WHITE;
+    }
+    return {
+      color: color,
+      fontWeight: 'bold',
+      fontSize: 12,
+      textAlign: 'center',
+    };
   },
   category: {
     ...FontStyle.LABEL_CATEGORY,
@@ -120,7 +93,7 @@ const style = StyleSheet.create({
 });
 
 export default props => {
-  const { onClick, type, title, distance, time } = props;
+  const { onClick, type, title, distance, time, status } = props;
 
   const { iconBgColor, icon, color, category } = useMemo(
     () => generateCategoryStyle(type),
@@ -136,9 +109,14 @@ export default props => {
       title,
       distance,
       time,
+      status,
     };
 
-    if (account.id) {
+    if (onClick) {
+      return onClick(data);
+    }
+
+    if (account.userId) {
       navigation.navigate('DetailPermohonan', data);
     } else {
       navigation.navigate('Profil');
@@ -146,9 +124,7 @@ export default props => {
   };
   return (
     <>
-      <TouchableOpacity
-        style={style.container}
-        onPress={onClick || onClickHandler}>
+      <Pressable style={style.container} onPress={onClickHandler}>
         <View>
           <View
             style={{ ...style.iconBackground, backgroundColor: iconBgColor }}>
@@ -156,6 +132,11 @@ export default props => {
           </View>
         </View>
         <View style={style.rightSection}>
+          {status && (
+            <View style={style.statusContainer(status)}>
+              <Text style={style.status(status)}>{STATUS_MESSAGE[status]}</Text>
+            </View>
+          )}
           <Text style={{ ...style.category, color: color }}>{category}</Text>
           <Text style={style.title}>{title}</Text>
           <View style={style.itemFooter}>
@@ -168,7 +149,7 @@ export default props => {
             {time && <Text style={style.time}>{time}</Text>}
           </View>
         </View>
-      </TouchableOpacity>
+      </Pressable>
     </>
   );
 };

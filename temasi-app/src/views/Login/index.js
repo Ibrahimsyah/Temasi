@@ -11,19 +11,18 @@ import {
 import { useDispatch, useSelector } from 'react-redux';
 import Input from '../../components/Input';
 import ButtonPrimary from '../../components/ButtonPrimary';
-import { Color } from '../../configs/style';
+import { Color } from '../../config/style';
 import { isEmpty } from '../../utils/validation';
 import style from './style';
-import { setAccount } from '../../stores/account.action';
 import { useEffect } from 'react';
+import { loginUser } from '../../store/auth.action';
 
 export default () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [loading, setLoading] = useState(false);
 
   const navigation = useNavigation();
-  const account = useSelector(state => state.account);
+  const { account, loading } = useSelector(state => state);
   const dispatch = useDispatch();
 
   const isFormFilled = useMemo(() => {
@@ -35,21 +34,16 @@ export default () => {
   };
 
   const onLogin = () => {
-    setLoading(true);
-    setTimeout(() => {
-      dispatch(
-        setAccount({
-          id: 'id1',
-          fullName: 'Ibrahimsyah Zairussalam',
-          token: 'token1',
-        }),
-      );
-      setLoading(false);
-    }, 3000);
+    dispatch(
+      loginUser({
+        email,
+        password,
+      }),
+    );
   };
 
   useEffect(() => {
-    if (account.id) {
+    if (account.userId) {
       navigation.dispatch(
         CommonActions.reset({
           routes: [{ name: 'HomeScreen' }],
@@ -81,8 +75,10 @@ export default () => {
           onChange={setPassword}
           placeholder="Kata Sandi"
         />
-        <ButtonPrimary disabled={!isFormFilled || loading} onClick={onLogin}>
-          {loading ? 'Mohon Tunggu' : 'Masuk'}
+        <ButtonPrimary
+          disabled={!isFormFilled || loading.login}
+          onClick={onLogin}>
+          {loading.login ? 'Mohon Tunggu' : 'Masuk'}
         </ButtonPrimary>
         <View style={style.footer}>
           <Text style={style.footer1}>Belum Memiliki Akun? </Text>

@@ -2,75 +2,16 @@ import React, { useState, useMemo } from 'react';
 import { View, ScrollView, StatusBar, Text } from 'react-native';
 import { useRoute } from '@react-navigation/core';
 import { default as FontAwesome5Icon } from 'react-native-vector-icons/FontAwesome5';
-import { default as MaterialCommunityIcon } from 'react-native-vector-icons/MaterialCommunityIcons';
-import { default as MaterialIcon } from 'react-native-vector-icons/MaterialIcons';
 
 import ButtonPrimary from '../../components/ButtonPrimary';
 import ButtonSecondary from '../../components/ButtonSecondary';
 import Header from '../../components/Header';
-import {
-  OKSIGEN,
-  PANGAN_SUPLEMEN,
-  PLASMA,
-  TYPE_OKSIGEN,
-  TYPE_PANGAN_SUPLEMEN,
-  TYPE_PLASMA,
-} from '../../configs/ItemTypes';
-import { Color } from '../../configs/style';
+import { TYPE_OKSIGEN } from '../../config/ItemTypes';
+import { Map } from '../../components/Map';
+import { generateCategoryStyle } from '../../utils/style';
+import { Color } from '../../config/style';
 
 import style from './style';
-import { Map } from '../../components/Map';
-
-const generateCategoryStyle = itemType => {
-  let iconBgColor;
-  let color;
-  let icon;
-  let category;
-  switch (itemType) {
-    case TYPE_PANGAN_SUPLEMEN: {
-      iconBgColor = Color.LIGHT_BLUE;
-      color = Color.MED_BLUE;
-      icon = (
-        <MaterialIcon
-          name="local-hospital"
-          style={{ ...style.icon, color: Color.MED_BLUE }}
-        />
-      );
-      category = PANGAN_SUPLEMEN;
-      break;
-    }
-    case TYPE_OKSIGEN: {
-      iconBgColor = Color.LIGHT_GREEN;
-      color = Color.PRIMARY;
-      icon = (
-        <MaterialCommunityIcon
-          name="diving-scuba-tank"
-          style={{ ...style.icon, color: Color.PRIMARY }}
-        />
-      );
-      category = OKSIGEN;
-      break;
-    }
-    default: {
-      iconBgColor = Color.LIGHT_RED;
-      color = Color.MED_RED;
-      icon = (
-        <FontAwesome5Icon
-          name="tint"
-          style={{ ...style.icon, color: Color.MED_RED }}
-        />
-      );
-      category = PLASMA;
-      break;
-    }
-  }
-  return {
-    iconBgColor,
-    icon,
-    color,
-    category,
-  };
-};
 
 export default () => {
   const [type] = useState(TYPE_OKSIGEN);
@@ -141,6 +82,18 @@ export default () => {
           <Text style={style.body}>{detailLokasi}</Text>
           <Text style={style.titleMed}>Catatan Pemohon</Text>
           <Text style={style.body}>{catatan}</Text>
+          <View style={style.tutorialContainer}>
+            <Text>
+              {'\u2022 Pastikan bantuan sesuai dengan kebutuhan pemohon \n\n'}
+              {
+                '\u2022 Patuhi protokol kesehatan dengan memakai masker dan jaga jarak dengan penerima\n\n'
+              }
+              {
+                '\u2022 Ingatkan penerima bantuan untuk mengonfirmasi bantuan telah diterima \n\n'
+              }
+              {'\u2022 Cuci tangan dan bersihkan diri setiba dirumah '}
+            </Text>
+          </View>
           <Text style={style.titleBig}>Hubungi Pemohon</Text>
           <ButtonPrimary style={style.buttonAction}>Telepon</ButtonPrimary>
           <ButtonSecondary style={style.buttonAction}>WhatsApp</ButtonSecondary>

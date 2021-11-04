@@ -3,7 +3,7 @@ const {expect} = require('chai');
 const chai = require('chai');
 const chaiHttp = require('chai-http');
 const server = require('../index');
-const {Pengguna, Profil} = require('../src/services/db');
+const {Pengguna} = require('../src/services/db');
 const {DataIncompleteError, LoginError, UserNotFoundError} = require('../src/util/error');
 chai.should();
 
@@ -13,7 +13,6 @@ describe('AuthAPI', () => {
   beforeEach((done) => {
     Promise.all([
       Pengguna.destroy({where: {}}),
-      Profil.destroy({where: {}}),
     ]).then(() => done()).catch((err) => console.log(err));
   });
 
@@ -30,7 +29,7 @@ describe('AuthAPI', () => {
           });
     });
 
-    it('should insert new user to table', () => {
+    it('should insert new user to table', async () => {
       const payload = {
         full_name: 'test',
         phone_number: '120131',
@@ -40,17 +39,15 @@ describe('AuthAPI', () => {
         photo: 'asdzxd',
       };
 
-      chai.request(server)
+      const res = await chai.request(server)
           .post('/auth/register')
-          .send(payload)
-          .end((res) => {
-            res.should.have.status(201);
-            res.body.should.have.property('userId');
-            res.body.should.have.property('name');
-            res.body.should.have.property('email');
-            res.body.should.have.property('phoneNumber');
-            res.body.should.have.property('token');
-          });
+          .send(payload);
+      res.should.have.status(201);
+      res.body.should.have.property('userId');
+      res.body.should.have.property('name');
+      res.body.should.have.property('email');
+      res.body.should.have.property('phoneNumber');
+      res.body.should.have.property('token');
     });
   });
 
@@ -60,9 +57,6 @@ describe('AuthAPI', () => {
         id: 'useas',
         email: 'test@gmail.com',
         password: '$2b$10$O/loc/FYkXzusbROaCLl3OILyZog/fO4c5Q1cjcWNuot6TyWSt3k.',
-      };
-
-      const profil = {
         pengguna_id: 'useas',
         full_name: 'fullName 1',
         phone_number: '12131213',
@@ -70,7 +64,6 @@ describe('AuthAPI', () => {
       };
 
       await Pengguna.create(pengguna);
-      await Profil.create(profil);
 
       const loginPayload = {
         email: 'test@gmail.com',
@@ -93,9 +86,6 @@ describe('AuthAPI', () => {
         id: 'useas',
         email: 'test@gmail.com',
         password: '$2b$10$O/loc/FYkXzusbROaCLl3OILyZog/fO4c5Q1cjcWNuot6TyWSt3k.',
-      };
-
-      const profil = {
         pengguna_id: 'useas',
         full_name: 'fullName 1',
         phone_number: '12131213',
@@ -103,7 +93,6 @@ describe('AuthAPI', () => {
       };
 
       await Pengguna.create(pengguna);
-      await Profil.create(profil);
 
       const loginPayload = {
         email: 'test@gmail.com',

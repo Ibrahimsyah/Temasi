@@ -1,5 +1,5 @@
 import { StyleSheet } from 'react-native';
-import { Color, FontStyle } from '../../configs/style';
+import { Color, FontStyle } from '../../config/style';
 
 export default StyleSheet.create({
   container: {
@@ -81,10 +81,6 @@ export default StyleSheet.create({
     justifyContent: 'center',
   },
 
-  icon: {
-    fontSize: 30,
-  },
-
   rightSection: {
     flex: 1,
     marginLeft: 14,
@@ -108,5 +104,12 @@ export default StyleSheet.create({
 
   buttonAction: {
     marginVertical: 5,
+  },
+
+  tutorialContainer: {
+    backgroundColor: Color.LIGHT_GREEN,
+    padding: 10,
+    borderRadius: 10,
+    marginTop: 20,
   },
 });

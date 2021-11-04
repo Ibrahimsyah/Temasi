@@ -10,8 +10,8 @@ import {
   TYPE_OKSIGEN,
   TYPE_PANGAN_SUPLEMEN,
   TYPE_PLASMA,
-} from '../configs/ItemTypes';
-import { Color, FontStyle } from '../configs/style';
+} from '../config/ItemTypes';
+import { Color, FontStyle } from '../config/style';
 
 const styles = StyleSheet.create({
   container: {

@@ -1,5 +1,6 @@
 const express = require('express');
 const morgan = require('morgan');
+const cors = require('cors');
 
 const {PORT, ENV} = require('./src/config');
 const {commonApi, uploadApi, authApi} = require('./src/apis');
@@ -9,6 +10,7 @@ require('./src/services/db');
 const port = PORT;
 const app = express();
 ENV !== 'TEST' && app.use(morgan('dev'));
+app.use(cors());
 app.use(express.json());
 
 // static file api

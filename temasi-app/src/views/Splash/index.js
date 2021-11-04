@@ -2,13 +2,13 @@ import React, { useEffect } from 'react';
 import { Text, StatusBar, View, Image } from 'react-native';
 import { useNavigation, StackActions } from '@react-navigation/native';
 import FadeInComponent from '../../components/animation/FadeInComponent';
-import { AppConfig } from '../../configs/app';
-import { Color } from '../../configs/style';
+import { AppConfig } from '../../config/app';
+import { Color } from '../../config/style';
 import style from './style';
 import { useDispatch } from 'react-redux';
-import storage from '../../providers/storage';
-import { ACCOUNT_STORAGE_KEY, APP_FIRST_USE } from '../../configs/storage';
-import { setAccount } from '../../stores/account.action';
+import storage from '../../provider/storage';
+import { ACCOUNT_STORAGE_KEY, APP_FIRST_USE } from '../../config/storage';
+import { setAccount } from '../../store/account.action';
 
 import AppLogo from '../../assets/app_logo.png';
 

@@ -1,10 +1,6 @@
-const {nanoid} = require('nanoid');
-const bcrypt = require('bcrypt');
-
-const {Pengguna, Profil} = require('../services/db');
-const {SALT_ROUND} = require('../config');
 const {generateToken} = require('../util/tokenizer');
-const {UserNotFoundError, LoginError, UserExistsError} = require('../util/error');
+const {getUserByEmail, addNewUser, verifyUserPassword, checkUserExists} = require('../repositories/UserRepository');
+const {UserNotFoundError} = require('../util/error');
 
 const registerUser = async (payload) => {
   const {
@@ -15,27 +11,15 @@ const registerUser = async (payload) => {
     password,
   } = payload;
 
-  const existingUser = await Pengguna.findOne({where: {email}, raw: true});
-  if (existingUser) throw UserExistsError;
+  await checkUserExists(email);
 
-  const userId = `user-${nanoid(10)}`;
-  const hashedPassword = await bcrypt.hash(password, SALT_ROUND);
-
-  const pengguna = {
-    id: userId,
+  const userId = await addNewUser({
     email,
-    password: hashedPassword,
-  };
-
-  const profil = {
-    pengguna_id: userId,
-    full_name,
     phone_number,
+    full_name,
+    password,
     is_male,
-  };
-
-  await Pengguna.create(pengguna);
-  await Profil.create(profil);
+  });
 
   const token = generateToken({userId});
 
@@ -50,21 +34,17 @@ const registerUser = async (payload) => {
 
 const loginUser = async (payload) => {
   const {email, password} = payload;
-
-  const account = await Pengguna.findOne({where: {email}, raw: true});
+  const account = await getUserByEmail(email);
   if (!account) throw UserNotFoundError;
 
-  const isPasswordMatched = await bcrypt.compare(password, account.password);
-  if (!isPasswordMatched) throw LoginError;
-
-  const profile = await Profil.findOne({where: {pengguna_id: account.id}, raw: true});
+  await verifyUserPassword(password, account.password);
   const token = generateToken({userId: account.id});
 
   return {
-    name: profile.full_name,
+    name: account.full_name,
     email,
     userId: account.id,
-    phoneNumber: profile.phone_number,
+    phoneNumber: account.phone_number,
     token,
   };
 };

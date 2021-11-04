@@ -15,20 +15,6 @@ const Pengguna = db.define('pengguna', {
   password: {
     type: DataTypes.STRING,
   },
-}, {
-  tableName: 'pengguna',
-  timestamps: false,
-});
-
-const Profil = db.define('profil', {
-  pengguna_id: {
-    type: DataTypes.STRING,
-    references: {
-      model: Pengguna,
-      key: 'id',
-    },
-    primaryKey: true,
-  },
   full_name: {
     type: DataTypes.STRING,
   },
@@ -39,7 +25,7 @@ const Profil = db.define('profil', {
     type: DataTypes.BOOLEAN,
   },
 }, {
-  tableName: 'profil',
+  tableName: 'pengguna',
   timestamps: false,
 });
 
@@ -73,9 +59,6 @@ const Permohonan = db.define('permohonan', {
   latitude: {
     type: DataTypes.FLOAT,
   },
-  document_url: {
-    type: DataTypes.STRING,
-  },
   note: {
     type: DataTypes.STRING,
   },
@@ -108,27 +91,44 @@ const Donasi = db.define('donasi', {
   donasi_date: {
     type: DataTypes.INTEGER,
   },
+  status: {
+    type: DataTypes.INTEGER,
+  },
+  received_date: {
+    type: DataTypes.INTEGER,
+  },
 }, {
   tableName: 'donasi',
   timestamps: false,
 });
 
-Pengguna.hasOne(Profil, {
-  foreignKey: 'pengguna_id',
-});
-
-Profil.belongsTo(Pengguna, {
-  foreignKey: 'pengguna_id',
+const Dokumen = db.define('dokumen', {
+  document_url: {
+    type: DataTypes.STRING,
+    primaryKey: true,
+  },
+  permohonan_id: {
+    type: DataTypes.STRING,
+    references: {
+      model: Permohonan,
+      key: 'id',
+    },
+    primaryKey: true,
+  },
+}, {
+  tableName: 'dokumen',
+  timestamps: false,
 });
 
 Pengguna.belongsToMany(Permohonan, {through: Donasi});
 Permohonan.belongsToMany(Pengguna, {through: Donasi});
+Permohonan.hasMany(Dokumen);
 
 Promise.all([
-  Pengguna.sync(),
-  Profil.sync(),
+  Dokumen.sync(),
   Permohonan.sync(),
   Donasi.sync(),
+  Pengguna.sync(),
   db.authenticate(),
 ]).then(() => {
   ENV !== 'TEST' && console.log('Connected to DB');
@@ -136,4 +136,4 @@ Promise.all([
   ENV !== 'TEST' && console.error(err);
 });
 
-module.exports = {db, Donasi, Pengguna, Permohonan, Profil};
+module.exports = {db, Donasi, Pengguna, Permohonan, Dokumen};
