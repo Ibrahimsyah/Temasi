@@ -48,22 +48,22 @@ export default () => {
     dispatch(deleteAccount());
   };
 
-  return !account.id ? (
+  return !account.userId ? (
     <AccountNotFound />
   ) : (
     <ScrollView style={style.mainContainer}>
       <Text style={style.mainTitle}>Informasi Akun</Text>
       <View style={style.profileInfo}>
         <Image source={UserPhotoNull} />
-        <Text style={style.profileName}>Ibrahimsyah Zairussalam</Text>
-        <Text style={style.profileNumber}>+6281230408862</Text>
+        <Text style={style.profileName}>{account.name}</Text>
+        <Text style={style.profileNumber}>{account.phoneNumber}</Text>
       </View>
       <View style={style.statisticGrid}>
         <GridInfo label="Permohonan" value="1" />
         <GridInfo label="Donasi" value="2" />
       </View>
       <Text style={style.profileLabel}>Alamat Email</Text>
-      <Text style={style.profileValue}>Ibrahimsyah@student.ub.ac.id</Text>
+      <Text style={style.profileValue}>{account.email}</Text>
       <Text style={style.profileLabel}>Jenis Kelamin</Text>
       <Text style={style.profileValue}>Pria</Text>
       <View style={style.buttonContainer}>

@@ -144,7 +144,7 @@ export default props => {
       time,
     };
 
-    if (account.id) {
+    if (account.userId) {
       navigation.navigate('DetailPermohonan', data);
     } else {
       navigation.navigate('Profil');

@@ -116,7 +116,7 @@ export default props => {
       return onClick(data);
     }
 
-    if (account.id) {
+    if (account.userId) {
       navigation.navigate('DetailPermohonan', data);
     } else {
       navigation.navigate('Profil');
