@@ -3,7 +3,7 @@ import { Text, View, StyleSheet } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import { useNavigation } from '@react-navigation/core';
 
-import { Color, FontStyle } from '../configs/style';
+import { Color, FontStyle } from '../config/style';
 
 const styles = StyleSheet.create({
   container: withPadding => ({

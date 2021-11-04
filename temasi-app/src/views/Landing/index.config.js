@@ -1,4 +1,4 @@
-import { Color } from '../../configs/style';
+import { Color } from '../../config/style';
 
 import imageLanding1 from '../../assets/images/landing1.png';
 import imageLanding2 from '../../assets/images/landing2.png';

@@ -3,7 +3,7 @@ import { useMemo } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { default as MaterialIcon } from 'react-native-vector-icons/MaterialIcons';
 
-import { Color, FontStyle } from '../configs/style';
+import { Color, FontStyle } from '../config/style';
 import { generateCategoryStyle } from '../utils/style';
 
 const style = StyleSheet.create({

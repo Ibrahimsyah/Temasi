@@ -10,8 +10,8 @@ import {
   PLASMA,
   TYPE_OKSIGEN,
   TYPE_PANGAN_SUPLEMEN,
-} from '../configs/ItemTypes';
-import { Color } from '../configs/style';
+} from '../config/ItemTypes';
+import { Color } from '../config/style';
 
 const styles = StyleSheet.create({
   icon: {

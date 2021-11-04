@@ -11,7 +11,7 @@ import CardBantuan from '../../../../components/CardBantuan';
 import CardPermohonan from '../../../../components/CardPermohonan';
 import { Notification } from '../../../../components/Notification';
 import { generateGreeting } from '../../../../utils/time';
-import { Color } from '../../../../configs/style';
+import { Color } from '../../../../config/style';
 
 import style from './style';
 import config from './index.config';

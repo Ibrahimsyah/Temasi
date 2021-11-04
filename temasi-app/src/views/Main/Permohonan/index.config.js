@@ -1,4 +1,4 @@
-import { STATUS_MATCHED } from '../../../configs';
+import { STATUS_MATCHED } from '../../../config';
 
 export default {
   permohonanLatest: [

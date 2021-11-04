@@ -4,8 +4,8 @@ import { default as MaterialIcon } from 'react-native-vector-icons/MaterialIcons
 import { useNavigation } from '@react-navigation/core';
 import { useSelector } from 'react-redux';
 
-import { Color, FontStyle } from '../configs/style';
-import { STATUS_DELIVERED, STATUS_MATCHED, STATUS_MESSAGE } from '../configs';
+import { Color, FontStyle } from '../config/style';
+import { STATUS_DELIVERED, STATUS_MATCHED, STATUS_MESSAGE } from '../config';
 import { generateCategoryStyle } from '../utils/style';
 
 const style = StyleSheet.create({

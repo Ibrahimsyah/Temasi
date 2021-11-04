@@ -2,7 +2,7 @@ import React from 'react';
 import { Text, View, Image, StyleSheet } from 'react-native';
 
 import NotFoundImage from '../assets/images/notFound.png';
-import { Color, FontStyle } from '../configs/style';
+import { Color, FontStyle } from '../config/style';
 
 const styles = StyleSheet.create({
   notFoundContainer: {

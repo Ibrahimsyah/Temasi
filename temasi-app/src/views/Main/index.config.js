@@ -2,7 +2,7 @@ import React from 'react';
 import { default as MaterialCommunityIcon } from 'react-native-vector-icons/MaterialCommunityIcons';
 import { default as MaterialIcon } from 'react-native-vector-icons/MaterialIcons';
 import { default as FontAwesomeIcon } from 'react-native-vector-icons/FontAwesome';
-import { Color } from '../../configs/style';
+import { Color } from '../../config/style';
 import HomeScreen from './Home';
 import Informasi from './Informasi';
 import Permohonan from './Permohonan';

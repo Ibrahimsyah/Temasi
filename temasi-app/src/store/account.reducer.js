@@ -1,6 +1,6 @@
-import storage from '../providers/storage';
+import storage from '../provider/storage';
 import { ADD_ACCOUNT, DELETE_ACCOUNT } from './ActionTypes';
-import { ACCOUNT_STORAGE_KEY } from '../configs/storage';
+import { ACCOUNT_STORAGE_KEY } from '../config/storage';
 
 const initState = {
   id: null,

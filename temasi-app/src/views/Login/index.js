@@ -11,11 +11,11 @@ import {
 import { useDispatch, useSelector } from 'react-redux';
 import Input from '../../components/Input';
 import ButtonPrimary from '../../components/ButtonPrimary';
-import { Color } from '../../configs/style';
+import { Color } from '../../config/style';
 import { isEmpty } from '../../utils/validation';
 import style from './style';
 import { useEffect } from 'react';
-import { loginUser } from '../../stores/auth.action';
+import { loginUser } from '../../store/auth.action';
 
 export default () => {
   const [email, setEmail] = useState('');

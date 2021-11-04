@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import rssParser from 'react-native-rss-parser';
 import { ActivityIndicator, ScrollView, Text } from 'react-native';
 import CardBerita from '../../../../components/CardBerita';
-import api from '../../../../providers/api';
+import api from '../../../../provider/api';
 import style from './style';
 import { useNavigation } from '@react-navigation/core';
 

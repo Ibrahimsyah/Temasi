@@ -1,4 +1,4 @@
-import { STATUS_DELIVERED, STATUS_NOT_DELIVERED } from '../../../../configs';
+import { STATUS_DELIVERED, STATUS_NOT_DELIVERED } from '../../../../config';
 
 export default {
   data: [

@@ -1,7 +1,7 @@
 import React from 'react';
 import { TouchableOpacity, StyleSheet, Text } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import { Color } from '../configs/style';
+import { Color } from '../config/style';
 
 const styles = StyleSheet.create({
   container: {

@@ -8,7 +8,7 @@ import FABPermohonan from '../../../components/FABPermohonan';
 import style from './style';
 import config from './index.config';
 import NotFound from '../../../components/NotFound';
-import { STATUS_MATCHED } from '../../../configs';
+import { STATUS_MATCHED } from '../../../config';
 
 export default () => {
   const [data] = useState(config.permohonanLatest);

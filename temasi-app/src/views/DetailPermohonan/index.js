@@ -15,7 +15,7 @@ import ButtonPrimary from '../../components/ButtonPrimary';
 import Header from '../../components/Header';
 import CheckBox from '../../components/CheckBox';
 import { Map } from '../../components/Map';
-import { TYPE_PLASMA } from '../../configs/ItemTypes';
+import { TYPE_PLASMA } from '../../config/ItemTypes';
 import { generateCategoryStyle } from '../../utils/style';
 
 import config from './index.config';

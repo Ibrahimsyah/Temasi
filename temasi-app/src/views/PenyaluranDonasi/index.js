@@ -6,10 +6,10 @@ import { default as FontAwesome5Icon } from 'react-native-vector-icons/FontAweso
 import ButtonPrimary from '../../components/ButtonPrimary';
 import ButtonSecondary from '../../components/ButtonSecondary';
 import Header from '../../components/Header';
-import { TYPE_OKSIGEN } from '../../configs/ItemTypes';
+import { TYPE_OKSIGEN } from '../../config/ItemTypes';
 import { Map } from '../../components/Map';
 import { generateCategoryStyle } from '../../utils/style';
-import { Color } from '../../configs/style';
+import { Color } from '../../config/style';
 
 import style from './style';
 

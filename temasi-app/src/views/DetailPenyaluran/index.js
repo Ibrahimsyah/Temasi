@@ -5,7 +5,7 @@ import { Text, ScrollView, View, StatusBar } from 'react-native';
 import Header from '../../components/Header';
 import PermohonanDetail from '../../components/PermohonanDetail';
 import ButtonPrimary from '../../components/ButtonPrimary';
-import { Color } from '../../configs/style';
+import { Color } from '../../config/style';
 
 import style from './style';
 import styles from './style';

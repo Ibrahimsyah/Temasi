@@ -21,7 +21,7 @@ import CardsJangkaWaktu from '../../components/CardsJangkaWaktu';
 import CardsGolonganDarah from '../../components/CardsGolonganDarah';
 import CardsRhesusDarah from '../../components/CardsRhesusDarah';
 import { Map } from '../../components/Map';
-import { TYPE_PLASMA } from '../../configs/ItemTypes';
+import { TYPE_PLASMA } from '../../config/ItemTypes';
 
 import config from './index.config';
 import style from './style';

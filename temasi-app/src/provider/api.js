@@ -1,7 +1,8 @@
 import axios from 'axios';
-import { AppConfig } from '../configs/app';
+import { AppConfig } from '../config/app';
 
 axios.defaults.baseURL = AppConfig.BASE_URL;
+
 axios.interceptors.response.use(
   response => Promise.resolve(response),
   error => {

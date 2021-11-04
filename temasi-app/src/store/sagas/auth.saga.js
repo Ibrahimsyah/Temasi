@@ -1,5 +1,5 @@
 import { takeLatest, put, call, delay } from 'redux-saga/effects';
-import api from '../../providers/api';
+import api from '../../provider/api';
 import { setAccount } from '../account.action';
 
 import { LOGIN_USER, REGISTER_USER } from '../ActionTypes';

@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, StyleSheet, Text, Pressable } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome5';
-import { Color, FontStyle } from '../configs/style';
+import { Color, FontStyle } from '../config/style';
 
 const styles = StyleSheet.create({
   container: {

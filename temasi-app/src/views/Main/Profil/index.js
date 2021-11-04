@@ -1,14 +1,15 @@
 import React from 'react';
 import { Text, Image, View, ScrollView } from 'react-native';
-import style from './style';
+import { useDispatch, useSelector } from 'react-redux';
+import { useNavigation } from '@react-navigation/core';
+
 import ButtonPrimary from '../../../components/ButtonPrimary';
 import ButtonSecondary from '../../../components/ButtonSecondary';
 import NoAccountImage from '../../../assets/images/noLogin.png';
 import UserPhotoNull from '../../../assets/images/userPhotoNull.png';
 import GridInfo from '../../../components/GridInfo';
-import { useDispatch, useSelector } from 'react-redux';
-import { deleteAccount } from '../../../stores/account.action';
-import { useNavigation } from '@react-navigation/core';
+import { deleteAccount } from '../../../store/account.action';
+import style from './style';
 
 const AccountNotFound = () => {
   const navigation = useNavigation();
