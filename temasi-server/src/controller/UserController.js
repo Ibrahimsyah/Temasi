@@ -1,10 +1,6 @@
-const {nanoid} = require('nanoid');
-const bcrypt = require('bcrypt');
-
-const {Pengguna} = require('../services/db');
-const {SALT_ROUND} = require('../config');
 const {generateToken} = require('../util/tokenizer');
-const {UserNotFoundError, LoginError, UserExistsError} = require('../util/error');
+const {getUserByEmail, addNewUser, verifyUserPassword, checkUserExists} = require('../repositories/UserRepository');
+const {UserNotFoundError} = require('../util/error');
 
 const registerUser = async (payload) => {
   const {
@@ -15,23 +11,15 @@ const registerUser = async (payload) => {
     password,
   } = payload;
 
-  const existingUser = await Pengguna.findOne({where: {email}, raw: true});
-  if (existingUser) throw UserExistsError;
+  await checkUserExists(email);
 
-  const userId = `user-${nanoid(10)}`;
-  const hashedPassword = await bcrypt.hash(password, SALT_ROUND);
-
-  const pengguna = {
-    id: userId,
+  const userId = await addNewUser({
     email,
-    password: hashedPassword,
-    pengguna_id: userId,
-    full_name,
     phone_number,
+    full_name,
+    password,
     is_male,
-  };
-
-  await Pengguna.create(pengguna);
+  });
 
   const token = generateToken({userId});
 
@@ -46,13 +34,10 @@ const registerUser = async (payload) => {
 
 const loginUser = async (payload) => {
   const {email, password} = payload;
-
-  const account = await Pengguna.findOne({where: {email}, raw: true});
+  const account = await getUserByEmail(email);
   if (!account) throw UserNotFoundError;
 
-  const isPasswordMatched = await bcrypt.compare(password, account.password);
-  if (!isPasswordMatched) throw LoginError;
-
+  await verifyUserPassword(password, account.password);
   const token = generateToken({userId: account.id});
 
   return {

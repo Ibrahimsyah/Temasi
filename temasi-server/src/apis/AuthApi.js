@@ -1,10 +1,10 @@
 const {Router} = require('express');
-const {handleError, DataIncompleteError} = require('../util/error');
+const {DataIncompleteError} = require('../util/error');
 const AuthController = require('../controller/UserController');
 
 const router = Router();
 
-const registerHandler = async (req, res) => {
+const registerHandler = async (req, res, next) => {
   try {
     const payload = req.body;
     const {
@@ -24,7 +24,7 @@ const registerHandler = async (req, res) => {
     res.status(201);
     res.send(result);
   } catch (err) {
-    handleError(res, err);
+    next(err);
   }
 };
 

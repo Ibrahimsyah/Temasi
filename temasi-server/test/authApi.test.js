@@ -29,7 +29,7 @@ describe('AuthAPI', () => {
           });
     });
 
-    it('should insert new user to table', () => {
+    it('should insert new user to table', async () => {
       const payload = {
         full_name: 'test',
         phone_number: '120131',
@@ -39,17 +39,15 @@ describe('AuthAPI', () => {
         photo: 'asdzxd',
       };
 
-      chai.request(server)
+      const res = await chai.request(server)
           .post('/auth/register')
-          .send(payload)
-          .end((res) => {
-            res.should.have.status(201);
-            res.body.should.have.property('userId');
-            res.body.should.have.property('name');
-            res.body.should.have.property('email');
-            res.body.should.have.property('phoneNumber');
-            res.body.should.have.property('token');
-          });
+          .send(payload);
+      res.should.have.status(201);
+      res.body.should.have.property('userId');
+      res.body.should.have.property('name');
+      res.body.should.have.property('email');
+      res.body.should.have.property('phoneNumber');
+      res.body.should.have.property('token');
     });
   });
 
