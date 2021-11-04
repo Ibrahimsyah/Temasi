@@ -16,6 +16,7 @@ import { isEmpty } from '../../utils/validation';
 import style from './style';
 import { setAccount } from '../../stores/account.action';
 import { useEffect } from 'react';
+import { loginUser } from '../../stores/auth.action';
 
 export default () => {
   const [email, setEmail] = useState('');
@@ -27,6 +28,7 @@ export default () => {
   const dispatch = useDispatch();
 
   const isFormFilled = useMemo(() => {
+    return true;
     return !isEmpty(email) && !isEmpty(password);
   }, [email, password]);
 
@@ -36,16 +38,23 @@ export default () => {
 
   const onLogin = () => {
     setLoading(true);
-    setTimeout(() => {
-      dispatch(
-        setAccount({
-          id: 'id1',
-          fullName: 'Ibrahimsyah Zairussalam',
-          token: 'token1',
-        }),
-      );
-      setLoading(false);
-    }, 3000);
+    dispatch(
+      loginUser({
+        email: 'tesst',
+        password: 'tisst',
+      }),
+    );
+    setLoading(false);
+    // setTimeout(() => {
+    //   dispatch(
+    //     setAccount({
+    //       id: 'id1',
+    //       fullName: 'Ibrahimsyah Zairussalam',
+    //       token: 'token1',
+    //     }),
+    //   );
+    //   setLoading(false);
+    // }, 3000);
   };
 
   useEffect(() => {
