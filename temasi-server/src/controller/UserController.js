@@ -9,6 +9,7 @@ const registerUser = async (payload) => {
     isMale,
     email,
     password,
+    photo,
   } = payload;
 
   await checkUserExists(email);
@@ -19,16 +20,18 @@ const registerUser = async (payload) => {
     fullName,
     password,
     isMale,
+    photo,
   });
 
   const token = generateToken({userId});
 
   return {
-    name: fullName,
+    fullName,
     phoneNumber: phoneNumber,
     email,
     userId,
     token,
+    photo,
   };
 };
 
@@ -44,6 +47,7 @@ const loginUser = async (payload) => {
     fullName: account.full_name,
     email,
     userId: account.id,
+    photo: account.photo,
     phoneNumber: account.phone_number,
     token,
   };
