@@ -9,6 +9,8 @@ import {
   TouchableOpacity,
   Pressable,
   Image,
+  Modal,
+  ActivityIndicator,
 } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import Input from '../../components/Input';
@@ -20,18 +22,21 @@ import { setAccount } from '../../store/account.action';
 import { useEffect } from 'react';
 import CardsGender from '../../components/CardsGender';
 import profilePlaceholder from '../../assets/images/profilePlaceholder.png';
+import ImageChooserModal from '../../components/ImageChooserModal';
+import { uploadImage } from '../../store/main.action';
 
 export default () => {
+  const [photo, setPhoto] = useState('');
   const [fullName, setFullName] = useState('');
   const [phone, setPhone] = useState('');
   const [isMale, setIsMale] = useState(-1);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
-  const [loading, setLoading] = useState(false);
+  const [modalVisible, setModalVisible] = useState(false);
 
   const navigation = useNavigation();
-  const account = useSelector(state => state.account);
+  const { account, loading, main } = useSelector(state => state);
   const dispatch = useDispatch();
 
   const isFormFilled = useMemo(() => {
@@ -46,7 +51,6 @@ export default () => {
   }, [email, password, confirmPassword, fullName, phone, isMale]);
 
   const onRegister = () => {
-    setLoading(true);
     setTimeout(() => {
       dispatch(
         setAccount({
@@ -54,12 +58,18 @@ export default () => {
           token: 'token1',
         }),
       );
-      setLoading(false);
     }, 3000);
   };
 
   const onLogin = () => {
     navigation.navigate('LoginScreen');
+  };
+
+  const onImageReceived = data => {
+    const { assets, didCancel } = data;
+    if (!didCancel) {
+      dispatch(uploadImage(assets[0]));
+    }
   };
 
   useEffect(() => {
@@ -71,8 +81,18 @@ export default () => {
       );
     }
   }, [account, navigation]);
+
+  useEffect(() => {
+    console.log(main);
+  }, [main]);
+
   return (
     <>
+      <ImageChooserModal
+        visible={modalVisible}
+        setVisible={setModalVisible}
+        onImageReceived={onImageReceived}
+      />
       <StatusBar backgroundColor={Color.LIGHT_GRAY} barStyle="dark-content" />
       <ScrollView
         style={style.container}
@@ -82,8 +102,11 @@ export default () => {
           <Text style={style.title1}>Daftar</Text>
           <Text style={style.title2}> Akun Baru</Text>
         </View>
-        <Pressable style={style.profilePicHolder}>
+        <Pressable
+          style={style.profilePicHolder}
+          onPress={() => setModalVisible(true)}>
           <Image source={profilePlaceholder} style={style.profilePic} />
+          {loading.uploadImage && <ActivityIndicator size="small" />}
         </Pressable>
         <Input
           style={style.input}

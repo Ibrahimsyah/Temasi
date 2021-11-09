@@ -9,3 +9,6 @@ export const SET_ERROR = 'SET_ERROR';
 
 export const LOGIN_USER = 'LOGIN_USER';
 export const REGISTER_USER = 'REGISTER_USER';
+
+export const UPLOAD_IMAGE = 'UPLOAD_IMAGE';
+export const SET_UPLOAD_RESULT = 'SET_UPLOAD_RESULT';

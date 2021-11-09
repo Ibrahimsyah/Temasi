@@ -35,4 +35,5 @@ const post = async (url, body) => {
 export default {
   ping: () => get('/ping'),
   login: payload => post('/auth/login', payload),
+  upload: payload => post('/upload', payload),
 };
