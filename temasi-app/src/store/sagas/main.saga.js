@@ -14,6 +14,8 @@ function* uploadPhoto(action) {
     yield put(setUploadResult(result));
   } catch (err) {
     console.log(err);
+  } finally {
+    yield put(setLoading('uploadPhoto', false));
   }
 }
 

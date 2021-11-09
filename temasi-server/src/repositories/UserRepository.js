@@ -16,7 +16,7 @@ const getUserByEmail = async (email) => {
 };
 
 const addNewUser = async (payload) => {
-  const {email, full_name, phone_number, is_male, password} = payload;
+  const {email, fullName, phoneNumber, isMale, password, photo} = payload;
   const userId = `user-${nanoid(10)}`;
   const hashedPassword = await bcrypt.hash(password, SALT_ROUND);
   const pengguna = {
@@ -24,9 +24,10 @@ const addNewUser = async (payload) => {
     email,
     password: hashedPassword,
     pengguna_id: userId,
-    full_name,
-    phone_number,
-    is_male,
+    full_name: fullName,
+    phone_number: phoneNumber,
+    is_male: isMale,
+    photo,
   };
   await Pengguna.create(pengguna);
   return userId;

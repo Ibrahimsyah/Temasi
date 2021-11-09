@@ -6,22 +6,13 @@ const registerUser = async (payload) => {
   const {
     fullName,
     phoneNumber,
-    isMale,
     email,
-    password,
     photo,
   } = payload;
 
   await checkUserExists(email);
 
-  const userId = await addNewUser({
-    email,
-    phoneNumber,
-    fullName,
-    password,
-    isMale,
-    photo,
-  });
+  const userId = await addNewUser(payload);
 
   const token = generateToken({userId});
 
