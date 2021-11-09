@@ -2,9 +2,9 @@ import React, { useEffect, useState } from 'react';
 import rssParser from 'react-native-rss-parser';
 import { ActivityIndicator, ScrollView, Text } from 'react-native';
 import CardBerita from '../../../../components/CardBerita';
-import api from '../../../../provider/api';
 import style from './style';
 import { useNavigation } from '@react-navigation/core';
+import axios from 'axios';
 
 export default () => {
   const [loading, setLoading] = useState(true);
@@ -17,7 +17,7 @@ export default () => {
 
   useEffect(() => {
     const fetchNewsData = async () => {
-      const data = await api.get('https://covid19.go.id/feed/berita');
+      const { data } = await axios.get('https://covid19.go.id/feed/berita');
       const parsed = await rssParser.parse(data);
       setNews(parsed.items);
       setLoading(false);

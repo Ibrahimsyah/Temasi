@@ -22,7 +22,7 @@ axios.interceptors.request.use(async config => {
   return config;
 });
 
-const get = async url => {
+export const get = async url => {
   const { data } = await axios.get(`${AppConfig.BASE_URL}${url}`);
   return data;
 };
