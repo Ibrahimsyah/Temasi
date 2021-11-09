@@ -23,10 +23,11 @@ import { useEffect } from 'react';
 import CardsGender from '../../components/CardsGender';
 import profilePlaceholder from '../../assets/images/profilePlaceholder.png';
 import ImageChooserModal from '../../components/ImageChooserModal';
-import { uploadImage } from '../../store/main.action';
+import { setUploadResult, uploadImage } from '../../store/main.action';
+import { absoluteUrl } from '../../utils/asset';
 
 export default () => {
-  const [photo, setPhoto] = useState('');
+  const [photo, setPhoto] = useState(null);
   const [fullName, setFullName] = useState('');
   const [phone, setPhone] = useState('');
   const [isMale, setIsMale] = useState(-1);
@@ -83,8 +84,11 @@ export default () => {
   }, [account, navigation]);
 
   useEffect(() => {
-    console.log(main);
-  }, [main]);
+    if (main?.uploadResult) {
+      setPhoto(main.uploadResult.document_url);
+      dispatch(setUploadResult(null));
+    }
+  }, [main, dispatch]);
 
   return (
     <>
@@ -105,7 +109,10 @@ export default () => {
         <Pressable
           style={style.profilePicHolder}
           onPress={() => setModalVisible(true)}>
-          <Image source={profilePlaceholder} style={style.profilePic} />
+          <Image
+            source={photo ? { uri: absoluteUrl(photo) } : profilePlaceholder}
+            style={style.profilePic}
+          />
           {loading.uploadImage && <ActivityIndicator size="small" />}
         </Pressable>
         <Input
@@ -146,8 +153,10 @@ export default () => {
           onChange={setConfirmPassword}
           placeholder="Ulangi Kata Sandi"
         />
-        <ButtonPrimary disabled={!isFormFilled || loading} onClick={onRegister}>
-          {loading ? 'Mohon Tunggu' : 'Daftar'}
+        <ButtonPrimary
+          disabled={!isFormFilled || loading.signUp}
+          onClick={onRegister}>
+          {loading.signUp ? 'Mohon Tunggu' : 'Daftar'}
         </ButtonPrimary>
         <View style={style.footer}>
           <Text style={style.footer1}>Sudah Memiliki Akun? </Text>
