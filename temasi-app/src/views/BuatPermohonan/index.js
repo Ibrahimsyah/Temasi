@@ -4,30 +4,33 @@ import {
   Text,
   TouchableOpacity,
   Image,
-  Modal,
   ScrollView,
+  ActivityIndicator,
 } from 'react-native';
-import { launchCamera, launchImageLibrary } from 'react-native-image-picker';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import Geolocation from '@react-native-community/geolocation';
 import CheckBox from '@react-native-community/checkbox';
 import RNAndroidLocationEnabler from 'react-native-android-location-enabler';
+import { useDispatch, useSelector } from 'react-redux';
 
 import ButtonPrimary from '../../components/ButtonPrimary';
 import Header from '../../components/Header';
+import ImageChooserModal from '../../components/ImageChooserModal';
 import CardsKategori from '../../components/CardsKategori';
 import Input from '../../components/Input';
 import CardsJangkaWaktu from '../../components/CardsJangkaWaktu';
 import CardsGolonganDarah from '../../components/CardsGolonganDarah';
 import CardsRhesusDarah from '../../components/CardsRhesusDarah';
 import { Map } from '../../components/Map';
+
+import { absoluteUrl } from '../../utils/asset';
 import { TYPE_PLASMA } from '../../config/ItemTypes';
 
-import config from './index.config';
 import style from './style';
+import { setUploadResult, uploadImage } from '../../store/main.action';
 
 export default () => {
-  const [image, setImage] = useState(null);
+  const [documents, setDocuments] = useState([]);
   const [tipe, setTipe] = useState(-1);
   const [judul, setJudul] = useState('');
   const [golonganDarah, setGolonganDarah] = useState(null);
@@ -40,26 +43,36 @@ export default () => {
   const [description, setDescription] = useState('');
   const [agreement, setAgreement] = useState(false);
 
-  const handleSetImage = () => {
-    setModalVisible(true);
-  };
+  const { loading, main } = useSelector(state => state);
+  const dispatch = useDispatch();
 
-  const onPhotoReceived = data => {
+  const onImageReceived = data => {
     const { assets, didCancel } = data;
     if (!didCancel) {
-      setImage(assets[0].uri);
+      dispatch(uploadImage(assets[0]));
     }
   };
 
-  const capturePhoto = () => {
-    launchCamera(config.imagePickerConfig, onPhotoReceived);
-    setModalVisible(false);
+  const onBuatPermohonan = () => {
+    const data = {
+      documents,
+      tipe,
+      judul,
+      jangkaWaktu,
+      position,
+      address,
+      administration,
+      description,
+    };
+    console.log(data);
   };
 
-  const getPhotoFromGallery = () => {
-    launchImageLibrary(config.imagePickerConfig, onPhotoReceived);
-    setModalVisible(false);
-  };
+  useEffect(() => {
+    if (main?.uploadResult) {
+      setDocuments(prev => [...prev, main.uploadResult.document_url]);
+      dispatch(setUploadResult(null));
+    }
+  }, [main, dispatch]);
 
   useEffect(() => {
     const getCurrentLocation = () => {
@@ -80,13 +93,18 @@ export default () => {
     RNAndroidLocationEnabler.promptForEnableLocationIfNeeded({
       interval: 10000,
       fastInterval: 5000,
-    }).then(data => {
+    }).then(() => {
       getCurrentLocation();
     });
   }, []);
 
   return (
     <>
+      <ImageChooserModal
+        visible={modalVisible}
+        setVisible={setModalVisible}
+        onImageReceived={onImageReceived}
+      />
       <ScrollView style={style.container}>
         <Header isDark title="Buat Permohonan" />
         <Text style={style.titleBig}>
@@ -121,19 +139,25 @@ export default () => {
         <Text style={style.description}>
           Beri pendukung berupa foto agar para donatur mudah memverifikasi. Foto
           dapat berupa surat keterangan terkena COVID-19 atau surat keterangan
-          dokter
+          dokter (Dapat lebih dari 1 dokumen)
         </Text>
-        <TouchableOpacity style={style.holder} onPress={handleSetImage}>
-          {image ? (
-            <Image style={style.image} source={{ uri: image }} />
-          ) : (
-            <View style={style.imagePlaceholderContainer}>
-              <Icon name="assignment" style={style.placeholderIcon} />
-              <Text style={style.placeholderText}>
-                Lampirkan foto dokumen pendukung{' '}
-              </Text>
-            </View>
-          )}
+        {documents.map((document, index) => (
+          <Image
+            key={index}
+            style={style.image}
+            source={{ uri: absoluteUrl(document) }}
+          />
+        ))}
+        {loading.uploadPhoto && <ActivityIndicator size="small" />}
+        <TouchableOpacity
+          style={style.holder}
+          onPress={() => setModalVisible(true)}>
+          <View style={style.imagePlaceholderContainer}>
+            <Icon name="assignment" style={style.placeholderIcon} />
+            <Text style={style.placeholderText}>
+              Lampirkan foto dokumen pendukung
+            </Text>
+          </View>
         </TouchableOpacity>
 
         <Text style={style.titleMed}>Jangka Waktu Permohonan</Text>
@@ -195,30 +219,13 @@ export default () => {
             Saya menyatakan bahwa data yang saya masukkan adalah data yang benar
           </Text>
         </View>
-        <ButtonPrimary style={style.buttonSubmit} disabled={!agreement}>
+        <ButtonPrimary
+          style={style.buttonSubmit}
+          disabled={!agreement}
+          onClick={onBuatPermohonan}>
           Buat Permohonan
         </ButtonPrimary>
       </ScrollView>
-      <Modal
-        visible={modalVisible}
-        transparent
-        onDismiss={() => setModalVisible(false)}
-        onRequestClose={() => setModalVisible(false)}
-        animationType="fade">
-        <View style={style.modal}>
-          <View style={style.modalContent}>
-            <Text style={style.modalTitle}>Pilih Gambar</Text>
-            <ButtonPrimary style={style.modalButton} onClick={capturePhoto}>
-              Ambil Gambar
-            </ButtonPrimary>
-            <ButtonPrimary
-              style={style.modalButton}
-              onClick={getPhotoFromGallery}>
-              Pilih dari Galeri
-            </ButtonPrimary>
-          </View>
-        </View>
-      </Modal>
     </>
   );
 };
