@@ -4,31 +4,25 @@ const {UserNotFoundError} = require('../util/error');
 
 const registerUser = async (payload) => {
   const {
-    full_name,
-    phone_number,
-    is_male,
+    fullName,
+    phoneNumber,
     email,
-    password,
+    photo,
   } = payload;
 
   await checkUserExists(email);
 
-  const userId = await addNewUser({
-    email,
-    phone_number,
-    full_name,
-    password,
-    is_male,
-  });
+  const userId = await addNewUser(payload);
 
   const token = generateToken({userId});
 
   return {
-    name: full_name,
-    phoneNumber: phone_number,
+    fullName,
+    phoneNumber: phoneNumber,
     email,
     userId,
     token,
+    photo,
   };
 };
 
@@ -41,9 +35,10 @@ const loginUser = async (payload) => {
   const token = generateToken({userId: account.id});
 
   return {
-    name: account.full_name,
+    fullName: account.full_name,
     email,
     userId: account.id,
+    photo: account.photo,
     phoneNumber: account.phone_number,
     token,
   };

@@ -3,7 +3,7 @@ import { ADD_ACCOUNT, DELETE_ACCOUNT } from './ActionTypes';
 import { ACCOUNT_STORAGE_KEY } from '../config/storage';
 
 const initState = {
-  id: null,
+  userId: null,
   fullName: '',
   token: null,
 };

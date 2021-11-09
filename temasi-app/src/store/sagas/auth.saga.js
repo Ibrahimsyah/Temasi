@@ -1,29 +1,33 @@
-import axios from 'axios';
-import { takeLatest, put, call, delay } from 'redux-saga/effects';
+import { takeLatest, put, call } from 'redux-saga/effects';
 import api from '../../provider/api';
+import { toastError } from '../../utils/error';
 import { setAccount } from '../account.action';
 
 import { LOGIN_USER, REGISTER_USER } from '../ActionTypes';
 import { setError } from '../error.action';
 import { setLoading } from '../loading.action';
 
-const registerNewUser = async userData => {};
-
-const loginUser = async userData => {
-  const result = await api.login(userData);
-  return result;
-};
-
-function* register(action) {}
+function* register(action) {
+  try {
+    yield put(setLoading('register', true));
+    const result = yield call(api.register, action.payload);
+    yield put(setAccount(result));
+  } catch (err) {
+    console.log(err);
+    toastError(err);
+  } finally {
+    yield put(setLoading('register', false));
+  }
+}
 
 function* login(action) {
   try {
     yield put(setLoading('login', true));
-    const result = yield call(loginUser, action.payload);
+    const result = yield call(api.login, action.payload);
     yield put(setAccount(result));
   } catch (err) {
     console.log(err);
-    yield put(setError('login', err));
+    toastError(err);
   } finally {
     yield put(setLoading('login', false));
   }

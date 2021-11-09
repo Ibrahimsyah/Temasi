@@ -41,7 +41,7 @@ export default () => {
         {account.userId && (
           <>
             <Text style={style.greeting}>{greeting}</Text>
-            <Text style={style.userName}>{account.name}</Text>
+            <Text style={style.userName}>{account.fullName}</Text>
           </>
         )}
 

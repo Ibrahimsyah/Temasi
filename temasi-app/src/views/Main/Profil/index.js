@@ -6,10 +6,10 @@ import { useNavigation } from '@react-navigation/core';
 import ButtonPrimary from '../../../components/ButtonPrimary';
 import ButtonSecondary from '../../../components/ButtonSecondary';
 import NoAccountImage from '../../../assets/images/noLogin.png';
-import UserPhotoNull from '../../../assets/images/userPhotoNull.png';
 import GridInfo from '../../../components/GridInfo';
 import { deleteAccount } from '../../../store/account.action';
 import style from './style';
+import { absoluteUrl } from '../../../utils/asset';
 
 const AccountNotFound = () => {
   const navigation = useNavigation();
@@ -55,8 +55,11 @@ export default () => {
     <ScrollView style={style.mainContainer}>
       <Text style={style.mainTitle}>Informasi Akun</Text>
       <View style={style.profileInfo}>
-        <Image source={UserPhotoNull} />
-        <Text style={style.profileName}>{account.name}</Text>
+        <Image
+          source={{ uri: absoluteUrl(account.photo) }}
+          style={style.profilePic}
+        />
+        <Text style={style.profileName}>{account.fullName}</Text>
         <Text style={style.profileNumber}>{account.phoneNumber}</Text>
       </View>
       <View style={style.statisticGrid}>

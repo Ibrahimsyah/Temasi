@@ -24,6 +24,9 @@ const Pengguna = db.define('pengguna', {
   is_male: {
     type: DataTypes.BOOLEAN,
   },
+  photo: {
+    type: DataTypes.STRING,
+  },
 }, {
   tableName: 'pengguna',
   timestamps: false,

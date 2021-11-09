@@ -22,7 +22,7 @@ axios.interceptors.request.use(async config => {
   return config;
 });
 
-const get = async url => {
+export const get = async url => {
   const { data } = await axios.get(`${AppConfig.BASE_URL}${url}`);
   return data;
 };
@@ -35,4 +35,6 @@ const post = async (url, body) => {
 export default {
   ping: () => get('/ping'),
   login: payload => post('/auth/login', payload),
+  register: payload => post('/auth/register', payload),
+  upload: payload => post('/upload', payload),
 };

@@ -1,6 +1,4 @@
-import { useNavigation } from '@react-navigation/core';
-import { CommonActions } from '@react-navigation/native';
-import React, { useMemo, useState } from 'react';
+import React, { useMemo, useState, useEffect } from 'react';
 import {
   View,
   Text,
@@ -9,29 +7,38 @@ import {
   TouchableOpacity,
   Pressable,
   Image,
+  ActivityIndicator,
 } from 'react-native';
+import { useNavigation } from '@react-navigation/core';
+import { CommonActions } from '@react-navigation/native';
 import { useDispatch, useSelector } from 'react-redux';
+
 import Input from '../../components/Input';
 import ButtonPrimary from '../../components/ButtonPrimary';
-import { Color } from '../../config/style';
-import { isEmpty } from '../../utils/validation';
-import style from './style';
-import { setAccount } from '../../store/account.action';
-import { useEffect } from 'react';
 import CardsGender from '../../components/CardsGender';
+import ImageChooserModal from '../../components/ImageChooserModal';
+import { isEmpty } from '../../utils/validation';
+import { absoluteUrl } from '../../utils/asset';
 import profilePlaceholder from '../../assets/images/profilePlaceholder.png';
+import { Color } from '../../config/style';
+import { setUploadResult, uploadImage } from '../../store/main.action';
+import { registerUser } from '../../store/auth.action';
+
+import style from './style';
+import { toastError } from '../../utils/error';
 
 export default () => {
+  const [photo, setPhoto] = useState(null);
   const [fullName, setFullName] = useState('');
   const [phone, setPhone] = useState('');
   const [isMale, setIsMale] = useState(-1);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
-  const [loading, setLoading] = useState(false);
+  const [modalVisible, setModalVisible] = useState(false);
 
   const navigation = useNavigation();
-  const account = useSelector(state => state.account);
+  const { account, loading, main, error } = useSelector(state => state);
   const dispatch = useDispatch();
 
   const isFormFilled = useMemo(() => {
@@ -46,24 +53,35 @@ export default () => {
   }, [email, password, confirmPassword, fullName, phone, isMale]);
 
   const onRegister = () => {
-    setLoading(true);
-    setTimeout(() => {
-      dispatch(
-        setAccount({
-          id: 'id1',
-          token: 'token1',
-        }),
-      );
-      setLoading(false);
-    }, 3000);
+    if (password !== confirmPassword) {
+      toastError('Pastikan Kata Sandi Konfirmasi Sama');
+      return;
+    }
+    const data = {
+      email,
+      password,
+      fullName,
+      phoneNumber: phone,
+      isMale,
+      photo,
+    };
+
+    dispatch(registerUser(data));
   };
 
   const onLogin = () => {
     navigation.navigate('LoginScreen');
   };
 
+  const onImageReceived = data => {
+    const { assets, didCancel } = data;
+    if (!didCancel) {
+      dispatch(uploadImage(assets[0]));
+    }
+  };
+
   useEffect(() => {
-    if (account.id) {
+    if (account.userId) {
       navigation.dispatch(
         CommonActions.reset({
           routes: [{ name: 'HomeScreen' }],
@@ -71,8 +89,21 @@ export default () => {
       );
     }
   }, [account, navigation]);
+
+  useEffect(() => {
+    if (main?.uploadResult) {
+      setPhoto(main.uploadResult.document_url);
+      dispatch(setUploadResult(null));
+    }
+  }, [main, dispatch]);
+
   return (
     <>
+      <ImageChooserModal
+        visible={modalVisible}
+        setVisible={setModalVisible}
+        onImageReceived={onImageReceived}
+      />
       <StatusBar backgroundColor={Color.LIGHT_GRAY} barStyle="dark-content" />
       <ScrollView
         style={style.container}
@@ -82,8 +113,14 @@ export default () => {
           <Text style={style.title1}>Daftar</Text>
           <Text style={style.title2}> Akun Baru</Text>
         </View>
-        <Pressable style={style.profilePicHolder}>
-          <Image source={profilePlaceholder} style={style.profilePic} />
+        <Pressable
+          style={style.profilePicHolder}
+          onPress={() => setModalVisible(true)}>
+          <Image
+            source={photo ? { uri: absoluteUrl(photo) } : profilePlaceholder}
+            style={style.profilePic}
+          />
+          {loading.uploadImage && <ActivityIndicator size="small" />}
         </Pressable>
         <Input
           style={style.input}
@@ -123,8 +160,10 @@ export default () => {
           onChange={setConfirmPassword}
           placeholder="Ulangi Kata Sandi"
         />
-        <ButtonPrimary disabled={!isFormFilled || loading} onClick={onRegister}>
-          {loading ? 'Mohon Tunggu' : 'Daftar'}
+        <ButtonPrimary
+          disabled={!isFormFilled || loading.register}
+          onClick={onRegister}>
+          {loading.register ? 'Mohon Tunggu' : 'Daftar'}
         </ButtonPrimary>
         <View style={style.footer}>
           <Text style={style.footer1}>Sudah Memiliki Akun? </Text>

@@ -16,13 +16,14 @@ import { isEmpty } from '../../utils/validation';
 import style from './style';
 import { useEffect } from 'react';
 import { loginUser } from '../../store/auth.action';
+import { toastError } from '../../utils/error';
 
 export default () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
   const navigation = useNavigation();
-  const { account, loading } = useSelector(state => state);
+  const { account, loading, error } = useSelector(state => state);
   const dispatch = useDispatch();
 
   const isFormFilled = useMemo(() => {
@@ -51,6 +52,7 @@ export default () => {
       );
     }
   }, [account, navigation]);
+
   return (
     <>
       <StatusBar backgroundColor={Color.LIGHT_GRAY} barStyle="dark-content" />

@@ -8,15 +8,15 @@ const registerHandler = async (req, res, next) => {
   try {
     const payload = req.body;
     const {
-      full_name,
-      phone_number,
-      is_male,
+      fullName,
+      phoneNumber,
+      isMale,
       email,
       password,
       photo,
     } = payload;
 
-    if (!full_name, !phone_number, !is_male, !email, !password, !phone_number, !photo) {
+    if (!fullName, !phoneNumber, !isMale, !email, !password, !photo) {
       throw DataIncompleteError;
     }
 

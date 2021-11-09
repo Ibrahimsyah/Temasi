@@ -89,7 +89,9 @@ export default StyleSheet.create({
 
   image: {
     width: '100%',
-    height: '100%',
+    height: 200,
+    borderRadius: 12,
+    marginTop: 10,
     backgroundColor: Color.MED_RED,
   },
 
