@@ -1,5 +1,6 @@
 import { takeLatest, put, call } from 'redux-saga/effects';
 import api from '../../provider/api';
+import { toastError } from '../../utils/error';
 import { setAccount } from '../account.action';
 
 import { LOGIN_USER, REGISTER_USER } from '../ActionTypes';
@@ -13,7 +14,7 @@ function* register(action) {
     yield put(setAccount(result));
   } catch (err) {
     console.log(err);
-    yield put(setError('register', err));
+    toastError(err);
   } finally {
     yield put(setLoading('register', false));
   }
@@ -26,7 +27,7 @@ function* login(action) {
     yield put(setAccount(result));
   } catch (err) {
     console.log(err);
-    yield put(setError('login', err));
+    toastError(err);
   } finally {
     yield put(setLoading('login', false));
   }

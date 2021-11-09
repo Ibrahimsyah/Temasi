@@ -97,11 +97,6 @@ export default () => {
     }
   }, [main, dispatch]);
 
-  useEffect(() => {
-    if (error.register) {
-      toastError(error.register);
-    }
-  }, [error.register]);
   return (
     <>
       <ImageChooserModal

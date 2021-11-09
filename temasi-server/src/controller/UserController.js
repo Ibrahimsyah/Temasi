@@ -41,7 +41,7 @@ const loginUser = async (payload) => {
   const token = generateToken({userId: account.id});
 
   return {
-    name: account.full_name,
+    fullName: account.full_name,
     email,
     userId: account.id,
     phoneNumber: account.phone_number,
