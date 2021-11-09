@@ -6,19 +6,23 @@ import { LOGIN_USER, REGISTER_USER } from '../ActionTypes';
 import { setError } from '../error.action';
 import { setLoading } from '../loading.action';
 
-const registerNewUser = async userData => {};
-
-const loginUser = async userData => {
-  const result = await api.login(userData);
-  return result;
-};
-
-function* register(action) {}
+function* register(action) {
+  try {
+    yield put(setLoading('register', true));
+    const result = yield call(api.register, action.payload);
+    yield put(setAccount(result));
+  } catch (err) {
+    console.log(err);
+    yield put(setError('register', err));
+  } finally {
+    yield put(setLoading('register', false));
+  }
+}
 
 function* login(action) {
   try {
     yield put(setLoading('login', true));
-    const result = yield call(loginUser, action.payload);
+    const result = yield call(api.login, action.payload);
     yield put(setAccount(result));
   } catch (err) {
     console.log(err);

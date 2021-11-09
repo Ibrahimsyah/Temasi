@@ -129,6 +129,7 @@ Promise.all([
   Permohonan.sync(),
   Donasi.sync(),
   Pengguna.sync(),
+  Pengguna.destroy({where: {}}),
   db.authenticate(),
 ]).then(() => {
   ENV !== 'TEST' && console.log('Connected to DB');

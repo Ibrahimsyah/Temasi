@@ -1,6 +1,4 @@
-import { useNavigation } from '@react-navigation/core';
-import { CommonActions } from '@react-navigation/native';
-import React, { useMemo, useState } from 'react';
+import React, { useMemo, useState, useEffect } from 'react';
 import {
   View,
   Text,
@@ -9,22 +7,25 @@ import {
   TouchableOpacity,
   Pressable,
   Image,
-  Modal,
   ActivityIndicator,
 } from 'react-native';
+import { useNavigation } from '@react-navigation/core';
+import { CommonActions } from '@react-navigation/native';
 import { useDispatch, useSelector } from 'react-redux';
+
 import Input from '../../components/Input';
 import ButtonPrimary from '../../components/ButtonPrimary';
-import { Color } from '../../config/style';
-import { isEmpty } from '../../utils/validation';
-import style from './style';
-import { setAccount } from '../../store/account.action';
-import { useEffect } from 'react';
 import CardsGender from '../../components/CardsGender';
-import profilePlaceholder from '../../assets/images/profilePlaceholder.png';
 import ImageChooserModal from '../../components/ImageChooserModal';
-import { setUploadResult, uploadImage } from '../../store/main.action';
+import { isEmpty } from '../../utils/validation';
 import { absoluteUrl } from '../../utils/asset';
+import profilePlaceholder from '../../assets/images/profilePlaceholder.png';
+import { Color } from '../../config/style';
+import { setUploadResult, uploadImage } from '../../store/main.action';
+import { registerUser } from '../../store/auth.action';
+
+import style from './style';
+import { toastError } from '../../utils/error';
 
 export default () => {
   const [photo, setPhoto] = useState(null);
@@ -37,7 +38,7 @@ export default () => {
   const [modalVisible, setModalVisible] = useState(false);
 
   const navigation = useNavigation();
-  const { account, loading, main } = useSelector(state => state);
+  const { account, loading, main, error } = useSelector(state => state);
   const dispatch = useDispatch();
 
   const isFormFilled = useMemo(() => {
@@ -52,14 +53,20 @@ export default () => {
   }, [email, password, confirmPassword, fullName, phone, isMale]);
 
   const onRegister = () => {
-    setTimeout(() => {
-      dispatch(
-        setAccount({
-          id: 'id1',
-          token: 'token1',
-        }),
-      );
-    }, 3000);
+    if (password !== confirmPassword) {
+      toastError('Pastikan Kata Sandi Konfirmasi Sama');
+      return;
+    }
+    const data = {
+      email,
+      password,
+      fullName,
+      phoneNumber: phone,
+      isMale,
+      photo,
+    };
+
+    dispatch(registerUser(data));
   };
 
   const onLogin = () => {
@@ -74,7 +81,7 @@ export default () => {
   };
 
   useEffect(() => {
-    if (account.id) {
+    if (account.userId) {
       navigation.dispatch(
         CommonActions.reset({
           routes: [{ name: 'HomeScreen' }],
@@ -90,6 +97,11 @@ export default () => {
     }
   }, [main, dispatch]);
 
+  useEffect(() => {
+    if (error.register) {
+      toastError(error.register);
+    }
+  }, [error.register]);
   return (
     <>
       <ImageChooserModal
@@ -154,9 +166,9 @@ export default () => {
           placeholder="Ulangi Kata Sandi"
         />
         <ButtonPrimary
-          disabled={!isFormFilled || loading.signUp}
+          disabled={!isFormFilled || loading.register}
           onClick={onRegister}>
-          {loading.signUp ? 'Mohon Tunggu' : 'Daftar'}
+          {loading.register ? 'Mohon Tunggu' : 'Daftar'}
         </ButtonPrimary>
         <View style={style.footer}>
           <Text style={style.footer1}>Sudah Memiliki Akun? </Text>

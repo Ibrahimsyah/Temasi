@@ -4,9 +4,9 @@ const {UserNotFoundError} = require('../util/error');
 
 const registerUser = async (payload) => {
   const {
-    full_name,
-    phone_number,
-    is_male,
+    fullName,
+    phoneNumber,
+    isMale,
     email,
     password,
   } = payload;
@@ -15,17 +15,17 @@ const registerUser = async (payload) => {
 
   const userId = await addNewUser({
     email,
-    phone_number,
-    full_name,
+    phoneNumber,
+    fullName,
     password,
-    is_male,
+    isMale,
   });
 
   const token = generateToken({userId});
 
   return {
-    name: full_name,
-    phoneNumber: phone_number,
+    name: fullName,
+    phoneNumber: phoneNumber,
     email,
     userId,
     token,

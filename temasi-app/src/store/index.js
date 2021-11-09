@@ -5,11 +5,13 @@ import sagas from './sagas';
 import AccountReducer from './account.reducer';
 import LoadingReducer from './loading.reducer';
 import MainReducer from './main.reducer';
+import ErrorReducer from './error.reducer';
 
 const reducers = combineReducers({
   account: AccountReducer,
   loading: LoadingReducer,
   main: MainReducer,
+  error: ErrorReducer,
 });
 
 const sagaMiddleware = createSagaMiddleware();
