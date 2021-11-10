@@ -3,7 +3,7 @@ const morgan = require('morgan');
 const cors = require('cors');
 
 const {PORT, ENV} = require('./src/config');
-const {commonApi, uploadApi, authApi} = require('./src/apis');
+const {commonApi, uploadApi, authApi, permohonanApi} = require('./src/apis');
 const {notFound, errorHandler} = require('./src/util/middleware');
 require('./src/services/db');
 
@@ -20,6 +20,7 @@ app.use('/media', express.static('./media'));
 app.use('/', commonApi);
 app.use('/auth', authApi);
 app.use('/upload', uploadApi);
+app.use('/permohonan', permohonanApi);
 
 // Api fallback
 app.use(notFound);
