@@ -37,4 +37,5 @@ export default {
   login: payload => post('/auth/login', payload),
   register: payload => post('/auth/register', payload),
   upload: payload => post('/upload', payload),
+  createPermohonan: payload => post('/permohonan', payload),
 };
