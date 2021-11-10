@@ -12,6 +12,7 @@ import Geolocation from '@react-native-community/geolocation';
 import CheckBox from '@react-native-community/checkbox';
 import RNAndroidLocationEnabler from 'react-native-android-location-enabler';
 import { useDispatch, useSelector } from 'react-redux';
+import { useNavigation } from '@react-navigation/core';
 
 import ButtonPrimary from '../../components/ButtonPrimary';
 import Header from '../../components/Header';
@@ -24,10 +25,14 @@ import CardsRhesusDarah from '../../components/CardsRhesusDarah';
 import { Map } from '../../components/Map';
 
 import { absoluteUrl } from '../../utils/asset';
-import { TYPE_PLASMA } from '../../config/ItemTypes';
+import { PLASMA, TYPE_PLASMA } from '../../config/ItemTypes';
 
 import style from './style';
 import { setUploadResult, uploadImage } from '../../store/main.action';
+import { generatePlasmaTitle } from '../../utils/text';
+import { submitPermohonan } from '../../store/permohonan.action';
+import { STATUS_REQUEST_SUCCESS } from '../../config/request';
+import { showToast } from '../../utils/error';
 
 export default () => {
   const [documents, setDocuments] = useState([]);
@@ -39,12 +44,21 @@ export default () => {
   const [modalVisible, setModalVisible] = useState(false);
   const [position, setPosition] = useState(null);
   const [address, setAddress] = useState('');
-  const [administration, setAdministration] = useState('');
   const [description, setDescription] = useState('');
   const [agreement, setAgreement] = useState(false);
 
-  const { loading, main } = useSelector(state => state);
+  const { loading, main, status } = useSelector(state => state);
   const dispatch = useDispatch();
+  const navigation = useNavigation();
+
+  const disabled =
+    !tipe ||
+    documents.length <= 0 ||
+    (tipe !== TYPE_PLASMA && !judul) ||
+    (tipe === TYPE_PLASMA && (!golonganDarah || !rhesus || !description)) ||
+    !address ||
+    !jangkaWaktu ||
+    !agreement;
 
   const onImageReceived = data => {
     const { assets, didCancel } = data;
@@ -54,17 +68,20 @@ export default () => {
   };
 
   const onBuatPermohonan = () => {
+    const title =
+      tipe !== TYPE_PLASMA ? judul : generatePlasmaTitle(golonganDarah, rhesus);
     const data = {
       documents,
-      tipe,
-      judul,
-      jangkaWaktu,
-      position,
+      type: tipe,
+      title,
+      timeout: jangkaWaktu,
+      longitude: position.longitude,
+      latitude: position.latitude,
       address,
-      administration,
-      description,
+      note: description,
     };
-    console.log(data);
+
+    dispatch(submitPermohonan(data));
   };
 
   useEffect(() => {
@@ -98,6 +115,12 @@ export default () => {
     });
   }, []);
 
+  useEffect(() => {
+    if (status.createPermohonan === STATUS_REQUEST_SUCCESS) {
+      navigation.goBack();
+      showToast('Permohonan Berhasil Dibuat');
+    }
+  }, [status, navigation]);
   return (
     <>
       <ImageChooserModal
@@ -191,8 +214,8 @@ export default () => {
             <Input
               style={style.input}
               placeholder="Contoh: Biaya dan urusan administrasi saya tanggung dengan keluarga, donatur tidak perlu mengeluarkan uang"
-              value={administration}
-              onChange={setAdministration}
+              value={description}
+              onChange={setDescription}
             />
           </>
         ) : (
@@ -221,7 +244,7 @@ export default () => {
         </View>
         <ButtonPrimary
           style={style.buttonSubmit}
-          disabled={!agreement}
+          disabled={disabled}
           onClick={onBuatPermohonan}>
           Buat Permohonan
         </ButtonPrimary>

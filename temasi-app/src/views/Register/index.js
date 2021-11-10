@@ -25,7 +25,7 @@ import { setUploadResult, uploadImage } from '../../store/main.action';
 import { registerUser } from '../../store/auth.action';
 
 import style from './style';
-import { toastError } from '../../utils/error';
+import { showToast } from '../../utils/error';
 
 export default () => {
   const [photo, setPhoto] = useState(null);
@@ -54,7 +54,7 @@ export default () => {
 
   const onRegister = () => {
     if (password !== confirmPassword) {
-      toastError('Pastikan Kata Sandi Konfirmasi Sama');
+      showToast('Pastikan Kata Sandi Konfirmasi Sama');
       return;
     }
     const data = {

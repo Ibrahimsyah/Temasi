@@ -51,7 +51,7 @@ const Permohonan = db.define('permohonan', {
     type: DataTypes.SMALLINT,
   },
   submit_date: {
-    type: DataTypes.INTEGER,
+    type: DataTypes.DATE,
   },
   timeout: {
     type: DataTypes.INTEGER,
@@ -61,6 +61,9 @@ const Permohonan = db.define('permohonan', {
   },
   latitude: {
     type: DataTypes.FLOAT,
+  },
+  address: {
+    type: DataTypes.STRING,
   },
   note: {
     type: DataTypes.STRING,
@@ -92,13 +95,13 @@ const Donasi = db.define('donasi', {
     primaryKey: true,
   },
   donasi_date: {
-    type: DataTypes.INTEGER,
+    type: DataTypes.DATE,
   },
   status: {
     type: DataTypes.INTEGER,
   },
   received_date: {
-    type: DataTypes.INTEGER,
+    type: DataTypes.DATE,
   },
 }, {
   tableName: 'donasi',

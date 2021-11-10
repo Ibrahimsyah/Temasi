@@ -16,7 +16,7 @@ import { isEmpty } from '../../utils/validation';
 import style from './style';
 import { useEffect } from 'react';
 import { loginUser } from '../../store/auth.action';
-import { toastError } from '../../utils/error';
+import { showToast } from '../../utils/error';
 
 export default () => {
   const [email, setEmail] = useState('');
