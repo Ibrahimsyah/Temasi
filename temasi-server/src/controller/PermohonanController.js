@@ -1,5 +1,5 @@
 const {insertDocument} = require('../repositories/DokumenRepository');
-const {insertPermohonan} = require('../repositories/PermohonanRepository');
+const {insertPermohonan, getAllPermohonan} = require('../repositories/PermohonanRepository');
 const {insertSuccess} = require('../util/response');
 
 const addPermohonan = async (payload) => {
@@ -23,6 +23,12 @@ const addPermohonan = async (payload) => {
   return insertSuccess;
 };
 
+const getPermohonan = async (payload) => {
+  const result = getAllPermohonan();
+  return result;
+};
+
 module.exports = {
   addPermohonan,
+  getPermohonan,
 };

@@ -35,6 +35,17 @@ const addPermohonanHandler = async (req, res, next) => {
   }
 };
 
+const getAllPermohonanHandler = async (req, res, next) => {
+  try {
+    const result = await PermohonanController.getPermohonan();
+    res.status(200);
+    res.send(result);
+  } catch (err) {
+    next(err);
+  }
+};
+
 router.post('/', validateUser, addPermohonanHandler);
+router.get('/', getAllPermohonanHandler);
 
 module.exports = router;
