@@ -27,7 +27,12 @@ const getAllPermohonan = async (payload) => {
   const {order = 'time_remaining', sort = 'asc', q, type} = payload || {};
 
   let query = `
-  select *
+  select 
+    dt.id,
+    title,
+    type,
+    time_remaining,
+    distance
   from (
     select id, 
     pengguna_id , 
@@ -39,7 +44,8 @@ const getAllPermohonan = async (payload) => {
     timeout*24 - (date_part('epoch', (now() - submit_date))/3600)::int as time_remaining
     from permohonan p 
   ) as dt
-  where (date_part('epoch', (now() - submit_date))/3600)::int <= timeout*24
+  left join donasi d on d.permohonan_id = dt.id 
+  where (date_part('epoch', (now() - submit_date))/3600)::int <= timeout*24 and d.id is null
   `;
 
   if (q) {
@@ -74,7 +80,7 @@ const getAllPermohonan = async (payload) => {
 
 const getSelfPermohonan = async (userId) => {
   const query = `
-  select dt.id, dt.pengguna_id, title, type, status, time_remaining
+  select dt.id, title, type, status, time_remaining
   from (
     select p.id, 
     pengguna_id , 

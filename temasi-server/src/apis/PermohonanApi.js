@@ -68,8 +68,8 @@ const getPermohonanDetailHandler = async (req, res, next) => {
 };
 
 router.post('/', validateUser, addPermohonanHandler);
-router.get('/:permohonan_id', validateUser, getPermohonanDetailHandler);
 router.get('/self', validateUser, getSelfPermohonanHandler);
+router.get('/:permohonan_id', validateUser, getPermohonanDetailHandler);
 router.get('/', getAllPermohonanHandler);
 
 module.exports = router;
