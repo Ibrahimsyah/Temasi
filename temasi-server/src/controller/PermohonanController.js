@@ -1,5 +1,5 @@
 const {insertDocument} = require('../repositories/DokumenRepository');
-const {insertPermohonan, getAllPermohonan} = require('../repositories/PermohonanRepository');
+const {insertPermohonan, getAllPermohonan, getSelfPermohonan, getDetailPermohonan} = require('../repositories/PermohonanRepository');
 const {insertSuccess} = require('../util/response');
 
 const addPermohonan = async (payload) => {
@@ -24,11 +24,23 @@ const addPermohonan = async (payload) => {
 };
 
 const getPermohonan = async (payload) => {
-  const result = getAllPermohonan();
+  const result = getAllPermohonan(payload);
+  return result;
+};
+
+const getUserPermohonan = async (payload) =>{
+  const result = getSelfPermohonan(payload);
+  return result;
+};
+
+const getPermohonanDetail = async (permohonanId) => {
+  const result = getDetailPermohonan(permohonanId);
   return result;
 };
 
 module.exports = {
   addPermohonan,
   getPermohonan,
+  getUserPermohonan,
+  getPermohonanDetail,
 };

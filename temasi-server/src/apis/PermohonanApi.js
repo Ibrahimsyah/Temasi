@@ -37,7 +37,29 @@ const addPermohonanHandler = async (req, res, next) => {
 
 const getAllPermohonanHandler = async (req, res, next) => {
   try {
-    const result = await PermohonanController.getPermohonan();
+    const result = await PermohonanController.getPermohonan(req.query);
+    res.status(200);
+    res.send(result);
+  } catch (err) {
+    next(err);
+  }
+};
+
+const getSelfPermohonanHandler = async (req, res, next) => {
+  try {
+    const {userId} = req.auth;
+    const result = await PermohonanController.getUserPermohonan(userId);
+    res.status(200);
+    res.send(result);
+  } catch (err) {
+    next(err);
+  }
+};
+
+const getPermohonanDetailHandler = async (req, res, next) => {
+  try {
+    const {permohonan_id} = req.params;
+    const result = await PermohonanController.getPermohonanDetail(permohonan_id);
     res.status(200);
     res.send(result);
   } catch (err) {
@@ -46,6 +68,8 @@ const getAllPermohonanHandler = async (req, res, next) => {
 };
 
 router.post('/', validateUser, addPermohonanHandler);
+router.get('/self', validateUser, getSelfPermohonanHandler);
+router.get('/:permohonan_id', validateUser, getPermohonanDetailHandler);
 router.get('/', getAllPermohonanHandler);
 
 module.exports = router;
