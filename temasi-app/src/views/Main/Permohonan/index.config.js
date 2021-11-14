@@ -1,4 +1,4 @@
-import { STATUS_MATCHED } from '../../../config';
+import { STATUS_DELIVERED, STATUS_MATCHED } from '../../../config';
 
 export default {
   permohonanLatest: [
@@ -7,7 +7,7 @@ export default {
       type: 2,
       title: 'Plasma Darah Golongan AB+',
       time: '3 Hari Lagi',
-      status: STATUS_MATCHED,
+      status: STATUS_DELIVERED,
     },
     {
       id: 2,
