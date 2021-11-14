@@ -24,7 +24,9 @@ const insertPermohonan = async (payload) => {
 };
 
 const getAllPermohonan = async (payload) => {
-  const results = db.query(`
+  const {order = 'time_remaining', sort = 'asc', q, type} = payload || {};
+
+  let query = `
   select *
   from (
     select id, 
@@ -38,10 +40,33 @@ const getAllPermohonan = async (payload) => {
     from permohonan p 
   ) as dt
   where (date_part('epoch', (now() - submit_date))/3600)::int <= timeout*24
-  order by distance asc
-  `, {type: QueryTypes.SELECT});
+  `;
 
-  return results;
+  if (q) {
+    query += ` and lower(title) like '%${q}%'`;
+  }
+  if (type) {
+    query += ` and type = ${type}`;
+  }
+  if (order) {
+    query += ` order by ${order} ${sort}`;
+  }
+
+  const results = await db.query(query, {type: QueryTypes.SELECT});
+  const mappedResult = results.map((permohonan) => {
+    const {id, pengguna_id, title, type, distance, time_remaining} = permohonan;
+    const timeRemaining = time_remaining >= 24 ? `${Math.floor(time_remaining / 24)} Hari` : `${time_remaining} Jam`;
+    const newDistance = `${distance} KM`;
+    return {
+      id,
+      penggunaId: pengguna_id,
+      title,
+      type,
+      distance: newDistance,
+      timeRemaining,
+    };
+  });
+  return mappedResult;
 };
 module.exports = {
   insertPermohonan,

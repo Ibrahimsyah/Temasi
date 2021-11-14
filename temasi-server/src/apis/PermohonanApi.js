@@ -37,7 +37,7 @@ const addPermohonanHandler = async (req, res, next) => {
 
 const getAllPermohonanHandler = async (req, res, next) => {
   try {
-    const result = await PermohonanController.getPermohonan();
+    const result = await PermohonanController.getPermohonan(req.query);
     res.status(200);
     res.send(result);
   } catch (err) {

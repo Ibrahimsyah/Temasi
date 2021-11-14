@@ -24,7 +24,7 @@ const addPermohonan = async (payload) => {
 };
 
 const getPermohonan = async (payload) => {
-  const result = getAllPermohonan();
+  const result = getAllPermohonan(payload);
   return result;
 };
 
