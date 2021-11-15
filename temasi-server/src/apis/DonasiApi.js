@@ -42,8 +42,21 @@ const getDonasiDetailHandler = async (req, res, next) => {
   }
 };
 
+const confirmDonationHandler = async (req, res, next) => {
+  try {
+    const {donasi_id} = req.params;
+
+    const result = await DonasiController.confirmDonationReceived(donasi_id);
+    res.status(200);
+    res.send(result);
+  } catch (err) {
+    next(err);
+  }
+};
+
 router.get('/', validateUser, getAllDonasiHandler);
 router.get('/:donasi_id', getDonasiDetailHandler);
 router.post('/accept', validateUser, acceptBantuanHandler);
+router.put('/confirm/:donasi_id', confirmDonationHandler);
 
 module.exports = router;

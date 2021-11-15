@@ -1,6 +1,7 @@
 const {nanoid} = require('nanoid');
 const {Donasi, db} = require('../services/db');
 const Constant = require('../config/constants');
+const {STATUS_DELIVERED} = require('../config/constants');
 
 const insertDonasi = async (payload) => {
   const {permohonanId, userId} = payload;
@@ -49,8 +50,21 @@ const getDonasiDetail = async (donasiId) => {
   return donasi;
 };
 
+const confirmDonation = async (donationId) => {
+  const receivedDate = Date.now();
+  await Donasi.update({
+    status: STATUS_DELIVERED,
+    received_date: receivedDate,
+  }, {
+    where: {
+      id: donationId,
+    },
+  });
+};
+
 module.exports = {
   insertDonasi,
   getAllDonasi,
   getDonasiDetail,
+  confirmDonation,
 };

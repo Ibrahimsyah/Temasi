@@ -140,6 +140,7 @@ const getDetailPermohonan = async (permohonanId) => {
 const getDonaturPermohonanDetail = async (permohonanId) => {
   const result = await db.query(`
   select p.id,
+  d.id as donation_id,
   p."type" ,
   p.title ,
   p2.full_name ,
