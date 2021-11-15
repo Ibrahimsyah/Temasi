@@ -15,7 +15,6 @@ export default () => {
   const navigation = useNavigation();
 
   const onPermohonanClick = item => {
-    console.log(item);
     if (item.status === STATUS_MATCHED) {
       navigation.navigate('DetailPenyaluran', item);
     }

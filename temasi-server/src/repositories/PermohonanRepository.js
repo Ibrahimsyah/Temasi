@@ -137,9 +137,27 @@ const getDetailPermohonan = async (permohonanId) => {
   return permohonan;
 };
 
+const getDonaturPermohonanDetail = async (permohonanId) => {
+  const result = await db.query(`
+  select p.id,
+  p."type" ,
+  p.title ,
+  p2.full_name ,
+  p2.photo
+  from permohonan p 
+  inner join donasi d on p.id  = d.permohonan_id
+  inner join pengguna p2 on p2.id = d.pengguna_id 
+  where p.id = '${permohonanId}'
+  `);
+
+  const permohonan = result[0][0];
+  return permohonan;
+};
+
 module.exports = {
   insertPermohonan,
   getAllPermohonan,
   getSelfPermohonan,
   getDetailPermohonan,
+  getDonaturPermohonanDetail,
 };
