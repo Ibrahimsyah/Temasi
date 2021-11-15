@@ -1,5 +1,5 @@
 const {nanoid} = require('nanoid');
-const {Donasi} = require('../services/db');
+const {Donasi, db} = require('../services/db');
 const Constant = require('../config/constants');
 
 const insertDonasi = async (payload) => {
@@ -28,7 +28,29 @@ const getAllDonasi = async (userId) => {
   return result;
 };
 
+const getDonasiDetail = async (donasiId) => {
+  const result = await db.query(`
+  select d.id, 
+    p2.phone_number, 
+    p.title ,
+    p."type" ,
+    p.latitude, 
+    p.longitude, 
+    p.address, 
+    p.note 
+  from donasi d 
+  inner join permohonan p on p.id  = d.permohonan_id 
+  inner join pengguna p2 ON p2.id = p.pengguna_id 
+  where d.id = '${donasiId}'
+  `);
+
+  const donasi = result[0][0];
+
+  return donasi;
+};
+
 module.exports = {
   insertDonasi,
   getAllDonasi,
+  getDonasiDetail,
 };
