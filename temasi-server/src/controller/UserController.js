@@ -1,5 +1,5 @@
 const {generateToken} = require('../util/tokenizer');
-const {getUserByEmail, addNewUser, verifyUserPassword, checkUserExists} = require('../repositories/UserRepository');
+const UserRepository = require('../repositories/UserRepository');
 const {UserNotFoundError} = require('../util/error');
 
 const registerUser = async (payload) => {
@@ -10,9 +10,9 @@ const registerUser = async (payload) => {
     photo,
   } = payload;
 
-  await checkUserExists(email);
+  await UserRepository.checkUserExists(email);
 
-  const userId = await addNewUser(payload);
+  const userId = await UserRepository.addNewUser(payload);
 
   const token = generateToken({userId});
 
@@ -28,10 +28,10 @@ const registerUser = async (payload) => {
 
 const loginUser = async (payload) => {
   const {email, password} = payload;
-  const account = await getUserByEmail(email);
+  const account = await UserRepository.getUserByEmail(email);
   if (!account) throw UserNotFoundError;
 
-  await verifyUserPassword(password, account.password);
+  await UserRepository.verifyUserPassword(password, account.password);
   const token = generateToken({userId: account.id});
 
   return {
@@ -44,7 +44,13 @@ const loginUser = async (payload) => {
   };
 };
 
+const getProfileSummary = async (userId) => {
+  const result = await UserRepository.getProfileSummary(userId);
+  return result;
+};
+
 module.exports = {
   registerUser,
   loginUser,
+  getProfileSummary,
 };

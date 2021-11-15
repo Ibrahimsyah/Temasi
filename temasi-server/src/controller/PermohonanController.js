@@ -1,10 +1,10 @@
 const {insertDocument} = require('../repositories/DokumenRepository');
-const {insertPermohonan, getAllPermohonan, getSelfPermohonan, getDetailPermohonan} = require('../repositories/PermohonanRepository');
+const PermohonanRepository = require('../repositories/PermohonanRepository');
 const {insertSuccess} = require('../util/response');
 
 const addPermohonan = async (payload) => {
   const {penggunaId, type, title, documents, timeout, longitude, latitude, address, note} = payload;
-  const permohonanData ={
+  const permohonanData = {
     penggunaId,
     type,
     title,
@@ -15,7 +15,7 @@ const addPermohonan = async (payload) => {
     note,
   };
 
-  const permohonanId = await insertPermohonan(permohonanData);
+  const permohonanId = await PermohonanRepository.insertPermohonan(permohonanData);
   await insertDocument({
     permohonanId, documents,
   });
@@ -24,17 +24,22 @@ const addPermohonan = async (payload) => {
 };
 
 const getPermohonan = async (payload) => {
-  const result = getAllPermohonan(payload);
+  const result = PermohonanRepository.getAllPermohonan(payload);
   return result;
 };
 
-const getUserPermohonan = async (payload) =>{
-  const result = getSelfPermohonan(payload);
+const getUserPermohonan = async (payload) => {
+  const result = PermohonanRepository.getSelfPermohonan(payload);
   return result;
 };
 
 const getPermohonanDetail = async (permohonanId) => {
-  const result = getDetailPermohonan(permohonanId);
+  const result = PermohonanRepository.getDetailPermohonan(permohonanId);
+  return result;
+};
+
+const getDonaturPermohonanDetail = async (permohonanId) => {
+  const result = PermohonanRepository.getDonaturPermohonanDetail(permohonanId);
   return result;
 };
 
@@ -43,4 +48,5 @@ module.exports = {
   getPermohonan,
   getUserPermohonan,
   getPermohonanDetail,
+  getDonaturPermohonanDetail,
 };

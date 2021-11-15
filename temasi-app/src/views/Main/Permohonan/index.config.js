@@ -7,7 +7,7 @@ export default {
       type: 2,
       title: 'Plasma Darah Golongan AB+',
       time: '3 Hari Lagi',
-      status: STATUS_DELIVERED,
+      status: STATUS_MATCHED,
     },
     {
       id: 2,

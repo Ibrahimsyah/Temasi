@@ -67,9 +67,21 @@ const getPermohonanDetailHandler = async (req, res, next) => {
   }
 };
 
+const getDonaturPermohonanDetailHandler = async (req, res, next) => {
+  try {
+    const {permohonan_id} = req.params;
+    const result = await PermohonanController.getDonaturPermohonanDetail(permohonan_id);
+    res.status(200);
+    res.send(result);
+  } catch (err) {
+    next(err);
+  }
+};
+
 router.post('/', validateUser, addPermohonanHandler);
 router.get('/self', validateUser, getSelfPermohonanHandler);
 router.get('/:permohonan_id', validateUser, getPermohonanDetailHandler);
 router.get('/', getAllPermohonanHandler);
+router.get('/matched/:permohonan_id', getDonaturPermohonanDetailHandler);
 
 module.exports = router;
