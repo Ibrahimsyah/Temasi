@@ -18,6 +18,17 @@ const insertDonasi = async (payload) => {
   });
 };
 
+const getAllDonasi = async (userId) => {
+  const result = await Donasi.findAll({where: {
+    pengguna_id: userId,
+  }, order: [
+    ['donasi_date', 'desc'],
+  ]});
+
+  return result;
+};
+
 module.exports = {
   insertDonasi,
+  getAllDonasi,
 };

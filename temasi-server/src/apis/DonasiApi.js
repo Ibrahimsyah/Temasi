@@ -18,6 +18,19 @@ const acceptBantuanHandler = async (req, res, next) => {
   }
 };
 
+const getAllDonasiHandler = async (req, res, next) => {
+  try {
+    const {userId} = req.auth;
+
+    const result = await DonasiController.fetchDonasiByUser(userId);
+    res.status(200);
+    res.send(result);
+  } catch (err) {
+    next(err);
+  }
+};
+
+router.get('/', validateUser, getAllDonasiHandler);
 router.post('/accept', validateUser, acceptBantuanHandler);
 
 module.exports = router;
