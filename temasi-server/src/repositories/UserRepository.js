@@ -1,7 +1,7 @@
 const bcrypt = require('bcrypt');
 const {nanoid} = require('nanoid');
 
-const {Pengguna} = require('../services/db');
+const {Pengguna, db} = require('../services/db');
 const {SALT_ROUND} = require('../config');
 const {LoginError, UserExistsError} = require('../util/error');
 
@@ -38,9 +38,20 @@ const verifyUserPassword = async (password, accountPassword) => {
   if (!isPasswordMatched) throw LoginError;
 };
 
+const getProfileSummary = async (userId) => {
+  const result = await db.query(`
+  select * from
+  (select count(*) permohonan_count from permohonan p where p.pengguna_id = '${userId}') as p,
+  (select count(*) donasi_count from donasi d where d.pengguna_id = '${userId}' and d.status = 3) as d
+  `);
+
+  return result[0][0];
+};
+
 module.exports = {
   getUserByEmail,
   addNewUser,
   verifyUserPassword,
   checkUserExists,
+  getProfileSummary,
 };
