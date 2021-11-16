@@ -32,10 +32,33 @@ const post = async (url, body) => {
   return data;
 };
 
+const put = async (url, body) => {
+  const { data } = await axios.put(`${AppConfig.BASE_URL}${url}`, body);
+  return data;
+};
+
 export default {
+  //Basic
   ping: () => get('/ping'),
+
+  // Auth and User
   login: payload => post('/auth/login', payload),
   register: payload => post('/auth/register', payload),
+  getUserSummary: () => get('/user/summary'),
+
+  // Upload
   upload: payload => post('/upload', payload),
+
+  // Permohonan
   createPermohonan: payload => post('/permohonan', payload),
+  getSelfPermohonan: () => get('/permohonan/self'),
+  getPermohonanDetail: payload => get(`/permohonan/${payload.permohonanId}`),
+  getDonaturPermohonanDetail: payload =>
+    get(`/permohonan/matched/${payload.permohonanId}`),
+
+  // Donasi
+  getAllDonasi: () => get('/donasi'),
+  getDonasiDetail: payload => get(`/donasi/${payload.donasiId}`),
+  acceptDonasi: payload => post('/donasi/accept', payload),
+  confirmDonasiReceived: payload => put(`/donasi/accept/${payload.donasiId}`),
 };
