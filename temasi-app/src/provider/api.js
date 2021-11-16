@@ -22,8 +22,20 @@ axios.interceptors.request.use(async config => {
   return config;
 });
 
-export const get = async url => {
-  const { data } = await axios.get(`${AppConfig.BASE_URL}${url}`);
+export const get = async (url, params) => {
+  let queryParam = '';
+  if (params) {
+    queryParam += '?';
+  }
+
+  Object.keys(params).forEach((key, index, arr) => {
+    queryParam += `${key}=${params[key]}`;
+    if (index !== arr.length - 1) {
+      queryParam += '&';
+    }
+  });
+
+  const { data } = await axios.get(`${AppConfig.BASE_URL}${url}${queryParam}`);
   return data;
 };
 
@@ -50,6 +62,7 @@ export default {
   upload: payload => post('/upload', payload),
 
   // Permohonan
+  getPermohonan: payload => get('/permohonan', payload),
   createPermohonan: payload => post('/permohonan', payload),
   getSelfPermohonan: () => get('/permohonan/self'),
   getPermohonanDetail: payload => get(`/permohonan/${payload.permohonanId}`),
