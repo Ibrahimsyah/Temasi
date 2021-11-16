@@ -131,13 +131,14 @@ const renderCategoryAndIcon = itemType => {
 };
 
 export default props => {
-  const { type, title, distance, timeRemaining } = props;
+  const { id, type, title, distance, timeRemaining } = props;
 
   const navigation = useNavigation();
   const account = useSelector(state => state.account);
 
   const onClickHandler = () => {
     const data = {
+      id,
       type,
       title,
       distance,

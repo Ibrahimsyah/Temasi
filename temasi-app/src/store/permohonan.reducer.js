@@ -1,6 +1,7 @@
 import {
   SET_DONATUR_PERMOHONAN_DETAIL,
   SET_LATEST_PERMOHONAN,
+  SET_PERMOHONAN_DETAIL,
   SET_SEARCH_PERMOHONAN_RESULT,
   SET_SELF_PERMOHONAN,
   SET_URGENT_PERMOHONAN,
@@ -12,6 +13,7 @@ const initState = {
   searchResult: [],
   self: [],
   donaturDetail: null,
+  detail: null,
 };
 
 export default (state = initState, action) => {
@@ -45,6 +47,12 @@ export default (state = initState, action) => {
       return {
         ...state,
         donaturDetail: payload,
+      };
+    }
+    case SET_PERMOHONAN_DETAIL: {
+      return {
+        ...state,
+        detail: payload,
       };
     }
     default:

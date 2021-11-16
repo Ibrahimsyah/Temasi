@@ -30,7 +30,6 @@ import {
 const greeting = generateGreeting();
 
 export default () => {
-  const [data, setData] = useState(config.initState);
   const navigation = useNavigation();
   const dispatch = useDispatch();
   const { account, permohonan, loading } = useSelector(state => state);
@@ -44,19 +43,9 @@ export default () => {
   };
 
   useEffect(() => {
-    setTimeout(() => {
-      setData(config.dummyState);
-    }, 100);
-  }, []);
-
-  useEffect(() => {
     dispatch(getLatestPermohonan());
     dispatch(getUrgentPermohonan());
   }, [dispatch]);
-
-  useEffect(() => {
-    console.log(permohonan);
-  }, [permohonan]);
 
   return (
     <>

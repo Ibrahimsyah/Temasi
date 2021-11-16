@@ -93,7 +93,7 @@ const style = StyleSheet.create({
 });
 
 export default props => {
-  const { onClick, type, title, distance, timeRemaining, status } = props;
+  const { onClick, id, type, title, distance, timeRemaining, status } = props;
 
   const { iconBgColor, icon, color, category } = useMemo(
     () => generateCategoryStyle(type),
@@ -105,6 +105,7 @@ export default props => {
 
   const onClickHandler = () => {
     const data = {
+      id,
       type,
       title,
       distance,
