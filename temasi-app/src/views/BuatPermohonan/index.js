@@ -33,6 +33,7 @@ import { generatePlasmaTitle } from '../../utils/text';
 import { submitPermohonan } from '../../store/permohonan.action';
 import { STATUS_REQUEST_SUCCESS } from '../../config/request';
 import { showToast } from '../../utils/error';
+import { clearStatus, setStatus } from '../../store/status.action';
 
 export default () => {
   const [documents, setDocuments] = useState([]);
@@ -119,8 +120,9 @@ export default () => {
     if (status.createPermohonan === STATUS_REQUEST_SUCCESS) {
       navigation.goBack();
       showToast('Permohonan Berhasil Dibuat');
+      dispatch(clearStatus('createPermohonan'));
     }
-  }, [status, navigation]);
+  }, [dispatch, status, navigation]);
   return (
     <>
       <ImageChooserModal
@@ -244,9 +246,9 @@ export default () => {
         </View>
         <ButtonPrimary
           style={style.buttonSubmit}
-          disabled={disabled}
+          disabled={disabled || loading.createPermohonan}
           onClick={onBuatPermohonan}>
-          Buat Permohonan
+          {loading.createPermohonan ? 'Mohon Tunggu' : 'Buat Permohonan'}
         </ButtonPrimary>
       </ScrollView>
     </>

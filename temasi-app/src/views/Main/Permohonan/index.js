@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { ScrollView, Text } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { ActivityIndicator, ScrollView, Text } from 'react-native';
 import { useNavigation } from '@react-navigation/core';
 
 import CardPermohonan from '../../../components/CardPermohonan';
@@ -9,9 +9,12 @@ import style from './style';
 import config from './index.config';
 import NotFound from '../../../components/NotFound';
 import { STATUS_MATCHED } from '../../../config';
+import { useDispatch, useSelector } from 'react-redux';
+import { getSelfPermohonan } from '../../../store/permohonan.action';
 
 export default () => {
-  const [data] = useState(config.permohonanLatest);
+  const dispatch = useDispatch();
+  const { permohonan, loading } = useSelector(state => state);
   const navigation = useNavigation();
 
   const onPermohonanClick = item => {
@@ -24,20 +27,32 @@ export default () => {
     navigation.navigate('BuatPermohonanScreen');
   };
 
+  useEffect(() => {
+    dispatch(getSelfPermohonan());
+  }, [dispatch]);
+
   return (
     <>
-      <ScrollView
-        style={style.container}
-        contentContainerStyle={style.contentContainer}>
-        <Text style={style.title}>Permohonan Anda</Text>
-        {!data.length ? (
-          <NotFound message="Anda atau kerabat anda membutuhkan bantuan isolasi mandiri? Segera buat permohonan dan temukan orang baik yang akan membantu anda" />
-        ) : (
-          data.map((item, index) => (
-            <CardPermohonan {...item} key={index} onClick={onPermohonanClick} />
-          ))
-        )}
-      </ScrollView>
+      {loading.createPermohonan ? (
+        <ActivityIndicator size="small" />
+      ) : (
+        <ScrollView
+          style={style.container}
+          contentContainerStyle={style.contentContainer}>
+          <Text style={style.title}>Permohonan Anda</Text>
+          {!permohonan.self.length ? (
+            <NotFound message="Anda atau kerabat anda membutuhkan bantuan isolasi mandiri? Segera buat permohonan dan temukan orang baik yang akan membantu anda" />
+          ) : (
+            permohonan.self.map((item, index) => (
+              <CardPermohonan
+                {...item}
+                key={index}
+                onClick={onPermohonanClick}
+              />
+            ))
+          )}
+        </ScrollView>
+      )}
       <FABPermohonan onClick={onCreatePermohonan} />
     </>
   );

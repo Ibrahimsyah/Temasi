@@ -26,14 +26,13 @@ export const get = async (url, params) => {
   let queryParam = '';
   if (params) {
     queryParam += '?';
+    Object.keys(params).forEach((key, index, arr) => {
+      queryParam += `${key}=${params[key]}`;
+      if (index !== arr.length - 1) {
+        queryParam += '&';
+      }
+    });
   }
-
-  Object.keys(params).forEach((key, index, arr) => {
-    queryParam += `${key}=${params[key]}`;
-    if (index !== arr.length - 1) {
-      queryParam += '&';
-    }
-  });
 
   const { data } = await axios.get(`${AppConfig.BASE_URL}${url}${queryParam}`);
   return data;

@@ -1,4 +1,9 @@
 import {
+  GET_DONATUR_PERMOHONAN_DETAIL,
+  GET_LATEST_PERMOHONAN,
+  GET_SELF_PERMOHONAN,
+  GET_URGENT_PERMOHONAN,
+  SEARCH_PERMOHONAN,
   SET_DONATUR_PERMOHONAN_DETAIL,
   SET_LATEST_PERMOHONAN,
   SET_SEARCH_PERMOHONAN_RESULT,
@@ -45,6 +50,41 @@ export const setSearchPermohonanResult = payload => {
 export const setDonaturPermohonanDetail = payload => {
   return {
     type: SET_DONATUR_PERMOHONAN_DETAIL,
+    payload,
+  };
+};
+
+export const getSelfPermohonan = payload => {
+  return {
+    type: GET_SELF_PERMOHONAN,
+    payload,
+  };
+};
+
+export const getLatestPermohonan = payload => {
+  return {
+    type: GET_LATEST_PERMOHONAN,
+    payload,
+  };
+};
+
+export const getUrgentPermohonan = payload => {
+  return {
+    type: GET_URGENT_PERMOHONAN,
+    payload,
+  };
+};
+
+export const getDonaturPermohonanDetail = payload => {
+  return {
+    type: GET_DONATUR_PERMOHONAN_DETAIL,
+    payload,
+  };
+};
+
+export const searchPermohonan = payload => {
+  return {
+    type: SEARCH_PERMOHONAN,
     payload,
   };
 };

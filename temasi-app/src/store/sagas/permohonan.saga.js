@@ -26,6 +26,7 @@ function* createPermohonan(action) {
     yield put(setLoading('createPermohonan', true));
     const { payload } = action;
     yield call(api.createPermohonan, payload);
+    yield call(getSelfPermohonan);
     yield put(setStatus('createPermohonan', STATUS_REQUEST_SUCCESS));
   } catch (err) {
     console.log(err);
@@ -41,7 +42,7 @@ function* getSelfPermohonan() {
     const result = yield call(api.getSelfPermohonan);
     yield put(setSelfPermohonan(result));
   } catch (err) {
-    console.log(err);
+    console.log(err.stack);
     showToast(err);
   } finally {
     yield put(setLoading('getSelfPermohonan', false));
