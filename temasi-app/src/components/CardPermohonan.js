@@ -93,7 +93,7 @@ const style = StyleSheet.create({
 });
 
 export default props => {
-  const { onClick, type, title, distance, time, status } = props;
+  const { onClick, type, title, distance, timeRemaining, status } = props;
 
   const { iconBgColor, icon, color, category } = useMemo(
     () => generateCategoryStyle(type),
@@ -108,7 +108,7 @@ export default props => {
       type,
       title,
       distance,
-      time,
+      timeRemaining,
       status,
     };
 
@@ -146,7 +146,7 @@ export default props => {
                 <Text style={style.location}>{distance}</Text>
               </View>
             )}
-            {time && <Text style={style.time}>{time}</Text>}
+            {timeRemaining && <Text style={style.time}>{timeRemaining}</Text>}
           </View>
         </View>
       </Pressable>
