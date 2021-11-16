@@ -3,9 +3,16 @@ import { default as FontAwesomeIcon } from 'react-native-vector-icons/FontAwesom
 import { default as FontAwesome5Icon } from 'react-native-vector-icons/FontAwesome5';
 import { default as MaterialCommunityIcon } from 'react-native-vector-icons/MaterialCommunityIcons';
 import { default as MaterialIcon } from 'react-native-vector-icons/MaterialIcons';
-import { View, Text, Pressable, ScrollView, FlatList } from 'react-native';
+import {
+  View,
+  Text,
+  Pressable,
+  ScrollView,
+  FlatList,
+  ActivityIndicator,
+} from 'react-native';
 import { useNavigation } from '@react-navigation/core';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import CardBantuan from '../../../../components/CardBantuan';
 import CardPermohonan from '../../../../components/CardPermohonan';
@@ -15,12 +22,17 @@ import { Color } from '../../../../config/style';
 
 import style from './style';
 import config from './index.config';
+import {
+  getLatestPermohonan,
+  getUrgentPermohonan,
+} from '../../../../store/permohonan.action';
 
 const greeting = generateGreeting();
+
 export default () => {
-  const [data, setData] = useState(config.initState);
   const navigation = useNavigation();
-  const account = useSelector(state => state.account);
+  const dispatch = useDispatch();
+  const { account, permohonan, loading } = useSelector(state => state);
 
   const onSearchClick = () => {
     navigation.navigate('SearchFragment');
@@ -31,10 +43,10 @@ export default () => {
   };
 
   useEffect(() => {
-    setTimeout(() => {
-      setData(config.dummyState);
-    }, 100);
-  }, []);
+    dispatch(getLatestPermohonan());
+    dispatch(getUrgentPermohonan());
+  }, [dispatch]);
+
   return (
     <>
       <ScrollView style={style.container}>
@@ -99,7 +111,7 @@ export default () => {
           horizontal={true}
           style={style.list}
           showsHorizontalScrollIndicator={false}
-          data={data.permohonanUrgent}
+          data={permohonan.mostUrgent}
           renderItem={({ item }) => <CardBantuan {...item} key={item.id} />}
         />
 
@@ -109,8 +121,9 @@ export default () => {
             <Text style={style.showMore}>Lihat Semua</Text>
           </Pressable>
         </View>
+        {loading.getLatestPermohonan && <ActivityIndicator size="small" />}
         <View style={style.list}>
-          {data.permohonanLatest.map(item => (
+          {permohonan.latest.map(item => (
             <CardPermohonan {...item} key={item.id} />
           ))}
         </View>

@@ -21,9 +21,11 @@ import { generateCategoryStyle } from '../../utils/style';
 import config from './index.config';
 import style from './style';
 import PermohonanDetail from '../../components/PermohonanDetail';
+import { useDispatch, useSelector } from 'react-redux';
+import { getPermohonanDetail } from '../../store/permohonan.action';
+import { absoluteUrl } from '../../utils/asset';
 
 export default () => {
-  const [loading, setLoading] = useState(false);
   const [data, setData] = useState(config.initState);
   const [screeningData1, setScreeningData1] = useState(false);
   const [screeningData2, setScreeningData2] = useState(false);
@@ -32,9 +34,12 @@ export default () => {
   const [screeningData5, setScreeningData5] = useState(false);
   const [agreement, setAgreement] = useState(false);
   const [imageFull, setImageFull] = useState(false);
+  const [selectedImage, setSelectedImage] = useState(null);
   const navigation = useNavigation();
   const router = useRoute();
-  const { type } = router.params;
+  const dispatch = useDispatch();
+  const { permohonan, loading } = useSelector(state => state);
+  const { id, type } = router.params;
 
   const { color } = useMemo(() => generateCategoryStyle(type), [type]);
 
@@ -68,24 +73,15 @@ export default () => {
       isAfterAccept: true,
     });
   };
+
+  const onDocumentClick = url => {
+    setSelectedImage(absoluteUrl(url));
+    setImageFull(true);
+  };
+
   useEffect(() => {
-    setLoading(true);
-    setTimeout(() => {
-      setData({
-        user_name: 'John Doe',
-        user_profile:
-          'https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png',
-        document:
-          'https://p4.wallpaperbetter.com/wallpaper/956/82/396/earth-ocean-california-coast-wallpaper-preview.jpg',
-        story:
-          'Saya sudah menjalani isolasi selama 5 hari dan merasa sesak nafas Saya sudah menjalani isolasi selama 5 hari dan merasa sesak nafas Saya sudah menjalani isolasi selama 5 hari dan merasa sesak nafas Saya sudah menjalani isolasi selama 5 hari dan merasa sesak nafas Saya sudah menjalani isolasi selama 5 hari dan merasa sesak nafas',
-        latitude: -7.86730328266399,
-        longitude: 112.68009106292808,
-        note: 'Beban administrasi dan biaya akan saya tanggung. Donatur tidak perlu mengeluarkan biaya apapun',
-      });
-      setLoading(false);
-    }, 10);
-  }, []);
+    dispatch(getPermohonanDetail({ permohonanId: id }));
+  }, [dispatch, id]);
 
   return (
     <>
@@ -98,35 +94,43 @@ export default () => {
         <View style={style.mainContainer}>
           <PermohonanDetail {...router.params} />
 
-          {loading ? (
+          {loading.getPermohonanDetail ? (
             <ActivityIndicator color={color} />
           ) : (
             <>
-              {data.story && <Text style={style.story}>{data.story}</Text>}
+              {permohonan.detail?.note && (
+                <Text style={style.story}>{permohonan.detail?.note}</Text>
+              )}
               <View style={style.profile}>
-                {data.user_profile && (
+                {permohonan.detail?.photo && (
                   <Image
                     style={style.profilePhoto}
-                    source={{ uri: data.user_profile }}
+                    source={{ uri: absoluteUrl(permohonan.detail.photo) }}
                   />
                 )}
                 <View style={style.profileDesc}>
                   <Text style={style.profileLabel}>Pemohon</Text>
-                  <Text style={style.profileName}>{data.user_name}</Text>
+                  <Text style={style.profileName}>
+                    {permohonan.detail?.full_name}
+                  </Text>
                 </View>
               </View>
               <Text style={style.titleBig}>Dokumen Pendukung</Text>
 
-              {data.document && (
+              {permohonan.detail?.documents && (
                 <>
-                  <Pressable onPress={() => setImageFull(true)}>
-                    <Image
-                      style={style.image}
-                      source={{ uri: data.document }}
-                    />
-                  </Pressable>
+                  {permohonan.detail.documents.map((document, idx) => (
+                    <Pressable
+                      key={idx}
+                      onPress={() => onDocumentClick(document)}>
+                      <Image
+                        style={style.image}
+                        source={{ uri: absoluteUrl(document) }}
+                      />
+                    </Pressable>
+                  ))}
                   <ImageView
-                    images={[{ uri: data.document }]}
+                    images={[{ uri: selectedImage }]}
                     swipeToCloseEnabled={false}
                     imageIndex={0}
                     visible={imageFull}
@@ -141,8 +145,8 @@ export default () => {
               <Text style={style.titleMed}>Lokasi Pemohon</Text>
               <Map
                 position={{
-                  latitude: data.latitude,
-                  longitude: data.longitude,
+                  latitude: permohonan.detail?.latitude || 0.0,
+                  longitude: permohonan.detail?.longitude || 0.0,
                 }}
               />
               {type === TYPE_PLASMA && (
@@ -150,7 +154,9 @@ export default () => {
                   <Text style={style.titleBig}>
                     Informasi Penanggung Administrasi
                   </Text>
-                  <Text style={style.description}>{data.note}</Text>
+                  <Text style={style.description}>
+                    {permohonan.detail?.note}
+                  </Text>
                   <CheckBox value={screeningData1} onChange={setScreeningData1}>
                     <Text>Saya benar benar memiliki darah AB+</Text>
                   </CheckBox>

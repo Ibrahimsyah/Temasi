@@ -12,13 +12,13 @@ import {
   PLASMA,
   TYPE_OKSIGEN,
   TYPE_PANGAN_SUPLEMEN,
-  TYPE_PLASMA,
 } from '../config/ItemTypes';
 import { Color, FontStyle } from '../config/style';
 
 const style = StyleSheet.create({
   cardContainer: {
     width: 150,
+    justifyContent: 'space-between',
     marginRight: 9,
     borderRadius: 8,
     backgroundColor: Color.WHITE,
@@ -131,17 +131,18 @@ const renderCategoryAndIcon = itemType => {
 };
 
 export default props => {
-  const { type, title, distance, time } = props;
+  const { id, type, title, distance, timeRemaining } = props;
 
   const navigation = useNavigation();
   const account = useSelector(state => state.account);
 
   const onClickHandler = () => {
     const data = {
+      id,
       type,
       title,
       distance,
-      time,
+      timeRemaining,
     };
 
     if (account.userId) {
@@ -153,14 +154,18 @@ export default props => {
   return (
     <>
       <TouchableOpacity style={style.cardContainer} onPress={onClickHandler}>
-        {renderCategoryAndIcon(type)}
-        <Text style={style.itemTitle}>{title}</Text>
+        <View>
+          {renderCategoryAndIcon(type)}
+          <Text style={style.itemTitle} numberOfLines={3}>
+            {title}
+          </Text>
+        </View>
         <View style={style.cardFooter}>
           <View style={style.footerLeft}>
             <MaterialIcon name="location-on" style={style.locationIcon} />
             <Text style={style.location}>{distance}</Text>
           </View>
-          <Text style={style.time}>{time}</Text>
+          <Text style={style.time}>{timeRemaining}</Text>
         </View>
       </TouchableOpacity>
     </>

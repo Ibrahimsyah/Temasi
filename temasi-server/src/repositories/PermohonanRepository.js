@@ -119,16 +119,32 @@ const getDetailPermohonan = async (permohonanId) => {
   const result = await db.query(`
   select 
     string_agg(d.document_url , ', ') as documents, 
-    id, 
-    pengguna_id, 
+    p.id, 
+    p.pengguna_id,
+    p2.photo,
+    p2.full_name,
+    p.latitude,
+    p.longitude,
+    p.address,
     title, 
     type, 
+    note,
     ( 6371 * acos( cos( radians(-7.861201244513014) ) * cos( radians(p.latitude) ) * cos( radians(p.longitude) - radians(112.68620204595044) ) + sin( radians(-7.861201244513014) ) * sin( radians(p.latitude) ) ) )::int as distance, 
     timeout * 24 - (date_part('epoch', (now() - submit_date))/ 3600)::int as time_remaining
   from permohonan p
-  inner join dokumen d on d.permohonan_id = id 
-  where id = '${permohonanId}'
-  group by id, pengguna_id ,title, type, time_remaining
+  inner join dokumen d on d.permohonan_id = p.id
+  inner join pengguna p2 on p.pengguna_id = p2.id
+  where p.id = '${permohonanId}'
+  group by p.id, 
+  p.pengguna_id,
+  p2.photo,
+  p2.full_name,
+  p.latitude,
+  p.longitude,
+  p.address,
+  title, 
+  type, 
+  note, time_remaining
   `);
 
   const permohonan = result[0][0];

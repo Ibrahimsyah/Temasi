@@ -4,7 +4,6 @@ import { showToast } from '../../utils/error';
 import { setAccount } from '../account.action';
 
 import { LOGIN_USER, REGISTER_USER } from '../ActionTypes';
-import { setError } from '../error.action';
 import { setLoading } from '../loading.action';
 
 function* register(action) {

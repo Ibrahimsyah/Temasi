@@ -130,13 +130,15 @@ Pengguna.belongsToMany(Permohonan, {through: Donasi});
 Permohonan.belongsToMany(Pengguna, {through: Donasi});
 Permohonan.hasMany(Dokumen);
 
-Promise.all([
-  Dokumen.sync(),
-  Permohonan.sync(),
-  Donasi.sync(),
-  Pengguna.sync(),
-  db.authenticate(),
-]).then(() => {
+const migrateDb = async () => {
+  await Pengguna.sync(),
+  await Permohonan.sync(),
+  await Dokumen.sync(),
+  await Donasi.sync(),
+  await db.authenticate();
+};
+
+migrateDb().then(() => {
   ENV !== 'TEST' && console.log('Connected to DB');
 }).catch((err) => {
   ENV !== 'TEST' && console.error(err);
