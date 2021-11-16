@@ -47,5 +47,7 @@ export default (state = initState, action) => {
         donaturDetail: payload,
       };
     }
+    default:
+      return state;
   }
 };

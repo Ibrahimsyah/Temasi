@@ -7,6 +7,7 @@ import LoadingReducer from './loading.reducer';
 import MainReducer from './main.reducer';
 import StatusReducer from './status.reducer';
 import PermohonanReducer from './permohonan.reducer';
+import DonasiReducer from './donasi.reducer';
 
 const reducers = combineReducers({
   account: AccountReducer,
@@ -14,6 +15,7 @@ const reducers = combineReducers({
   main: MainReducer,
   status: StatusReducer,
   permohonan: PermohonanReducer,
+  donasi: DonasiReducer,
 });
 
 const sagaMiddleware = createSagaMiddleware();
