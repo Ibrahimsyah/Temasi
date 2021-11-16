@@ -1,4 +1,5 @@
 import {
+  SET_DONATUR_PERMOHONAN_DETAIL,
   SET_LATEST_PERMOHONAN,
   SET_SEARCH_PERMOHONAN_RESULT,
   SET_SELF_PERMOHONAN,
@@ -37,6 +38,13 @@ export const setUrgentPermohonan = payload => {
 export const setSearchPermohonanResult = payload => {
   return {
     type: SET_SEARCH_PERMOHONAN_RESULT,
+    payload,
+  };
+};
+
+export const setDonaturPermohonanDetail = payload => {
+  return {
+    type: SET_DONATUR_PERMOHONAN_DETAIL,
     payload,
   };
 };

@@ -1,4 +1,5 @@
 import {
+  SET_DONATUR_PERMOHONAN_DETAIL,
   SET_LATEST_PERMOHONAN,
   SET_SEARCH_PERMOHONAN_RESULT,
   SET_SELF_PERMOHONAN,
@@ -10,6 +11,7 @@ const initState = {
   mostUrgent: [],
   searchResult: [],
   self: [],
+  donaturDetail: null,
 };
 
 export default (state = initState, action) => {
@@ -37,6 +39,12 @@ export default (state = initState, action) => {
       return {
         ...state,
         mostUrgent: payload,
+      };
+    }
+    case SET_DONATUR_PERMOHONAN_DETAIL: {
+      return {
+        ...state,
+        donaturDetail: payload,
       };
     }
   }

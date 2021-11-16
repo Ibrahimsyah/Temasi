@@ -4,6 +4,7 @@ import { STATUS_REQUEST_SUCCESS } from '../../config/request';
 import api from '../../provider/api';
 import { showToast } from '../../utils/error';
 import {
+  GET_DONATUR_PERMOHONAN_DETAIL,
   GET_LATEST_PERMOHONAN,
   GET_SELF_PERMOHONAN,
   GET_URGENT_PERMOHONAN,
@@ -12,6 +13,7 @@ import {
 } from '../ActionTypes';
 import { setLoading } from '../loading.action';
 import {
+  setDonaturPermohonanDetail,
   setLatestPermohonan,
   setSearchPermohonanResult,
   setSelfPermohonan,
@@ -96,12 +98,27 @@ function* searchPermohonan(action) {
   }
 }
 
+function* getDonaturPermohonanDetail(action) {
+  try {
+    const { payload } = action;
+    yield put(setLoading('getDonaturPermohonanDetail', true));
+    const result = yield call(api.getDonaturPermohonanDetail, payload);
+    yield put(setDonaturPermohonanDetail(result));
+  } catch (err) {
+    console.log(err);
+    showToast(err);
+  } finally {
+    yield put(setLoading('getDonaturPermohonanDetail', false));
+  }
+}
+
 function* permohonanSaga() {
   yield takeLatest(SUBMIT_PERMOHONAN, createPermohonan);
   yield takeLatest(GET_SELF_PERMOHONAN, getSelfPermohonan);
   yield takeLatest(GET_LATEST_PERMOHONAN, getLatestPermohonan);
   yield takeLatest(GET_URGENT_PERMOHONAN, getUrgentPermohonan);
   yield takeLatest(SEARCH_PERMOHONAN, searchPermohonan);
+  yield takeLatest(GET_DONATUR_PERMOHONAN_DETAIL, getDonaturPermohonanDetail);
 }
 
 export default permohonanSaga;
