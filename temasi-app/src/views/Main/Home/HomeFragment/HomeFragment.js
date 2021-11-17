@@ -55,7 +55,6 @@ export default () => {
 
   useEffect(() => {
     const getCurrentLocation = () => {
-      console.log('Get current Location');
       Geolocation.getCurrentPosition(
         info => {
           setPosition({
@@ -76,7 +75,6 @@ export default () => {
         fastInterval: 5000,
       })
         .then(data => {
-          console.log(data);
           getCurrentLocation();
         })
         .catch(err => {

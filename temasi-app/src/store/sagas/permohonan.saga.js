@@ -38,7 +38,7 @@ function* createPermohonan(action) {
   }
 }
 
-function* getSelfPermohonan() {
+export function* getSelfPermohonan() {
   try {
     yield put(setLoading('getSelfPermohonan', true));
     const result = yield call(api.getSelfPermohonan);

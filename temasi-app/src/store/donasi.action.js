@@ -1,5 +1,6 @@
 import {
   ACCEPT_DONASI,
+  CONFIRM_DONASI_RECEIVED,
   GET_DONASI,
   GET_DONASI_DETAIL,
   SET_DONASI,
@@ -9,6 +10,13 @@ import {
 export const acceptDonasi = payload => {
   return {
     type: ACCEPT_DONASI,
+    payload,
+  };
+};
+
+export const confirmDonasiReceived = payload => {
+  return {
+    type: CONFIRM_DONASI_RECEIVED,
     payload,
   };
 };
