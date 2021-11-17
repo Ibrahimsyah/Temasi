@@ -24,7 +24,7 @@ const insertPermohonan = async (payload) => {
 };
 
 const getAllPermohonan = async (payload) => {
-  const {order = 'time_remaining', sort = 'asc', q, type} = payload || {};
+  const {order = 'time_remaining', sort = 'asc', q, type, latitude, longitude} = payload || {};
 
   let query = `
   select 
@@ -40,7 +40,7 @@ const getAllPermohonan = async (payload) => {
     timeout,
     submit_date,
     type, 
-    ( 6371 * acos( cos( radians(-7.861201244513014) ) * cos( radians( p.latitude ) ) * cos( radians( p.longitude ) - radians(112.68620204595044) ) + sin( radians(-7.861201244513014) ) * sin( radians( p.latitude ) ) ) )::int as distance,
+    ( 6371 * acos( cos( radians(${latitude}) ) * cos( radians( p.latitude ) ) * cos( radians( p.longitude ) - radians(${longitude}) ) + sin( radians(${latitude}) ) * sin( radians( p.latitude ) ) ) )::int as distance,
     timeout*24 - (date_part('epoch', (now() - submit_date))/3600)::int as time_remaining
     from permohonan p 
   ) as dt

@@ -1,7 +1,8 @@
 const {nanoid} = require('nanoid');
 const {Donasi, db} = require('../services/db');
 const Constant = require('../config/constants');
-const {STATUS_DELIVERED} = require('../config/constants');
+const {STATUS_DELIVERED, STATUS_MATCHED, STATUS_NOT_DELIVERED} = require('../config/constants');
+const {QueryTypes} = require('sequelize');
 
 const insertDonasi = async (payload) => {
   const {permohonanId, userId} = payload;
@@ -17,16 +18,25 @@ const insertDonasi = async (payload) => {
     donasi_date: donasiDate,
     status,
   });
+
+  return id;
 };
 
 const getAllDonasi = async (userId) => {
-  const result = await Donasi.findAll({where: {
-    pengguna_id: userId,
-  }, order: [
-    ['donasi_date', 'desc'],
-  ]});
+  const result = await db.query(`
+  select d.id, d.permohonan_id, p.title, d.status, p."type" from donasi d 
+  inner join permohonan p 
+  on p.id = d.permohonan_id 
+  where d.pengguna_id = '${userId}'
+  order by d.donasi_date desc
+  `, {type: QueryTypes.SELECT});
 
-  return result;
+  const mappedResult = result.map((res) => ({
+    ...res,
+    status: STATUS_MATCHED ? STATUS_NOT_DELIVERED : res.status,
+  }));
+
+  return mappedResult;
 };
 
 const getDonasiDetail = async (donasiId) => {

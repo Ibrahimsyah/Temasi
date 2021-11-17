@@ -72,5 +72,5 @@ export default {
   getAllDonasi: () => get('/donasi'),
   getDonasiDetail: payload => get(`/donasi/${payload.donasiId}`),
   acceptDonasi: payload => post('/donasi/accept', payload),
-  confirmDonasiReceived: payload => put(`/donasi/accept/${payload.donasiId}`),
+  confirmDonasiReceived: payload => put(`/donasi/confirm/${payload.donasiId}`),
 };

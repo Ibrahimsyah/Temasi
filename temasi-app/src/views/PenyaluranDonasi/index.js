@@ -1,7 +1,9 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import { View, ScrollView, StatusBar, Text } from 'react-native';
 import { useRoute } from '@react-navigation/core';
 import { default as FontAwesome5Icon } from 'react-native-vector-icons/FontAwesome5';
+import { useDispatch, useSelector } from 'react-redux';
+import { useNavigation, StackActions } from '@react-navigation/core';
 
 import ButtonPrimary from '../../components/ButtonPrimary';
 import ButtonSecondary from '../../components/ButtonSecondary';
@@ -12,22 +14,30 @@ import { generateCategoryStyle } from '../../utils/style';
 import { Color } from '../../config/style';
 
 import style from './style';
+import { getDonasiDetail } from '../../store/donasi.action';
 
 export default () => {
   const [type] = useState(TYPE_OKSIGEN);
   const route = useRoute();
+  const dispatch = useDispatch();
+  const navigation = useNavigation();
+  const { donasi } = useSelector(state => state);
+  const { isAfterAccept, donasiId } = route.params || {};
 
-  const { isAfterAccept } = route.params || {};
-
-  const position = {
-    latitude: -7.867439569730554,
-    longitude: 112.68013360023379,
+  const handleBack = () => {
+    if (isAfterAccept) {
+      navigation.dispatch(StackActions.pop(2));
+    } else {
+      navigation.goBack();
+    }
   };
-
-  const detailLokasi =
-    'Lorem Ipsum Dolor Site AmetLorem Ipsum Dolor Site AmetLorem Ipsum Dolor Site AmetLorem Ipsum Dolor Site Amet ';
-
-  const catatan = 'Lorem Ipsum Dolor Sit Amet Amet Amet';
+  useEffect(() => {
+    dispatch(
+      getDonasiDetail({
+        donasiId: donasiId,
+      }),
+    );
+  }, [dispatch, donasiId]);
 
   const { iconBgColor, icon, category, color } = useMemo(
     () => generateCategoryStyle(type),
@@ -40,7 +50,11 @@ export default () => {
       <ScrollView
         style={style.container}
         contentContainerStyle={style.contentContainer}>
-        <Header withPadding title="Penyaluran Donasi" />
+        <Header
+          withPadding
+          title="Penyaluran Donasi"
+          onBackPressed={handleBack}
+        />
 
         <View style={style.mainContainer}>
           {isAfterAccept && (
@@ -71,17 +85,20 @@ export default () => {
               <Text style={{ ...style.category, color: color }}>
                 {category}
               </Text>
-              <Text style={style.title}>
-                Dibutuhkan tabung oksigen dan perlengkapan
-              </Text>
+              <Text style={style.title}>{donasi.detail?.title}</Text>
             </View>
           </View>
           <Text style={style.titleMed}>Lokasi Pemohon</Text>
-          <Map position={position} />
+          <Map
+            position={{
+              longitude: donasi.detail?.longitude,
+              latitude: donasi.detail?.latitude,
+            }}
+          />
           <Text style={style.titleMed}>Detail Lokasi</Text>
-          <Text style={style.body}>{detailLokasi}</Text>
+          <Text style={style.body}>{donasi.detail?.address}</Text>
           <Text style={style.titleMed}>Catatan Pemohon</Text>
-          <Text style={style.body}>{catatan}</Text>
+          <Text style={style.body}>{donasi.detail?.note}</Text>
           <View style={style.tutorialContainer}>
             <Text>
               {'\u2022 Pastikan bantuan sesuai dengan kebutuhan pemohon \n\n'}

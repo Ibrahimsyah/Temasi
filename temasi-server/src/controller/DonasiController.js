@@ -1,9 +1,9 @@
 const DonasiRepository = require('../repositories/DonasiRepository');
-const {insertSuccess, updateSuccess} = require('../util/response');
+const {updateSuccess} = require('../util/response');
 
 const acceptBantuan = async (payload) => {
-  await DonasiRepository.insertDonasi(payload);
-  return insertSuccess;
+  const donasiId = await DonasiRepository.insertDonasi(payload);
+  return donasiId;
 };
 
 const fetchDonasiByUser = async (userId) => {

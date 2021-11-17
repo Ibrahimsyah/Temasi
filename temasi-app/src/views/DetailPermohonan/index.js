@@ -18,15 +18,16 @@ import { Map } from '../../components/Map';
 import { TYPE_PLASMA } from '../../config/ItemTypes';
 import { generateCategoryStyle } from '../../utils/style';
 
-import config from './index.config';
 import style from './style';
 import PermohonanDetail from '../../components/PermohonanDetail';
 import { useDispatch, useSelector } from 'react-redux';
 import { getPermohonanDetail } from '../../store/permohonan.action';
 import { absoluteUrl } from '../../utils/asset';
+import { clearStatus } from '../../store/status.action';
+import { STATUS_REQUEST_SUCCESS } from '../../config/request';
+import { acceptDonasi } from '../../store/donasi.action';
 
 export default () => {
-  const [data, setData] = useState(config.initState);
   const [screeningData1, setScreeningData1] = useState(false);
   const [screeningData2, setScreeningData2] = useState(false);
   const [screeningData3, setScreeningData3] = useState(false);
@@ -35,12 +36,13 @@ export default () => {
   const [agreement, setAgreement] = useState(false);
   const [imageFull, setImageFull] = useState(false);
   const [selectedImage, setSelectedImage] = useState(null);
+
   const navigation = useNavigation();
   const router = useRoute();
-  const dispatch = useDispatch();
-  const { permohonan, loading } = useSelector(state => state);
   const { id, type } = router.params;
 
+  const dispatch = useDispatch();
+  const { permohonan, loading, status, donasi } = useSelector(state => state);
   const { color } = useMemo(() => generateCategoryStyle(type), [type]);
 
   const isCheckBoxFilled = useMemo(() => {
@@ -69,15 +71,27 @@ export default () => {
   ]);
 
   const onSalurkanBantuan = () => {
-    navigation.navigate('PenyaluranDonasi', {
-      isAfterAccept: true,
-    });
+    dispatch(
+      acceptDonasi({
+        permohonanId: permohonan.detail.id,
+      }),
+    );
   };
 
   const onDocumentClick = url => {
     setSelectedImage(absoluteUrl(url));
     setImageFull(true);
   };
+
+  useEffect(() => {
+    if (status.acceptDonasi === STATUS_REQUEST_SUCCESS) {
+      dispatch(clearStatus('acceptDonasi'));
+      navigation.navigate('PenyaluranDonasi', {
+        isAfterAccept: true,
+        donasiId: donasi.detail?.id,
+      });
+    }
+  }, [status.acceptDonasi, navigation, dispatch, donasi]);
 
   useEffect(() => {
     dispatch(getPermohonanDetail({ permohonanId: id }));
@@ -187,14 +201,14 @@ export default () => {
                 style={style.agreement}>
                 <Text>
                   Saya menyatakan bahwa saya bersedia menyalurkan bantuan kepada{' '}
-                  {data.user_name}
+                  {permohonan.detail?.full_name}
                 </Text>
               </CheckBox>
               <ButtonPrimary
                 style={style.buttonSubmit}
                 onClick={onSalurkanBantuan}
-                disabled={!isCheckBoxFilled}>
-                Salurkan Bantuan
+                disabled={!isCheckBoxFilled || loading.acceptDonasi}>
+                {loading.acceptDonasi ? 'Mohon Tunggu' : 'Salurkan Bantuan'}
               </ButtonPrimary>
             </>
           )}

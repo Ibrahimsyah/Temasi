@@ -9,8 +9,8 @@ import {
 } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import Geolocation from '@react-native-community/geolocation';
-import CheckBox from '@react-native-community/checkbox';
 import RNAndroidLocationEnabler from 'react-native-android-location-enabler';
+import CheckBox from '@react-native-community/checkbox';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigation } from '@react-navigation/core';
 
@@ -25,7 +25,7 @@ import CardsRhesusDarah from '../../components/CardsRhesusDarah';
 import { Map } from '../../components/Map';
 
 import { absoluteUrl } from '../../utils/asset';
-import { PLASMA, TYPE_PLASMA } from '../../config/ItemTypes';
+import { TYPE_PLASMA } from '../../config/ItemTypes';
 
 import style from './style';
 import { setUploadResult, uploadImage } from '../../store/main.action';
@@ -33,7 +33,7 @@ import { generatePlasmaTitle } from '../../utils/text';
 import { submitPermohonan } from '../../store/permohonan.action';
 import { STATUS_REQUEST_SUCCESS } from '../../config/request';
 import { showToast } from '../../utils/error';
-import { clearStatus, setStatus } from '../../store/status.action';
+import { clearStatus } from '../../store/status.action';
 
 export default () => {
   const [documents, setDocuments] = useState([]);

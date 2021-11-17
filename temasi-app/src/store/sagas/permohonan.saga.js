@@ -1,4 +1,4 @@
-import { takeLatest, put, call } from 'redux-saga/effects';
+import { takeLatest, put, call, select } from 'redux-saga/effects';
 import { STATUS_REQUEST_SUCCESS } from '../../config/request';
 
 import api from '../../provider/api';
@@ -38,7 +38,7 @@ function* createPermohonan(action) {
   }
 }
 
-function* getSelfPermohonan() {
+export function* getSelfPermohonan() {
   try {
     yield put(setLoading('getSelfPermohonan', true));
     const result = yield call(api.getSelfPermohonan);
@@ -51,11 +51,14 @@ function* getSelfPermohonan() {
   }
 }
 
-function* getLatestPermohonan() {
+export function* getLatestPermohonan() {
   try {
+    const { position } = yield select(state => state.account);
     yield put(setLoading('getLatestPermohonan', true));
     const params = {
       order: 'submit_date',
+      latitude: position.latitude,
+      longitude: position.longitude,
     };
     const result = yield call(api.getPermohonan, params);
     yield put(setLatestPermohonan(result));
@@ -67,10 +70,17 @@ function* getLatestPermohonan() {
   }
 }
 
-function* getUrgentPermohonan() {
+export function* getUrgentPermohonan() {
   try {
+    const {
+      position: { latitude, longitude },
+    } = yield select(state => state.account);
     yield put(setLoading('getUrgentPermohonan', true));
-    const result = yield call(api.getPermohonan);
+    const params = {
+      latitude,
+      longitude,
+    };
+    const result = yield call(api.getPermohonan, params);
     yield put(setUrgentPermohonan(result));
   } catch (err) {
     console.log(err);
@@ -83,8 +93,14 @@ function* getUrgentPermohonan() {
 function* searchPermohonan(action) {
   try {
     const { payload } = action;
+    const {
+      position: { latitude, longitude },
+    } = yield select(state => state.account);
     yield put(setLoading('searchPermohonan', true));
-    const params = {};
+    const params = {
+      latitude,
+      longitude,
+    };
     if (payload.query) {
       params.q = payload.query;
     }

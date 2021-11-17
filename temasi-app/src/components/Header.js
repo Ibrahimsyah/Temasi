@@ -28,10 +28,14 @@ const styles = StyleSheet.create({
 });
 
 export default props => {
-  const { title, isDark = false, withPadding = false } = props;
+  const { title, isDark = false, withPadding = false, onBackPressed } = props;
   const navigation = useNavigation();
 
   const onBack = () => {
+    if (onBackPressed) {
+      onBackPressed();
+      return;
+    }
     navigation.goBack();
   };
 
