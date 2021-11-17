@@ -27,6 +27,7 @@ import {
   getLatestPermohonan,
   getUrgentPermohonan,
 } from '../../../../store/permohonan.action';
+import { getDonasi } from '../../../../store/donasi.action';
 
 const greeting = generateGreeting();
 
@@ -43,6 +44,10 @@ export default () => {
   const onNotificationClick = () => {
     navigation.navigate('DonasiFragment');
   };
+
+  useEffect(() => {
+    dispatch(getDonasi());
+  }, [dispatch]);
 
   useEffect(() => {
     if (position) {
