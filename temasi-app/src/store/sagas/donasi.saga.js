@@ -12,7 +12,11 @@ import {
 import { setDonasi, setDonasiDetail } from '../donasi.action';
 import { setLoading } from '../loading.action';
 import { setStatus } from '../status.action';
-import { getSelfPermohonan } from './permohonan.saga';
+import {
+  getLatestPermohonan,
+  getSelfPermohonan,
+  getUrgentPermohonan,
+} from './permohonan.saga';
 
 function* getAllDonasi() {
   try {
@@ -49,6 +53,8 @@ function* acceptDonasi(action) {
     });
     yield put(setStatus('acceptDonasi', STATUS_REQUEST_SUCCESS));
     yield call(getAllDonasi);
+    yield call(getLatestPermohonan);
+    yield call(getUrgentPermohonan);
   } catch (err) {
     showToast(err);
   } finally {

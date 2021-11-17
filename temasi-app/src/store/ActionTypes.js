@@ -1,5 +1,6 @@
 export const ADD_ACCOUNT = 'ADD_ACCOUNT';
 export const DELETE_ACCOUNT = 'DELETE_ACCOUNT';
+export const SET_POSITION = 'SET_POSITION';
 
 export const SET_LOADING = 'SET_LOADING';
 

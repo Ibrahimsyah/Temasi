@@ -28,11 +28,11 @@ import {
   getUrgentPermohonan,
 } from '../../../../store/permohonan.action';
 import { getDonasi } from '../../../../store/donasi.action';
+import { setPosition } from '../../../../store/account.action';
 
 const greeting = generateGreeting();
 
 export default () => {
-  const [position, setPosition] = useState(null);
   const navigation = useNavigation();
   const dispatch = useDispatch();
   const { account, permohonan, loading } = useSelector(state => state);
@@ -50,22 +50,22 @@ export default () => {
   }, [dispatch]);
 
   useEffect(() => {
-    if (position) {
-      const { latitude, longitude } = position;
-      const payload = { latitude, longitude };
-      dispatch(getLatestPermohonan(payload));
-      dispatch(getUrgentPermohonan(payload));
+    if (account.position) {
+      dispatch(getLatestPermohonan());
+      dispatch(getUrgentPermohonan());
     }
-  }, [dispatch, position]);
+  }, [dispatch, account]);
 
   useEffect(() => {
     const getCurrentLocation = () => {
       Geolocation.getCurrentPosition(
         info => {
-          setPosition({
-            latitude: info.coords.latitude,
-            longitude: info.coords.longitude,
-          });
+          dispatch(
+            setPosition({
+              latitude: info.coords.latitude,
+              longitude: info.coords.longitude,
+            }),
+          );
         },
         error => {
           console.log(error);
@@ -79,14 +79,14 @@ export default () => {
         interval: 10000,
         fastInterval: 5000,
       })
-        .then(data => {
+        .then(() => {
           getCurrentLocation();
         })
         .catch(err => {
           console.log(err);
         });
     }, 500);
-  }, []);
+  }, [dispatch]);
 
   return (
     <>

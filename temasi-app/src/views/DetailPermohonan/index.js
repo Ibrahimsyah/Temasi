@@ -207,8 +207,8 @@ export default () => {
               <ButtonPrimary
                 style={style.buttonSubmit}
                 onClick={onSalurkanBantuan}
-                disabled={!isCheckBoxFilled}>
-                Salurkan Bantuan
+                disabled={!isCheckBoxFilled || loading.acceptDonasi}>
+                {loading.acceptDonasi ? 'Mohon Tunggu' : 'Salurkan Bantuan'}
               </ButtonPrimary>
             </>
           )}
