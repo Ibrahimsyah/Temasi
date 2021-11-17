@@ -12,9 +12,10 @@ export default () => {
   const navigation = useNavigation();
   const { donasi } = useSelector(state => state);
 
-  const onPermohonanClick = () => {
+  const onDonasiClick = data => {
     navigation.navigate('PenyaluranDonasi', {
       isAfterAccept: false,
+      donasiId: data.id,
     });
   };
 
@@ -23,8 +24,8 @@ export default () => {
       <View style={styles.container}>
         <Header title="Donasi Anda" isDark />
         <ScrollView showsVerticalScrollIndicator={false}>
-          {donasi.donasi.map((item, index) => (
-            <CardPermohonan key={index} {...item} onClick={onPermohonanClick} />
+          {donasi.list.map((item, index) => (
+            <CardPermohonan key={index} {...item} onClick={onDonasiClick} />
           ))}
         </ScrollView>
       </View>

@@ -18,6 +18,8 @@ const insertDonasi = async (payload) => {
     donasi_date: donasiDate,
     status,
   });
+
+  return id;
 };
 
 const getAllDonasi = async (userId) => {

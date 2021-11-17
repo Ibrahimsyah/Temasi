@@ -43,8 +43,12 @@ function* acceptDonasi(action) {
   try {
     const { payload } = action;
     yield put(setLoading('acceptDonasi', true));
-    yield call(api.acceptDonasi, payload);
+    const donasiId = yield call(api.acceptDonasi, payload);
+    yield call(getDonasiDetail, {
+      payload: { donasiId },
+    });
     yield put(setStatus('acceptDonasi', STATUS_REQUEST_SUCCESS));
+    yield call(getAllDonasi);
   } catch (err) {
     showToast(err);
   } finally {

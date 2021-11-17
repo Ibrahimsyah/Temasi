@@ -39,11 +39,11 @@ export default () => {
 
   const navigation = useNavigation();
   const router = useRoute();
-  const dispatch = useDispatch();
-  const { permohonan, loading, status } = useSelector(state => state);
-  const { color } = useMemo(() => generateCategoryStyle(type), [type]);
-
   const { id, type } = router.params;
+
+  const dispatch = useDispatch();
+  const { permohonan, loading, status, donasi } = useSelector(state => state);
+  const { color } = useMemo(() => generateCategoryStyle(type), [type]);
 
   const isCheckBoxFilled = useMemo(() => {
     let result;
@@ -88,9 +88,10 @@ export default () => {
       dispatch(clearStatus('acceptDonasi'));
       navigation.navigate('PenyaluranDonasi', {
         isAfterAccept: true,
+        donasiId: donasi.detail?.id,
       });
     }
-  }, [status.acceptDonasi, navigation, dispatch]);
+  }, [status.acceptDonasi, navigation, dispatch, donasi]);
 
   useEffect(() => {
     dispatch(getPermohonanDetail({ permohonanId: id }));

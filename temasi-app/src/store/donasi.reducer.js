@@ -1,8 +1,8 @@
 import { SET_DONASI, SET_DONASI_DETAIL } from './ActionTypes';
 
 const initState = {
-  donasi: [],
-  donasiDetail: null,
+  list: [],
+  detail: null,
 };
 
 export default (state = initState, action) => {
@@ -11,13 +11,13 @@ export default (state = initState, action) => {
     case SET_DONASI: {
       return {
         ...state,
-        donasi: payload,
+        list: payload,
       };
     }
     case SET_DONASI_DETAIL: {
       return {
         ...state,
-        donasiDetail: payload,
+        detail: payload,
       };
     }
     default:
