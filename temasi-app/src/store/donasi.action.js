@@ -1,9 +1,17 @@
 import {
+  ACCEPT_DONASI,
   GET_DONASI,
   GET_DONASI_DETAIL,
   SET_DONASI,
   SET_DONASI_DETAIL,
 } from './ActionTypes';
+
+export const acceptDonasi = payload => {
+  return {
+    type: ACCEPT_DONASI,
+    payload,
+  };
+};
 
 export const setDonasi = payload => {
   return {

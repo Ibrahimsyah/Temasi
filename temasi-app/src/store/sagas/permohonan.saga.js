@@ -51,11 +51,14 @@ function* getSelfPermohonan() {
   }
 }
 
-function* getLatestPermohonan() {
+function* getLatestPermohonan(action) {
   try {
+    const { latitude, longitude } = action.payload;
     yield put(setLoading('getLatestPermohonan', true));
     const params = {
       order: 'submit_date',
+      latitude,
+      longitude,
     };
     const result = yield call(api.getPermohonan, params);
     yield put(setLatestPermohonan(result));
@@ -67,10 +70,15 @@ function* getLatestPermohonan() {
   }
 }
 
-function* getUrgentPermohonan() {
+function* getUrgentPermohonan(action) {
   try {
+    const { latitude, longitude } = action.payload;
     yield put(setLoading('getUrgentPermohonan', true));
-    const result = yield call(api.getPermohonan);
+    const params = {
+      latitude,
+      longitude,
+    };
+    const result = yield call(api.getPermohonan, params);
     yield put(setUrgentPermohonan(result));
   } catch (err) {
     console.log(err);
@@ -84,7 +92,10 @@ function* searchPermohonan(action) {
   try {
     const { payload } = action;
     yield put(setLoading('searchPermohonan', true));
-    const params = {};
+    const params = {
+      latitude: payload.latitude,
+      longitude: payload.longitude,
+    };
     if (payload.query) {
       params.q = payload.query;
     }
