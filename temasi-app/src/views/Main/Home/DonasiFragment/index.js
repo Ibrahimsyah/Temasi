@@ -7,16 +7,19 @@ import Header from '../../../../components/Header';
 import CardPermohonan from '../../../../components/CardPermohonan';
 
 import styles from './style';
+import { STATUS_NOT_DELIVERED } from '../../../../config';
 
 export default () => {
   const navigation = useNavigation();
   const { donasi } = useSelector(state => state);
 
   const onDonasiClick = data => {
-    navigation.navigate('PenyaluranDonasi', {
-      isAfterAccept: false,
-      donasiId: data.id,
-    });
+    if (data.status === STATUS_NOT_DELIVERED) {
+      navigation.navigate('PenyaluranDonasi', {
+        isAfterAccept: false,
+        donasiId: data.id,
+      });
+    }
   };
 
   return (

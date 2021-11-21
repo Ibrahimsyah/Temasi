@@ -32,12 +32,14 @@ export default () => {
     }
   };
   useEffect(() => {
-    dispatch(
-      getDonasiDetail({
-        donasiId: donasiId,
-      }),
-    );
-  }, [dispatch, donasiId]);
+    if (donasi.detail?.id !== donasiId) {
+      dispatch(
+        getDonasiDetail({
+          donasiId: donasiId,
+        }),
+      );
+    }
+  }, [dispatch, donasiId, donasi]);
 
   const { iconBgColor, icon, category, color } = useMemo(
     () => generateCategoryStyle(type),
@@ -89,12 +91,14 @@ export default () => {
             </View>
           </View>
           <Text style={style.titleMed}>Lokasi Pemohon</Text>
-          <Map
-            position={{
-              longitude: donasi.detail?.longitude,
-              latitude: donasi.detail?.latitude,
-            }}
-          />
+          {donasi.detail?.latitude && donasi.detail?.longitude && (
+            <Map
+              position={{
+                longitude: donasi.detail?.longitude,
+                latitude: donasi.detail?.latitude,
+              }}
+            />
+          )}
           <Text style={style.titleMed}>Detail Lokasi</Text>
           <Text style={style.body}>{donasi.detail?.address}</Text>
           <Text style={style.titleMed}>Catatan Pemohon</Text>

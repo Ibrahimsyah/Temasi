@@ -35,7 +35,7 @@ const greeting = generateGreeting();
 export default () => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
-  const { account, permohonan, loading } = useSelector(state => state);
+  const { account, permohonan, loading, donasi } = useSelector(state => state);
 
   const onSearchClick = () => {
     navigation.navigate('SearchFragment');
@@ -105,9 +105,11 @@ export default () => {
           </View>
         </Pressable>
 
-        <Notification onClick={onNotificationClick}>
-          Lihat Status Donasi Anda
-        </Notification>
+        {donasi.list.length > 0 && (
+          <Notification onClick={onNotificationClick}>
+            Lihat Status Donasi Anda
+          </Notification>
+        )}
 
         <View style={style.mainPanel}>
           <Text style={style.panelTitle}>Yuk Bantu Mereka</Text>

@@ -12,7 +12,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     paddingVertical: 10,
     borderRadius: 10,
-    marginVertical: 10,
+    marginTop: 10,
     backgroundColor: Color.MED_GREEN,
   },
   icon: {

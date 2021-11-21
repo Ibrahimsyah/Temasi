@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { ActivityIndicator, ScrollView, Text } from 'react-native';
 import { useNavigation } from '@react-navigation/core';
 
@@ -6,7 +6,6 @@ import CardPermohonan from '../../../components/CardPermohonan';
 import FABPermohonan from '../../../components/FABPermohonan';
 
 import style from './style';
-import config from './index.config';
 import NotFound from '../../../components/NotFound';
 import { STATUS_MATCHED } from '../../../config';
 import { useDispatch, useSelector } from 'react-redux';
