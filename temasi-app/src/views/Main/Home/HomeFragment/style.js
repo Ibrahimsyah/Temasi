@@ -50,6 +50,7 @@ export default StyleSheet.create({
     borderRadius: 8,
     backgroundColor: Color.PRIMARY,
     paddingHorizontal: 23,
+    marginTop: 10,
     paddingVertical: 18,
   },
   panelTitle: {
