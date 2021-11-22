@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { ActivityIndicator, ScrollView, Text } from 'react-native';
 import { useNavigation } from '@react-navigation/core';
 
@@ -9,10 +9,8 @@ import style from './style';
 import NotFound from '../../../components/NotFound';
 import { STATUS_MATCHED } from '../../../config';
 import { useDispatch, useSelector } from 'react-redux';
-import { getSelfPermohonan } from '../../../store/permohonan.action';
 
 export default () => {
-  const dispatch = useDispatch();
   const { permohonan, loading } = useSelector(state => state);
   const navigation = useNavigation();
 
@@ -25,10 +23,6 @@ export default () => {
   const onCreatePermohonan = () => {
     navigation.navigate('BuatPermohonanScreen');
   };
-
-  useEffect(() => {
-    dispatch(getSelfPermohonan());
-  }, [dispatch]);
 
   return (
     <>

@@ -25,10 +25,14 @@ import { Color } from '../../../../config/style';
 import style from './style';
 import {
   getLatestPermohonan,
+  getSelfPermohonan,
   getUrgentPermohonan,
 } from '../../../../store/permohonan.action';
 import { getDonasi } from '../../../../store/donasi.action';
-import { setPosition } from '../../../../store/account.action';
+import {
+  getAccountSummary,
+  setPosition,
+} from '../../../../store/account.action';
 
 const greeting = generateGreeting();
 
@@ -54,7 +58,12 @@ export default () => {
       dispatch(getLatestPermohonan());
       dispatch(getUrgentPermohonan());
     }
-  }, [dispatch, account]);
+
+    if (account.userId) {
+      dispatch(getAccountSummary());
+      dispatch(getSelfPermohonan());
+    }
+  }, [dispatch, account.userId, account.position]);
 
   useEffect(() => {
     const getCurrentLocation = () => {

@@ -31,10 +31,12 @@ const getAllDonasi = async (userId) => {
   order by d.donasi_date desc
   `, {type: QueryTypes.SELECT});
 
-  const mappedResult = result.map((res) => ({
-    ...res,
-    status: STATUS_MATCHED ? STATUS_NOT_DELIVERED : res.status,
-  }));
+  const mappedResult = result.map((res) => {
+    return ({
+      ...res,
+      status: res.status === STATUS_MATCHED ? STATUS_NOT_DELIVERED : res.status,
+    });
+  });
 
   return mappedResult;
 };
