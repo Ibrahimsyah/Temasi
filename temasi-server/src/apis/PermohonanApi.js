@@ -37,7 +37,7 @@ const addPermohonanHandler = async (req, res, next) => {
 
 const getAllPermohonanHandler = async (req, res, next) => {
   try {
-    const {userId} = req.auth;
+    const {userId} = req.auth || {};
     const result = await PermohonanController.getPermohonan({...req.query, userId});
     res.status(200);
     res.send(result);

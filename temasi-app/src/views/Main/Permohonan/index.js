@@ -8,10 +8,15 @@ import FABPermohonan from '../../../components/FABPermohonan';
 import style from './style';
 import NotFound from '../../../components/NotFound';
 import { STATUS_MATCHED } from '../../../config';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
+import { showToast } from '../../../utils/error';
 
 export default () => {
-  const { permohonan, loading } = useSelector(state => state);
+  const {
+    permohonan,
+    loading,
+    account: { userId },
+  } = useSelector(state => state);
   const navigation = useNavigation();
 
   const onPermohonanClick = item => {
@@ -21,7 +26,11 @@ export default () => {
   };
 
   const onCreatePermohonan = () => {
-    navigation.navigate('BuatPermohonanScreen');
+    if (userId) {
+      navigation.navigate('BuatPermohonanScreen');
+    } else {
+      showToast('Silahkan Masuk Terlebih Dahulu');
+    }
   };
 
   return (

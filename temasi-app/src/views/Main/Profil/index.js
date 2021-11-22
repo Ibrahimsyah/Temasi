@@ -10,6 +10,11 @@ import GridInfo from '../../../components/GridInfo';
 import { deleteAccount } from '../../../store/account.action';
 import style from './style';
 import { absoluteUrl } from '../../../utils/asset';
+import { setDonasi } from '../../../store/donasi.action';
+import {
+  getLatestPermohonan,
+  getUrgentPermohonan,
+} from '../../../store/permohonan.action';
 
 const AccountNotFound = () => {
   const navigation = useNavigation();
@@ -50,6 +55,9 @@ export default () => {
 
   const onLogout = () => {
     dispatch(deleteAccount());
+    dispatch(setDonasi([]));
+    dispatch(getLatestPermohonan());
+    dispatch(getUrgentPermohonan());
   };
 
   return !account.userId ? (

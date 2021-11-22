@@ -22,6 +22,7 @@ import {
   setUrgentPermohonan,
 } from '../permohonan.action';
 import { setStatus } from '../status.action';
+import { getUserSummary } from './auth.saga';
 
 function* createPermohonan(action) {
   try {
@@ -29,6 +30,7 @@ function* createPermohonan(action) {
     const { payload } = action;
     yield call(api.createPermohonan, payload);
     yield call(getSelfPermohonan);
+    yield call(getUserSummary);
     yield put(setStatus('createPermohonan', STATUS_REQUEST_SUCCESS));
   } catch (err) {
     console.log(err);

@@ -24,7 +24,9 @@ export default (state = initState, action) => {
     }
     case DELETE_ACCOUNT: {
       storage.removeData(ACCOUNT_STORAGE_KEY);
-      return initState;
+      return {
+        position: state.position,
+      };
     }
     case SET_POSITION: {
       return {

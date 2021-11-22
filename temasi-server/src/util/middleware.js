@@ -28,8 +28,8 @@ const getUserId = (req, _, next) => {
   if (token) {
     const tokenPayload = decodeToken(token);
     req.auth = tokenPayload;
-    next();
   }
+  next();
 };
 
 module.exports = {

@@ -32,7 +32,7 @@ function* login(action) {
   }
 }
 
-function* getUserSummary() {
+export function* getUserSummary() {
   try {
     yield put(setLoading('getUserSummary', true));
     const result = yield call(api.getUserSummary);
