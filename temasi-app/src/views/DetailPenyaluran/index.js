@@ -57,7 +57,7 @@ export default () => {
       <ConfirmModal
         visible={visible}
         setVisible={setVisible}
-        message="Apakah anda yakin ingin mengonfirmasi bantuan? Pastikan bantuan sesuai dengan apa yang anda butuhkan?"
+        message="Apakah anda yakin ingin mengonfirmasi bantuan? Pastikan bantuan sesuai dengan apa yang anda butuhkan"
         acceptText="Konfirmasi"
         onAccept={onConfirmBantuan}
       />

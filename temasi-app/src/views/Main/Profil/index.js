@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Text, Image, View, ScrollView } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigation } from '@react-navigation/core';
@@ -10,6 +10,11 @@ import GridInfo from '../../../components/GridInfo';
 import { deleteAccount } from '../../../store/account.action';
 import style from './style';
 import { absoluteUrl } from '../../../utils/asset';
+import { setDonasi } from '../../../store/donasi.action';
+import {
+  getLatestPermohonan,
+  getUrgentPermohonan,
+} from '../../../store/permohonan.action';
 
 const AccountNotFound = () => {
   const navigation = useNavigation();
@@ -44,9 +49,15 @@ const AccountNotFound = () => {
 export default () => {
   const account = useSelector(state => state.account);
   const dispatch = useDispatch();
+  const {
+    account: { summary },
+  } = useSelector(state => state);
 
   const onLogout = () => {
     dispatch(deleteAccount());
+    dispatch(setDonasi([]));
+    dispatch(getLatestPermohonan());
+    dispatch(getUrgentPermohonan());
   };
 
   return !account.userId ? (
@@ -63,8 +74,8 @@ export default () => {
         <Text style={style.profileNumber}>{account.phoneNumber}</Text>
       </View>
       <View style={style.statisticGrid}>
-        <GridInfo label="Permohonan" value="1" />
-        <GridInfo label="Donasi" value="2" />
+        <GridInfo label="Permohonan" value={summary?.permohonan_count || 0} />
+        <GridInfo label="Donasi" value={summary?.donasi_count || 0} />
       </View>
       <Text style={style.profileLabel}>Alamat Email</Text>
       <Text style={style.profileValue}>{account.email}</Text>

@@ -1,5 +1,10 @@
 import storage from '../provider/storage';
-import { ADD_ACCOUNT, DELETE_ACCOUNT, SET_POSITION } from './ActionTypes';
+import {
+  ADD_ACCOUNT,
+  DELETE_ACCOUNT,
+  SET_ACCOUNT_SUMMARY,
+  SET_POSITION,
+} from './ActionTypes';
 import { ACCOUNT_STORAGE_KEY } from '../config/storage';
 
 const initState = {
@@ -7,6 +12,7 @@ const initState = {
   fullName: '',
   token: null,
   position: null,
+  summary: null,
 };
 
 export default (state = initState, action) => {
@@ -18,12 +24,20 @@ export default (state = initState, action) => {
     }
     case DELETE_ACCOUNT: {
       storage.removeData(ACCOUNT_STORAGE_KEY);
-      return initState;
+      return {
+        position: state.position,
+      };
     }
     case SET_POSITION: {
       return {
         ...state,
         position: payload,
+      };
+    }
+    case SET_ACCOUNT_SUMMARY: {
+      return {
+        ...state,
+        summary: payload,
       };
     }
     default: {

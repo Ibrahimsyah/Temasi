@@ -1,4 +1,10 @@
-import { ADD_ACCOUNT, DELETE_ACCOUNT, SET_POSITION } from './ActionTypes';
+import {
+  ADD_ACCOUNT,
+  DELETE_ACCOUNT,
+  GET_ACCOUNT_SUMMARY,
+  SET_ACCOUNT_SUMMARY,
+  SET_POSITION,
+} from './ActionTypes';
 
 export const setAccount = account => {
   return {
@@ -17,5 +23,18 @@ export const setPosition = payload => {
   return {
     type: SET_POSITION,
     payload,
+  };
+};
+
+export const setAccountSummary = payload => {
+  return {
+    type: SET_ACCOUNT_SUMMARY,
+    payload,
+  };
+};
+
+export const getAccountSummary = () => {
+  return {
+    type: GET_ACCOUNT_SUMMARY,
   };
 };

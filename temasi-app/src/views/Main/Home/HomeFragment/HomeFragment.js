@@ -25,10 +25,14 @@ import { Color } from '../../../../config/style';
 import style from './style';
 import {
   getLatestPermohonan,
+  getSelfPermohonan,
   getUrgentPermohonan,
 } from '../../../../store/permohonan.action';
 import { getDonasi } from '../../../../store/donasi.action';
-import { setPosition } from '../../../../store/account.action';
+import {
+  getAccountSummary,
+  setPosition,
+} from '../../../../store/account.action';
 
 const greeting = generateGreeting();
 
@@ -45,16 +49,24 @@ export default () => {
     navigation.navigate('DonasiFragment');
   };
 
-  useEffect(() => {
-    dispatch(getDonasi());
-  }, [dispatch]);
+  const onKategoriClick = type => {
+    navigation.navigate('KategoriFragment', {
+      type,
+    });
+  };
 
   useEffect(() => {
     if (account.position) {
       dispatch(getLatestPermohonan());
       dispatch(getUrgentPermohonan());
     }
-  }, [dispatch, account]);
+
+    if (account.userId) {
+      dispatch(getDonasi());
+      dispatch(getAccountSummary());
+      dispatch(getSelfPermohonan());
+    }
+  }, [dispatch, account.userId, account.position]);
 
   useEffect(() => {
     const getCurrentLocation = () => {
@@ -114,7 +126,9 @@ export default () => {
         <View style={style.mainPanel}>
           <Text style={style.panelTitle}>Yuk Bantu Mereka</Text>
           <View style={style.panelGrid}>
-            <Pressable style={style.panelItem}>
+            <Pressable
+              style={style.panelItem}
+              onPress={() => onKategoriClick(1)}>
               <View style={style.iconBackground}>
                 <MaterialIcon
                   name="local-hospital"
@@ -123,7 +137,9 @@ export default () => {
               </View>
               <Text style={style.panelItemTitle}>Bahan Pangan & Suplemen</Text>
             </Pressable>
-            <Pressable style={style.panelItem}>
+            <Pressable
+              style={style.panelItem}
+              onPress={() => onKategoriClick(2)}>
               <View style={style.iconBackground}>
                 <MaterialCommunityIcon
                   name="diving-scuba-tank"
@@ -132,7 +148,9 @@ export default () => {
               </View>
               <Text style={style.panelItemTitle}>Tabung Oksigen</Text>
             </Pressable>
-            <Pressable style={style.panelItem}>
+            <Pressable
+              style={style.panelItem}
+              onPress={() => onKategoriClick(3)}>
               <View style={style.iconBackground}>
                 <FontAwesome5Icon
                   name="tint"

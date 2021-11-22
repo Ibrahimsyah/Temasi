@@ -1,9 +1,9 @@
 import { takeLatest, put, call } from 'redux-saga/effects';
 import api from '../../provider/api';
 import { showToast } from '../../utils/error';
-import { setAccount } from '../account.action';
+import { setAccount, setAccountSummary } from '../account.action';
 
-import { LOGIN_USER, REGISTER_USER } from '../ActionTypes';
+import { GET_ACCOUNT_SUMMARY, LOGIN_USER, REGISTER_USER } from '../ActionTypes';
 import { setLoading } from '../loading.action';
 
 function* register(action) {
@@ -32,9 +32,23 @@ function* login(action) {
   }
 }
 
+export function* getUserSummary() {
+  try {
+    yield put(setLoading('getUserSummary', true));
+    const result = yield call(api.getUserSummary);
+    yield put(setAccountSummary(result));
+  } catch (err) {
+    console.log(err);
+    showToast(err);
+  } finally {
+    yield put(setLoading('getUserSummary', false));
+  }
+}
+
 function* authSaga() {
   yield takeLatest(REGISTER_USER, register);
   yield takeLatest(LOGIN_USER, login);
+  yield takeLatest(GET_ACCOUNT_SUMMARY, getUserSummary);
 }
 
 export default authSaga;

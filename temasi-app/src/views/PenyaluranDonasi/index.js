@@ -1,5 +1,5 @@
 import React, { useState, useMemo, useEffect } from 'react';
-import { View, ScrollView, StatusBar, Text } from 'react-native';
+import { View, ScrollView, StatusBar, Text, Linking } from 'react-native';
 import { useRoute } from '@react-navigation/core';
 import { default as FontAwesome5Icon } from 'react-native-vector-icons/FontAwesome5';
 import { useDispatch, useSelector } from 'react-redux';
@@ -8,16 +8,13 @@ import { useNavigation, StackActions } from '@react-navigation/core';
 import ButtonPrimary from '../../components/ButtonPrimary';
 import ButtonSecondary from '../../components/ButtonSecondary';
 import Header from '../../components/Header';
-import { TYPE_OKSIGEN } from '../../config/ItemTypes';
 import { Map } from '../../components/Map';
 import { generateCategoryStyle } from '../../utils/style';
-import { Color } from '../../config/style';
 
 import style from './style';
 import { getDonasiDetail } from '../../store/donasi.action';
 
 export default () => {
-  const [type] = useState(TYPE_OKSIGEN);
   const route = useRoute();
   const dispatch = useDispatch();
   const navigation = useNavigation();
@@ -31,6 +28,16 @@ export default () => {
       navigation.goBack();
     }
   };
+
+  const onCall = () => {
+    Linking.openURL(`tel:${donasi.detail?.phone_number}`);
+  };
+
+  const onWhatsApp = () => {
+    const api = `https://api.whatsapp.com/send?phone=${donasi.detail?.phone_number}`;
+    Linking.openURL(api);
+  };
+
   useEffect(() => {
     if (donasi.detail?.id !== donasiId) {
       dispatch(
@@ -42,15 +49,15 @@ export default () => {
   }, [dispatch, donasiId, donasi]);
 
   const { iconBgColor, icon, category, color } = useMemo(
-    () => generateCategoryStyle(type),
-    [type],
+    () => generateCategoryStyle(donasi.detail?.type),
+    [donasi.detail?.type],
   );
 
   return (
     <>
-      <StatusBar backgroundColor={Color.PRIMARY} barStyle="light-content" />
+      <StatusBar backgroundColor={color} barStyle="light-content" />
       <ScrollView
-        style={style.container}
+        style={style.container(donasi.detail?.type)}
         contentContainerStyle={style.contentContainer}>
         <Header
           withPadding
@@ -63,7 +70,7 @@ export default () => {
             <>
               <FontAwesome5Icon
                 name="check-circle"
-                color={Color.PRIMARY}
+                color={color}
                 size={60}
                 style={style.checkLogo}
               />
@@ -116,8 +123,12 @@ export default () => {
             </Text>
           </View>
           <Text style={style.titleBig}>Hubungi Pemohon</Text>
-          <ButtonPrimary style={style.buttonAction}>Telepon</ButtonPrimary>
-          <ButtonSecondary style={style.buttonAction}>WhatsApp</ButtonSecondary>
+          <ButtonPrimary style={style.buttonAction} onClick={onCall}>
+            Telepon
+          </ButtonPrimary>
+          <ButtonSecondary style={style.buttonAction} onClick={onWhatsApp}>
+            WhatsApp
+          </ButtonSecondary>
         </View>
       </ScrollView>
     </>

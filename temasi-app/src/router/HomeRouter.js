@@ -6,6 +6,7 @@ import SearchFragment from '../views/Main/Home/SearchFragment';
 import DonasiFragment from '../views/Main/Home/DonasiFragment';
 
 import config from './index.config';
+import KategoriFragment from '../views/Main/Home/KategoriFragment';
 
 const Stack = createNativeStackNavigator();
 export const HomeRouter = () => {
@@ -16,6 +17,7 @@ export const HomeRouter = () => {
       <Stack.Screen name="HomeFragment" component={HomeFragment} />
       <Stack.Screen name="SearchFragment" component={SearchFragment} />
       <Stack.Screen name="DonasiFragment" component={DonasiFragment} />
+      <Stack.Screen name="KategoriFragment" component={KategoriFragment} />
     </Stack.Navigator>
   );
 };
