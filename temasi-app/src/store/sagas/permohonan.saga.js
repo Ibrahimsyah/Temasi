@@ -44,7 +44,7 @@ export function* getSelfPermohonan() {
     const result = yield call(api.getSelfPermohonan);
     yield put(setSelfPermohonan(result));
   } catch (err) {
-    console.log(err.stack);
+    console.log(err);
     showToast(err);
   } finally {
     yield put(setLoading('getSelfPermohonan', false));
@@ -64,7 +64,6 @@ export function* getLatestPermohonan() {
     yield put(setLatestPermohonan(result));
   } catch (err) {
     console.log(err);
-    showToast(err);
   } finally {
     yield put(setLoading('getLatestPermohonan', false));
   }
@@ -84,7 +83,6 @@ export function* getUrgentPermohonan() {
     yield put(setUrgentPermohonan(result));
   } catch (err) {
     console.log(err);
-    showToast(err);
   } finally {
     yield put(setLoading('getUrgentPermohonan', false));
   }
@@ -135,7 +133,6 @@ function* getPermohonanDetail(action) {
   try {
     const { payload } = action;
     yield put(setLoading('getPermohonanDetail', true));
-    yield put(setPermohonanDetail(null));
     const result = yield call(api.getPermohonanDetail, payload);
     yield put(setPermohonanDetail(result));
   } catch (err) {

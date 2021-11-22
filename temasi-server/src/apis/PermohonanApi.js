@@ -2,7 +2,7 @@ const {Router} = require('express');
 
 const {DataIncompleteError} = require('../util/error');
 const PermohonanController = require('../controller/PermohonanController');
-const {validateUser} = require('../util/middleware');
+const {validateUser, getUserId} = require('../util/middleware');
 
 const router = Router();
 
@@ -37,7 +37,8 @@ const addPermohonanHandler = async (req, res, next) => {
 
 const getAllPermohonanHandler = async (req, res, next) => {
   try {
-    const result = await PermohonanController.getPermohonan(req.query);
+    const {userId} = req.auth;
+    const result = await PermohonanController.getPermohonan({...req.query, userId});
     res.status(200);
     res.send(result);
   } catch (err) {
@@ -81,7 +82,7 @@ const getDonaturPermohonanDetailHandler = async (req, res, next) => {
 router.post('/', validateUser, addPermohonanHandler);
 router.get('/self', validateUser, getSelfPermohonanHandler);
 router.get('/:permohonan_id', validateUser, getPermohonanDetailHandler);
-router.get('/', getAllPermohonanHandler);
+router.get('/', getUserId, getAllPermohonanHandler);
 router.get('/matched/:permohonan_id', getDonaturPermohonanDetailHandler);
 
 module.exports = router;

@@ -8,7 +8,6 @@ import { useNavigation, StackActions } from '@react-navigation/core';
 import ButtonPrimary from '../../components/ButtonPrimary';
 import ButtonSecondary from '../../components/ButtonSecondary';
 import Header from '../../components/Header';
-import { TYPE_OKSIGEN } from '../../config/ItemTypes';
 import { Map } from '../../components/Map';
 import { generateCategoryStyle } from '../../utils/style';
 import { Color } from '../../config/style';
@@ -17,7 +16,6 @@ import style from './style';
 import { getDonasiDetail } from '../../store/donasi.action';
 
 export default () => {
-  const [type] = useState(TYPE_OKSIGEN);
   const route = useRoute();
   const dispatch = useDispatch();
   const navigation = useNavigation();
@@ -42,15 +40,15 @@ export default () => {
   }, [dispatch, donasiId, donasi]);
 
   const { iconBgColor, icon, category, color } = useMemo(
-    () => generateCategoryStyle(type),
-    [type],
+    () => generateCategoryStyle(donasi.detail?.type),
+    [donasi.detail?.type],
   );
 
   return (
     <>
-      <StatusBar backgroundColor={Color.PRIMARY} barStyle="light-content" />
+      <StatusBar backgroundColor={color} barStyle="light-content" />
       <ScrollView
-        style={style.container}
+        style={style.container(donasi.detail?.type)}
         contentContainerStyle={style.contentContainer}>
         <Header
           withPadding
@@ -63,7 +61,7 @@ export default () => {
             <>
               <FontAwesome5Icon
                 name="check-circle"
-                color={Color.PRIMARY}
+                color={color}
                 size={60}
                 style={style.checkLogo}
               />

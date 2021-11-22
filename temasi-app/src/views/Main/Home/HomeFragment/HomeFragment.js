@@ -50,16 +50,13 @@ export default () => {
   };
 
   useEffect(() => {
-    dispatch(getDonasi());
-  }, [dispatch]);
-
-  useEffect(() => {
     if (account.position) {
       dispatch(getLatestPermohonan());
       dispatch(getUrgentPermohonan());
     }
 
     if (account.userId) {
+      dispatch(getDonasi());
       dispatch(getAccountSummary());
       dispatch(getSelfPermohonan());
     }

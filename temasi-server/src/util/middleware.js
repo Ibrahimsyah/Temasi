@@ -11,7 +11,7 @@ const errorHandler = (err, req, res, next) => {
   res.status(err.statusCode || 500).json({error: err.message || 'Kesalahan Sistem'});
 };
 
-const validateUser = (req, res, next) => {
+const validateUser = (req, _, next) => {
   const token = req.headers['authorization']?.split(' ')[1];
   if (!token) throw UnauthorizedError;
   try {
@@ -23,8 +23,18 @@ const validateUser = (req, res, next) => {
   }
 };
 
+const getUserId = (req, _, next) => {
+  const token = req.headers['authorization']?.split(' ')[1];
+  if (token) {
+    const tokenPayload = decodeToken(token);
+    req.auth = tokenPayload;
+    next();
+  }
+};
+
 module.exports = {
   notFound,
   errorHandler,
   validateUser,
+  getUserId,
 };

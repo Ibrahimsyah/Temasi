@@ -112,7 +112,7 @@ export default () => {
             <ActivityIndicator color={color} />
           ) : (
             <>
-              {permohonan.detail?.note && (
+              {permohonan.detail?.note !== '' && (
                 <Text style={style.story}>{permohonan.detail?.note}</Text>
               )}
               <View style={style.profile}>
@@ -131,7 +131,7 @@ export default () => {
               </View>
               <Text style={style.titleBig}>Dokumen Pendukung</Text>
 
-              {permohonan.detail?.documents && (
+              {permohonan.detail?.documents.length > 0 && (
                 <>
                   {permohonan.detail.documents.map((document, idx) => (
                     <Pressable

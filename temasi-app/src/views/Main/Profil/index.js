@@ -66,8 +66,8 @@ export default () => {
         <Text style={style.profileNumber}>{account.phoneNumber}</Text>
       </View>
       <View style={style.statisticGrid}>
-        <GridInfo label="Permohonan" value={summary.permohonan_count || 0} />
-        <GridInfo label="Donasi" value={summary.donasi_count || 0} />
+        <GridInfo label="Permohonan" value={summary?.permohonan_count || 0} />
+        <GridInfo label="Donasi" value={summary?.donasi_count || 0} />
       </View>
       <Text style={style.profileLabel}>Alamat Email</Text>
       <Text style={style.profileValue}>{account.email}</Text>

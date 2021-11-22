@@ -1,10 +1,19 @@
 import { StyleSheet } from 'react-native';
+import { TYPE_OKSIGEN, TYPE_PLASMA } from '../../config/ItemTypes';
 import { Color, FontStyle } from '../../config/style';
 
 export default StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: Color.PRIMARY,
+  container: type => {
+    const color =
+      type === TYPE_PLASMA
+        ? Color.MED_RED
+        : type === TYPE_OKSIGEN
+        ? Color.PRIMARY
+        : Color.MED_BLUE;
+    return {
+      flex: 1,
+      backgroundColor: color,
+    };
   },
 
   mainContainer: {

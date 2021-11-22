@@ -24,8 +24,7 @@ const insertPermohonan = async (payload) => {
 };
 
 const getAllPermohonan = async (payload) => {
-  const {order = 'time_remaining', sort = 'asc', q, type, latitude, longitude} = payload || {};
-
+  const {order = 'time_remaining', sort = 'asc', q, type, latitude, longitude, userId} = payload || {};
   let query = `
   select 
     dt.id,
@@ -54,10 +53,12 @@ const getAllPermohonan = async (payload) => {
   if (type) {
     query += ` and type = ${type}`;
   }
+  if (userId) {
+    query += ` and dt.pengguna_id != '${userId}'`;
+  }
   if (order) {
     query += ` order by ${order} ${sort}`;
   }
-
   const results = await db.query(query, {type: QueryTypes.SELECT});
   const mappedResult = results.map((permohonan) => {
     const {id, pengguna_id, title, type, distance, time_remaining} = permohonan;
@@ -94,6 +95,7 @@ const getSelfPermohonan = async (userId) => {
   ) as dt
   left join donasi d on dt.id  = d.permohonan_id 
   where (date_part('epoch', (now() - submit_date))/3600)::int <= timeout*24
+  order by submit_date
   `;
 
   const results = await db.query(query, {type: QueryTypes.SELECT});
