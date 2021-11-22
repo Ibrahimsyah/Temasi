@@ -1,5 +1,5 @@
 import React, { useState, useMemo, useEffect } from 'react';
-import { View, ScrollView, StatusBar, Text } from 'react-native';
+import { View, ScrollView, StatusBar, Text, Linking } from 'react-native';
 import { useRoute } from '@react-navigation/core';
 import { default as FontAwesome5Icon } from 'react-native-vector-icons/FontAwesome5';
 import { useDispatch, useSelector } from 'react-redux';
@@ -10,7 +10,6 @@ import ButtonSecondary from '../../components/ButtonSecondary';
 import Header from '../../components/Header';
 import { Map } from '../../components/Map';
 import { generateCategoryStyle } from '../../utils/style';
-import { Color } from '../../config/style';
 
 import style from './style';
 import { getDonasiDetail } from '../../store/donasi.action';
@@ -29,6 +28,16 @@ export default () => {
       navigation.goBack();
     }
   };
+
+  const onCall = () => {
+    Linking.openURL(`tel:${donasi.detail?.phone_number}`);
+  };
+
+  const onWhatsApp = () => {
+    const api = `https://api.whatsapp.com/send?phone=${donasi.detail?.phone_number}`;
+    Linking.openURL(api);
+  };
+
   useEffect(() => {
     if (donasi.detail?.id !== donasiId) {
       dispatch(
@@ -114,8 +123,12 @@ export default () => {
             </Text>
           </View>
           <Text style={style.titleBig}>Hubungi Pemohon</Text>
-          <ButtonPrimary style={style.buttonAction}>Telepon</ButtonPrimary>
-          <ButtonSecondary style={style.buttonAction}>WhatsApp</ButtonSecondary>
+          <ButtonPrimary style={style.buttonAction} onClick={onCall}>
+            Telepon
+          </ButtonPrimary>
+          <ButtonSecondary style={style.buttonAction} onClick={onWhatsApp}>
+            WhatsApp
+          </ButtonSecondary>
         </View>
       </ScrollView>
     </>

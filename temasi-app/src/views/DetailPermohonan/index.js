@@ -108,7 +108,7 @@ export default () => {
         <View style={style.mainContainer}>
           <PermohonanDetail {...router.params} />
 
-          {loading.getPermohonanDetail ? (
+          {loading.getPermohonanDetail || permohonan.detail?.id !== id ? (
             <ActivityIndicator color={color} />
           ) : (
             <>
