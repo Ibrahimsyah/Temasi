@@ -36,7 +36,6 @@ function* getUserSummary() {
   try {
     yield put(setLoading('getUserSummary', true));
     const result = yield call(api.getUserSummary);
-    console.log(result);
     yield put(setAccountSummary(result));
   } catch (err) {
     console.log(err);

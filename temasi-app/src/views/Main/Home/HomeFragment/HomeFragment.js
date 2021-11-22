@@ -49,6 +49,12 @@ export default () => {
     navigation.navigate('DonasiFragment');
   };
 
+  const onKategoriClick = type => {
+    navigation.navigate('KategoriFragment', {
+      type,
+    });
+  };
+
   useEffect(() => {
     if (account.position) {
       dispatch(getLatestPermohonan());
@@ -120,7 +126,9 @@ export default () => {
         <View style={style.mainPanel}>
           <Text style={style.panelTitle}>Yuk Bantu Mereka</Text>
           <View style={style.panelGrid}>
-            <Pressable style={style.panelItem}>
+            <Pressable
+              style={style.panelItem}
+              onPress={() => onKategoriClick(1)}>
               <View style={style.iconBackground}>
                 <MaterialIcon
                   name="local-hospital"
@@ -129,7 +137,9 @@ export default () => {
               </View>
               <Text style={style.panelItemTitle}>Bahan Pangan & Suplemen</Text>
             </Pressable>
-            <Pressable style={style.panelItem}>
+            <Pressable
+              style={style.panelItem}
+              onPress={() => onKategoriClick(2)}>
               <View style={style.iconBackground}>
                 <MaterialCommunityIcon
                   name="diving-scuba-tank"
@@ -138,7 +148,9 @@ export default () => {
               </View>
               <Text style={style.panelItemTitle}>Tabung Oksigen</Text>
             </Pressable>
-            <Pressable style={style.panelItem}>
+            <Pressable
+              style={style.panelItem}
+              onPress={() => onKategoriClick(3)}>
               <View style={style.iconBackground}>
                 <FontAwesome5Icon
                   name="tint"
