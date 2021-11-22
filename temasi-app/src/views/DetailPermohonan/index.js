@@ -94,8 +94,10 @@ export default () => {
   }, [status.acceptDonasi, navigation, dispatch, donasi]);
 
   useEffect(() => {
-    dispatch(getPermohonanDetail({ permohonanId: id }));
-  }, [dispatch, id]);
+    if (id !== permohonan.detail?.id) {
+      dispatch(getPermohonanDetail({ permohonanId: id }));
+    }
+  }, [dispatch, id, permohonan]);
 
   return (
     <>
