@@ -1,6 +1,7 @@
 const {Sequelize, DataTypes} = require('sequelize');
 const {DSN, ENV} = require('../config');
 
+console.log(DSN);
 const db = new Sequelize(DSN, {logging: false});
 
 const Pengguna = db.define('pengguna', {
