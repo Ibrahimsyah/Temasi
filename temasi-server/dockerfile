@@ -1,0 +1,9 @@
+FROM node:alpine
+
+WORKDIR /temasi-server
+COPY package.json ./
+RUN npm install
+
+COPY . .
+RUN chmod +x ./wait-for.sh
+CMD ./wait-for.sh db:5432 -- npm start
