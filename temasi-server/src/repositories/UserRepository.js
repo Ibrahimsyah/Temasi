@@ -3,7 +3,7 @@ const {nanoid} = require('nanoid');
 
 const {Pengguna, db} = require('../services/db');
 const {SALT_ROUND} = require('../config');
-const {LoginError, UserExistsError} = require('../util/error');
+const {LoginError, UserExistsError, PasswordNotMatch} = require('../util/error');
 
 const checkUserExists = async (email) => {
   const result = await Pengguna.findOne({where: {email}, raw: true});
@@ -48,10 +48,28 @@ const getProfileSummary = async (userId) => {
   return result[0][0];
 };
 
+const changeUserPassword = async (payload) => {
+  const {userId, oldPassword, newPassword} = payload;
+
+  const user = await Pengguna.findOne({where: {
+    id: userId,
+  }});
+
+  const isPasswordMatched = await bcrypt.compare(oldPassword, user.password);
+  if (!isPasswordMatched) throw PasswordNotMatch;
+
+  const hashedPassword = await bcrypt.hash(newPassword, SALT_ROUND);
+
+  await Pengguna.update({password: hashedPassword}, {where: {
+    id: userId,
+  }});
+};
+
 module.exports = {
   getUserByEmail,
   addNewUser,
   verifyUserPassword,
   checkUserExists,
   getProfileSummary,
+  changeUserPassword,
 };

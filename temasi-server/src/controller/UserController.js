@@ -1,6 +1,7 @@
 const {generateToken} = require('../util/tokenizer');
 const UserRepository = require('../repositories/UserRepository');
 const {UserNotFoundError} = require('../util/error');
+const {insertSuccess} = require('../util/response');
 
 const registerUser = async (payload) => {
   const {
@@ -49,8 +50,14 @@ const getProfileSummary = async (userId) => {
   return result;
 };
 
+const changeUserPassword = async (payload) => {
+  await UserRepository.changeUserPassword(payload);
+  return insertSuccess;
+};
+
 module.exports = {
   registerUser,
   loginUser,
   getProfileSummary,
+  changeUserPassword,
 };
