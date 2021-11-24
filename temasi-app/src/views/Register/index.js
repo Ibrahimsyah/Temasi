@@ -26,6 +26,7 @@ import { registerUser } from '../../store/auth.action';
 
 import style from './style';
 import { showToast } from '../../utils/error';
+import { deleteAccount } from '../../store/account.action';
 
 export default () => {
   const [photo, setPhoto] = useState(null);
@@ -38,7 +39,7 @@ export default () => {
   const [modalVisible, setModalVisible] = useState(false);
 
   const navigation = useNavigation();
-  const { account, loading, main, error } = useSelector(state => state);
+  const { account, loading, main } = useSelector(state => state);
   const dispatch = useDispatch();
 
   const isFormFilled = useMemo(() => {
@@ -70,6 +71,7 @@ export default () => {
   };
 
   const onLogin = () => {
+    dispatch(deleteAccount());
     navigation.navigate('LoginScreen');
   };
 
@@ -81,7 +83,7 @@ export default () => {
   };
 
   useEffect(() => {
-    if (account.userId) {
+    if (account.userId && account.status) {
       navigation.dispatch(
         CommonActions.reset({
           routes: [{ name: 'HomeScreen' }],
@@ -89,6 +91,12 @@ export default () => {
       );
     }
   }, [account, navigation]);
+
+  useEffect(() => {
+    if (account.status === false) {
+      navigation.push('KonfirmasiScreen');
+    }
+  }, [account.status, navigation]);
 
   useEffect(() => {
     if (main?.uploadResult) {

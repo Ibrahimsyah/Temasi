@@ -27,6 +27,9 @@ const Pengguna = db.define('pengguna', {
   photo: {
     type: DataTypes.STRING,
   },
+  status: {
+    type: DataTypes.BOOLEAN,
+  },
 }, {
   tableName: 'pengguna',
   timestamps: false,

@@ -60,13 +60,15 @@ export default () => {
       dispatch(getLatestPermohonan());
       dispatch(getUrgentPermohonan());
     }
+  }, [dispatch, account.position]);
 
-    if (account.userId) {
+  useEffect(() => {
+    if (account.userId && account.status) {
       dispatch(getDonasi());
       dispatch(getAccountSummary());
       dispatch(getSelfPermohonan());
     }
-  }, [dispatch, account.userId, account.position]);
+  }, [account.status, dispatch, account.userId]);
 
   useEffect(() => {
     const getCurrentLocation = () => {
@@ -103,7 +105,7 @@ export default () => {
   return (
     <>
       <ScrollView style={style.container}>
-        {account.userId && (
+        {account.userId && account.status && (
           <>
             <Text style={style.greeting}>{greeting}</Text>
             <Text style={style.userName}>{account.fullName}</Text>

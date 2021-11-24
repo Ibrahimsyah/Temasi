@@ -1,9 +1,10 @@
 const bcrypt = require('bcrypt');
-const {nanoid} = require('nanoid');
+const {customAlphabet} = require('nanoid');
 
 const {Pengguna, db} = require('../services/db');
 const {SALT_ROUND} = require('../config');
 const {LoginError, UserExistsError, PasswordNotMatch} = require('../util/error');
+const {sendConfirmationEmail} = require('../services/mailer');
 
 const checkUserExists = async (email) => {
   const result = await Pengguna.findOne({where: {email}, raw: true});
@@ -17,7 +18,9 @@ const getUserByEmail = async (email) => {
 
 const addNewUser = async (payload) => {
   const {email, fullName, phoneNumber, isMale, password, photo} = payload;
-  const userId = `user-${nanoid(10)}`;
+
+  const userCode = customAlphabet('1234567890', 6)();
+  const userId = `user-${userCode}`;
   const hashedPassword = await bcrypt.hash(password, SALT_ROUND);
   const pengguna = {
     id: userId,
@@ -28,8 +31,17 @@ const addNewUser = async (payload) => {
     phone_number: phoneNumber,
     is_male: isMale,
     photo,
+    status: false,
   };
-  await Pengguna.create(pengguna);
+
+  const transaction = await db.transaction();
+  try {
+    await Pengguna.create(pengguna, {transaction});
+    await sendConfirmationEmail(email, userCode);
+  } catch (err) {
+    throw err;
+  }
+  transaction.commit();
   return userId;
 };
 
@@ -65,6 +77,12 @@ const changeUserPassword = async (payload) => {
   }});
 };
 
+const verifyUser = async ({userId}) => {
+  await Pengguna.update({status: 1}, {where: {
+    id: userId,
+  }});
+};
+
 module.exports = {
   getUserByEmail,
   addNewUser,
@@ -72,4 +90,5 @@ module.exports = {
   checkUserExists,
   getProfileSummary,
   changeUserPassword,
+  verifyUser,
 };

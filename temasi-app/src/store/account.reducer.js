@@ -2,6 +2,7 @@ import storage from '../provider/storage';
 import {
   ADD_ACCOUNT,
   DELETE_ACCOUNT,
+  SET_ACCOUNT_STATUS,
   SET_ACCOUNT_SUMMARY,
   SET_POSITION,
 } from './ActionTypes';
@@ -13,6 +14,7 @@ const initState = {
   token: null,
   position: null,
   summary: null,
+  status: null,
 };
 
 export default (state = initState, action) => {
@@ -38,6 +40,12 @@ export default (state = initState, action) => {
       return {
         ...state,
         summary: payload,
+      };
+    }
+    case SET_ACCOUNT_STATUS: {
+      return {
+        ...state,
+        status: payload,
       };
     }
     default: {

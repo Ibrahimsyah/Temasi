@@ -65,8 +65,20 @@ const changePasswordHandler = async (req, res, next) => {
   }
 };
 
+const confirmAccountHandler = async (req, res, next) => {
+  try {
+    const {userId} = req.auth;
+    const {confirmationCode} = req.body;
+    const result = await AuthController.confirmAccount({userId, confirmationCode});
+    res.status(201);
+    res.send(result);
+  } catch (err) {
+    next(err);
+  }
+};
 router.post('/register', registerHandler);
 router.post('/login', loginHandler);
 router.post('/changepassword', validateUser, changePasswordHandler);
+router.post('/confirm', validateUser, confirmAccountHandler);
 
 module.exports = router;

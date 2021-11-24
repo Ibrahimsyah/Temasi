@@ -29,6 +29,11 @@ const PasswordNotMatch = {
   message: 'Kata sandi lama salah',
 };
 
+const ConfirmationCodeNotMatch = {
+  statusCode: 403,
+  message: 'Kode konfirmasi salah',
+};
+
 module.exports = {
   DataIncompleteError,
   LoginError,
@@ -36,4 +41,5 @@ module.exports = {
   UserNotFoundError,
   UnauthorizedError,
   PasswordNotMatch,
+  ConfirmationCodeNotMatch,
 };

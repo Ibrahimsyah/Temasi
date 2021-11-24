@@ -1,7 +1,7 @@
 const {generateToken} = require('../util/tokenizer');
 const UserRepository = require('../repositories/UserRepository');
-const {UserNotFoundError} = require('../util/error');
-const {insertSuccess} = require('../util/response');
+const {UserNotFoundError, ConfirmationCodeNotMatch} = require('../util/error');
+const {insertSuccess, updateSuccess} = require('../util/response');
 
 const registerUser = async (payload) => {
   const {
@@ -24,6 +24,7 @@ const registerUser = async (payload) => {
     userId,
     token,
     photo,
+    status: false,
   };
 };
 
@@ -42,6 +43,7 @@ const loginUser = async (payload) => {
     photo: account.photo,
     phoneNumber: account.phone_number,
     token,
+    status: account.status,
   };
 };
 
@@ -55,9 +57,22 @@ const changeUserPassword = async (payload) => {
   return insertSuccess;
 };
 
+const confirmAccount = async (payload) => {
+  const {userId, confirmationCode} = payload;
+  const userCode = userId.split('-')[1];
+
+  if (userCode === confirmationCode) {
+    await UserRepository.verifyUser({userId});
+    return updateSuccess;
+  }
+
+  throw ConfirmationCodeNotMatch;
+};
+
 module.exports = {
   registerUser,
   loginUser,
   getProfileSummary,
   changeUserPassword,
+  confirmAccount,
 };
