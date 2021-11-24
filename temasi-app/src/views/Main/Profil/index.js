@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Text, Image, View, ScrollView } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigation } from '@react-navigation/core';
@@ -18,12 +18,15 @@ import {
 
 const AccountNotFound = () => {
   const navigation = useNavigation();
+  const dispatch = useDispatch();
 
   const onLogin = () => {
+    dispatch(deleteAccount());
     navigation.navigate('LoginScreen');
   };
 
   const onRegister = () => {
+    dispatch(deleteAccount());
     navigation.navigate('RegisterScreen');
   };
 
@@ -60,7 +63,7 @@ export default () => {
     dispatch(getUrgentPermohonan());
   };
 
-  return !account.userId ? (
+  return !account.userId || account.status === false ? (
     <AccountNotFound />
   ) : (
     <ScrollView style={style.mainContainer}>

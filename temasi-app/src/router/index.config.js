@@ -7,6 +7,7 @@ import LoginScreen from '../views/Login';
 import RegisterScreen from '../views/Register';
 import PenyaluranDonasiScreen from '../views/PenyaluranDonasi';
 import DetailPenyaluran from '../views/DetailPenyaluran';
+import KonfirmasiEmail from '../views/KonfirmasiEmail';
 
 export default {
   defaultRouteName: 'SplashScreen',
@@ -23,5 +24,6 @@ export default {
     { name: 'RegisterScreen', screen: RegisterScreen },
     { name: 'PenyaluranDonasi', screen: PenyaluranDonasiScreen },
     { name: 'DetailPenyaluran', screen: DetailPenyaluran },
+    { name: 'KonfirmasiScreen', screen: KonfirmasiEmail },
   ],
 };

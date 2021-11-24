@@ -16,14 +16,14 @@ import { isEmpty } from '../../utils/validation';
 import style from './style';
 import { useEffect } from 'react';
 import { loginUser } from '../../store/auth.action';
-import { showToast } from '../../utils/error';
+import { deleteAccount } from '../../store/account.action';
 
 export default () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
   const navigation = useNavigation();
-  const { account, loading, error } = useSelector(state => state);
+  const { account, loading } = useSelector(state => state);
   const dispatch = useDispatch();
 
   const isFormFilled = useMemo(() => {
@@ -31,10 +31,12 @@ export default () => {
   }, [email, password]);
 
   const onRegister = () => {
+    dispatch(deleteAccount());
     navigation.navigate('RegisterScreen');
   };
 
   const onLogin = () => {
+    dispatch(deleteAccount());
     dispatch(
       loginUser({
         email,
@@ -44,7 +46,7 @@ export default () => {
   };
 
   useEffect(() => {
-    if (account.userId) {
+    if (account.userId && account.status) {
       navigation.dispatch(
         CommonActions.reset({
           routes: [{ name: 'HomeScreen' }],
@@ -52,6 +54,12 @@ export default () => {
       );
     }
   }, [account, navigation]);
+
+  useEffect(() => {
+    if (account.status === false) {
+      navigation.push('KonfirmasiScreen');
+    }
+  }, [account.status, navigation]);
 
   return (
     <>

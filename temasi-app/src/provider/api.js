@@ -56,6 +56,7 @@ export default {
   login: payload => post('/auth/login', payload),
   register: payload => post('/auth/register', payload),
   getUserSummary: () => get('/user/summary'),
+  confirmAccount: payload => post('/auth/confirm', payload),
 
   // Upload
   upload: payload => post('/upload', payload),

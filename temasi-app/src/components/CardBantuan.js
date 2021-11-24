@@ -145,7 +145,7 @@ export default props => {
       timeRemaining,
     };
 
-    if (account.userId) {
+    if (account.userId && account.status) {
       navigation.navigate('DetailPermohonan', data);
     } else {
       navigation.navigate('Profil');

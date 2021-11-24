@@ -2,6 +2,7 @@ import {
   ADD_ACCOUNT,
   DELETE_ACCOUNT,
   GET_ACCOUNT_SUMMARY,
+  SET_ACCOUNT_STATUS,
   SET_ACCOUNT_SUMMARY,
   SET_POSITION,
 } from './ActionTypes';
@@ -36,5 +37,12 @@ export const setAccountSummary = payload => {
 export const getAccountSummary = () => {
   return {
     type: GET_ACCOUNT_SUMMARY,
+  };
+};
+
+export const setAccountStatus = payload => {
+  return {
+    type: SET_ACCOUNT_STATUS,
+    payload,
   };
 };

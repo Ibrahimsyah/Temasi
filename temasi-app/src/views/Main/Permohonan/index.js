@@ -15,7 +15,7 @@ export default () => {
   const {
     permohonan,
     loading,
-    account: { userId },
+    account: { userId, status },
   } = useSelector(state => state);
   const navigation = useNavigation();
 
@@ -26,7 +26,7 @@ export default () => {
   };
 
   const onCreatePermohonan = () => {
-    if (userId) {
+    if (userId && status) {
       navigation.navigate('BuatPermohonanScreen');
     } else {
       showToast('Silahkan Masuk Terlebih Dahulu');
