@@ -1,6 +1,7 @@
 const {Router} = require('express');
 const {DataIncompleteError} = require('../util/error');
 const AuthController = require('../controller/UserController');
+const {validateUser} = require('../util/middleware');
 
 const router = Router();
 
@@ -48,7 +49,24 @@ const loginHandler = async (req, res, next) => {
   }
 };
 
+const changePasswordHandler = async (req, res, next) => {
+  try {
+    const {userId} = req.auth;
+    const payload ={
+      userId,
+      ...req.body,
+    };
+
+    const result = await AuthController.changeUserPassword(payload);
+    res.status(201);
+    res.send(result);
+  } catch (err) {
+    next(err);
+  }
+};
+
 router.post('/register', registerHandler);
 router.post('/login', loginHandler);
+router.post('/changepassword', validateUser, changePasswordHandler);
 
 module.exports = router;

@@ -24,10 +24,16 @@ const UnauthorizedError = {
   message: 'Silahkan masuk terlebih dahulu',
 };
 
+const PasswordNotMatch = {
+  statusCode: 400,
+  message: 'Kata sandi lama salah',
+};
+
 module.exports = {
   DataIncompleteError,
   LoginError,
   UserExistsError,
   UserNotFoundError,
   UnauthorizedError,
+  PasswordNotMatch,
 };
