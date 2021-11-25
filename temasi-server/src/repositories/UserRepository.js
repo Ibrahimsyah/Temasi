@@ -7,12 +7,12 @@ const {LoginError, UserExistsError, PasswordNotMatch} = require('../util/error')
 const {sendConfirmationEmail} = require('../services/mailer');
 
 const checkUserExists = async (email) => {
-  const result = await Pengguna.findOne({where: {email}, raw: true});
+  const result = await Pengguna.findOne({where: {email: email.toLowerCase()}, raw: true});
   if (result) throw UserExistsError;
 };
 
 const getUserByEmail = async (email) => {
-  const result = await Pengguna.findOne({where: {email}, raw: true});
+  const result = await Pengguna.findOne({where: {email: email.toLowerCase()}, raw: true});
   return result;
 };
 
@@ -24,7 +24,7 @@ const addNewUser = async (payload) => {
   const hashedPassword = await bcrypt.hash(password, SALT_ROUND);
   const pengguna = {
     id: userId,
-    email,
+    email: email.toLowerCase(),
     password: hashedPassword,
     pengguna_id: userId,
     full_name: fullName,

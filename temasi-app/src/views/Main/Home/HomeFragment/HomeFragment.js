@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import { default as FontAwesomeIcon } from 'react-native-vector-icons/FontAwesome';
 import { default as FontAwesome5Icon } from 'react-native-vector-icons/FontAwesome5';
 import { default as MaterialCommunityIcon } from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -9,15 +9,13 @@ import {
   Pressable,
   ScrollView,
   FlatList,
-  ActivityIndicator,
   Platform,
   RefreshControl,
+  PermissionsAndroid,
 } from 'react-native';
 import { useNavigation } from '@react-navigation/core';
 import { useDispatch, useSelector } from 'react-redux';
-import Geolocation from '@react-native-community/geolocation';
-import RNAndroidLocationEnabler from 'react-native-android-location-enabler';
-
+import Geolocation from 'react-native-geolocation-service';
 import CardBantuan from '../../../../components/CardBantuan';
 import CardPermohonan from '../../../../components/CardPermohonan';
 import { Notification } from '../../../../components/Notification';
@@ -75,7 +73,10 @@ export default () => {
   }, [dispatch, getAllData]);
 
   useEffect(() => {
-    const getCurrentLocation = () => {
+    const getCurrentLocation = async () => {
+      await PermissionsAndroid.request(
+        PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
+      );
       const options =
         Platform.OS === 'android'
           ? { enableHighAccuracy: false, timeout: 5000 }
@@ -95,19 +96,7 @@ export default () => {
         options,
       );
     };
-
-    setTimeout(() => {
-      RNAndroidLocationEnabler.promptForEnableLocationIfNeeded({
-        interval: 10000,
-        fastInterval: 5000,
-      })
-        .then(() => {
-          getCurrentLocation();
-        })
-        .catch(err => {
-          console.log(err);
-        });
-    }, 500);
+    getCurrentLocation();
   }, [dispatch]);
 
   return (
