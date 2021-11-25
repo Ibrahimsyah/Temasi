@@ -1,65 +1,52 @@
 import { useNavigation } from '@react-navigation/core';
-import { CommonActions } from '@react-navigation/native';
-import React, { useMemo, useState } from 'react';
-import {
-  View,
-  Text,
-  ScrollView,
-  StatusBar,
-  TouchableOpacity,
-} from 'react-native';
+import React, { useMemo, useState, useEffect } from 'react';
+import { View, Text, ScrollView, StatusBar } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
+
 import Input from '../../components/Input';
 import ButtonPrimary from '../../components/ButtonPrimary';
 import { Color } from '../../config/style';
 import { isEmpty } from '../../utils/validation';
+import { changePassword } from '../../store/auth.action';
+import { STATUS_REQUEST_SUCCESS } from '../../config/request';
+import { showToast } from '../../utils/error';
+import { clearStatus } from '../../store/status.action';
+
 import style from './style';
-import { useEffect } from 'react';
-import { loginUser } from '../../store/auth.action';
-import { deleteAccount } from '../../store/account.action';
 
 export default () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [oldPassword, setOldPassword] = useState('');
+  const [newPassword, setNewPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
 
   const navigation = useNavigation();
-  const { account, loading } = useSelector(state => state);
+  const { loading, status } = useSelector(state => state);
   const dispatch = useDispatch();
 
   const isFormFilled = useMemo(() => {
-    return !isEmpty(email) && !isEmpty(password);
-  }, [email, password]);
+    return (
+      !isEmpty(oldPassword) &&
+      !isEmpty(newPassword) &&
+      oldPassword === confirmPassword
+    );
+  }, [oldPassword, newPassword, confirmPassword]);
 
-  const onRegister = () => {
-    dispatch(deleteAccount());
-    navigation.navigate('RegisterScreen');
-  };
-
-  const onLogin = () => {
-    dispatch(deleteAccount());
+  const onChangePassword = () => {
     dispatch(
-      loginUser({
-        email,
-        password,
+      changePassword({
+        oldPassword,
+        newPassword,
       }),
     );
   };
 
   useEffect(() => {
-    if (account.userId && account.status) {
-      navigation.dispatch(
-        CommonActions.reset({
-          routes: [{ name: 'HomeScreen' }],
-        }),
-      );
+    if (status.ubahPassword === STATUS_REQUEST_SUCCESS) {
+      navigation.goBack();
+      showToast('Kata Sandi Berhasil Diubah');
+      dispatch(clearStatus('ubahPassword'));
     }
-  }, [account, navigation]);
-
-  useEffect(() => {
-    if (account.status === false) {
-      navigation.push('KonfirmasiScreen');
-    }
-  }, [account.status, navigation]);
+  }, [dispatch, status, navigation]);
 
   return (
     <>
@@ -68,34 +55,35 @@ export default () => {
         contentContainerStyle={style.container}
         showsVerticalScrollIndicator={false}>
         <View style={style.title}>
-          <Text style={style.title1}>Masuk</Text>
-          <Text style={style.title2}> ke Akun Anda</Text>
+          <Text style={style.title1}>Ubah</Text>
+          <Text style={style.title2}> Kata Sandi</Text>
         </View>
         <Input
+          type="password"
           style={style.input}
-          textContentType="emailAddress"
-          value={email}
-          onChange={setEmail}
-          placeholder="Alamat Email"
+          value={oldPassword}
+          onChange={setOldPassword}
+          placeholder="Kata Sandi Lama"
         />
         <Input
-          secureTextEntry
+          type="password"
           style={style.input}
-          value={password}
-          onChange={setPassword}
-          placeholder="Kata Sandi"
+          value={newPassword}
+          onChange={setNewPassword}
+          placeholder="Kata Sandi Baru"
+        />
+        <Input
+          type="password"
+          style={style.input}
+          value={confirmPassword}
+          onChange={setConfirmPassword}
+          placeholder="Konfirmasi kata Sandi Baru"
         />
         <ButtonPrimary
-          disabled={!isFormFilled || loading.login}
-          onClick={onLogin}>
-          {loading.login ? 'Mohon Tunggu' : 'Masuk'}
+          disabled={!isFormFilled || loading.changePassword}
+          onClick={onChangePassword}>
+          {loading.changePassword ? 'Mohon Tunggu' : 'Kirim'}
         </ButtonPrimary>
-        <View style={style.footer}>
-          <Text style={style.footer1}>Belum Memiliki Akun? </Text>
-          <TouchableOpacity onPress={onRegister}>
-            <Text style={style.footer2}>Daftar Sekarang</Text>
-          </TouchableOpacity>
-        </View>
       </ScrollView>
     </>
   );
