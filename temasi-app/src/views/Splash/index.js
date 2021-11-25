@@ -20,6 +20,7 @@ export default () => {
     const init = async () => {
       const account = await storage.getData(ACCOUNT_STORAGE_KEY);
       if (account) {
+        await storage.setData(ACCOUNT_STORAGE_KEY, account);
         dispatch(setAccount(account));
       }
 

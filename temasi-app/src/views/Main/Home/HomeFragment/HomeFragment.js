@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { default as FontAwesomeIcon } from 'react-native-vector-icons/FontAwesome';
 import { default as FontAwesome5Icon } from 'react-native-vector-icons/FontAwesome5';
 import { default as MaterialCommunityIcon } from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -11,6 +11,7 @@ import {
   FlatList,
   ActivityIndicator,
   Platform,
+  RefreshControl,
 } from 'react-native';
 import { useNavigation } from '@react-navigation/core';
 import { useDispatch, useSelector } from 'react-redux';
@@ -56,20 +57,22 @@ export default () => {
     });
   };
 
-  useEffect(() => {
-    if (account.position) {
-      dispatch(getLatestPermohonan());
-      dispatch(getUrgentPermohonan());
-    }
-  }, [dispatch, account.position]);
-
-  useEffect(() => {
+  const getAllData = useCallback(() => {
     if (account.userId && account.status) {
       dispatch(getDonasi());
       dispatch(getAccountSummary());
       dispatch(getSelfPermohonan());
     }
-  }, [account.status, dispatch, account.userId]);
+
+    if (account.position) {
+      dispatch(getLatestPermohonan());
+      dispatch(getUrgentPermohonan());
+    }
+  }, [account.userId, account.status, dispatch, account.position]);
+
+  useEffect(() => {
+    getAllData();
+  }, [dispatch, getAllData]);
 
   useEffect(() => {
     const getCurrentLocation = () => {
@@ -109,7 +112,18 @@ export default () => {
 
   return (
     <>
-      <ScrollView style={style.container}>
+      <ScrollView
+        style={style.container}
+        refreshControl={
+          <RefreshControl
+            refreshing={
+              loading.getLatestPermohonan ||
+              loading.getDonasi ||
+              loading.getUrgentPermohonan
+            }
+            onRefresh={getAllData}
+          />
+        }>
         {account.userId && account.status && (
           <>
             <Text style={style.greeting}>{greeting}</Text>
@@ -189,7 +203,6 @@ export default () => {
             <Text style={style.showMore}>Lihat Semua</Text>
           </Pressable>
         </View>
-        {loading.getLatestPermohonan && <ActivityIndicator size="small" />}
         <View style={style.list}>
           {permohonan.latest.map(item => (
             <CardPermohonan {...item} key={item.id} />

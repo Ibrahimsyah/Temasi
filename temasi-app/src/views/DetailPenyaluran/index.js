@@ -53,7 +53,7 @@ export default () => {
     }
   }, [status, dispatch, navigation]);
   return (
-    <>
+    <View style={style.main}>
       <ConfirmModal
         visible={visible}
         setVisible={setVisible}
@@ -62,7 +62,7 @@ export default () => {
         onAccept={onConfirmBantuan}
       />
       <StatusBar backgroundColor={Color.WHITE} />
-      <ScrollView style={styles.container}>
+      <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
         <Header title="Detail Penyaluran" isDark />
         <PermohonanDetail {...permohonanDetailData} />
         <Text style={style.titleMed}>Detail Donatur</Text>
@@ -92,6 +92,6 @@ export default () => {
           Konfirmasi Bantuan
         </ButtonPrimary>
       </ScrollView>
-    </>
+    </View>
   );
 };

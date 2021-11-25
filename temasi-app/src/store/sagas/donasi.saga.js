@@ -26,7 +26,7 @@ function* getAllDonasi() {
   } catch (err) {
     showToast(err);
   } finally {
-    yield put(setLoading('getAllDonasi', true));
+    yield put(setLoading('getAllDonasi', false));
   }
 }
 
