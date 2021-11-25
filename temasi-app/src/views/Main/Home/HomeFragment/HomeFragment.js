@@ -10,6 +10,7 @@ import {
   ScrollView,
   FlatList,
   ActivityIndicator,
+  Platform,
 } from 'react-native';
 import { useNavigation } from '@react-navigation/core';
 import { useDispatch, useSelector } from 'react-redux';
@@ -72,6 +73,10 @@ export default () => {
 
   useEffect(() => {
     const getCurrentLocation = () => {
+      const options =
+        Platform.OS === 'android'
+          ? { enableHighAccuracy: false, timeout: 5000 }
+          : { enableHighAccuracy: true, timeout: 5000, maximumAge: 2000 };
       Geolocation.getCurrentPosition(
         info => {
           dispatch(
@@ -84,7 +89,7 @@ export default () => {
         error => {
           console.log(error);
         },
-        { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 },
+        options,
       );
     };
 
