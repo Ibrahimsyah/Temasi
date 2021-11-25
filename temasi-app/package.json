@@ -7,6 +7,7 @@
     "android-device": "adb reverse tcp:8081 tcp:8081 && react-native run-android",
     "ios": "react-native run-ios",
     "start": "react-native start",
+    "release": "react-native run-android --variant=release",
     "test": "jest",
     "lint": "eslint ."
   },

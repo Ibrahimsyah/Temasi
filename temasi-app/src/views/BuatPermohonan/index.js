@@ -102,9 +102,9 @@ export default () => {
           });
         },
         error => {
-          console.log(error);
+          console.log('Error:', error);
         },
-        { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 },
+        { timeout: 5000 },
       );
     };
 

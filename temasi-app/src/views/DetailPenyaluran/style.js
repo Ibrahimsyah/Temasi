@@ -4,7 +4,7 @@ import { Color, FontStyle } from '../../config/style';
 export default StyleSheet.create({
   container: {
     backgroundColor: Color.WHITE,
-    padding: 20,
+    paddingHorizontal: 20,
   },
   titleMed: {
     ...FontStyle.H4,
@@ -30,8 +30,9 @@ export default StyleSheet.create({
     padding: 10,
     borderRadius: 10,
     marginTop: 20,
+    marginBottom: 8,
   },
   btnAction: {
-    marginTop: 20,
+    marginVertical: 8,
   },
 });
