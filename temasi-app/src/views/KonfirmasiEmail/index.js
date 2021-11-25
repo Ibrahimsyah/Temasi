@@ -57,6 +57,7 @@ export default () => {
           style={style.input}
           value={code}
           onChange={setCode}
+          keyboardType="number-pad"
           placeholder="Kode Konfirmasi"
         />
         <ButtonPrimary

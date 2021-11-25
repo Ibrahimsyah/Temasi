@@ -34,7 +34,11 @@ export default () => {
   };
 
   const onWhatsApp = () => {
-    const api = `https://api.whatsapp.com/send?phone=${donasi.detail?.phone_number}`;
+    const userPhone = donasi.detail?.phone_number;
+    const phoneNumber =
+      userPhone[0] === '0' ? `62${userPhone.slice(1)}` : userPhone;
+
+    const api = `https://api.whatsapp.com/send?phone=${phoneNumber}`;
     Linking.openURL(api);
   };
 
