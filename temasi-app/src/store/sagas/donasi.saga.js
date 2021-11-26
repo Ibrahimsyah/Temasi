@@ -58,7 +58,7 @@ function* acceptDonasi(action) {
   } catch (err) {
     showToast(err);
   } finally {
-    yield put(setLoading('acceptDonasi', true));
+    yield put(setLoading('acceptDonasi', false));
   }
 }
 

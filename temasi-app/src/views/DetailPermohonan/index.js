@@ -89,6 +89,7 @@ export default () => {
       navigation.navigate('PenyaluranDonasi', {
         isAfterAccept: true,
         donasiId: donasi.detail?.id,
+        donasiType: donasi.detail?.type,
       });
     }
   }, [status.acceptDonasi, navigation, dispatch, donasi]);

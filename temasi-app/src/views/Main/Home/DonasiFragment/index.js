@@ -9,7 +9,6 @@ import CardPermohonan from '../../../../components/CardPermohonan';
 import styles from './style';
 import { STATUS_NOT_DELIVERED } from '../../../../config';
 import { getDonasi } from '../../../../store/donasi.action';
-import { SET_LOADING } from '../../../../store/ActionTypes';
 
 export default () => {
   const navigation = useNavigation();
@@ -21,6 +20,7 @@ export default () => {
       navigation.navigate('PenyaluranDonasi', {
         isAfterAccept: false,
         donasiId: data.id,
+        donasiType: data.type,
       });
     }
   };
