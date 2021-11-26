@@ -2,6 +2,7 @@ const {generateToken} = require('../util/tokenizer');
 const UserRepository = require('../repositories/UserRepository');
 const {UserNotFoundError, ConfirmationCodeNotMatch} = require('../util/error');
 const {insertSuccess, updateSuccess} = require('../util/response');
+const {sendConfirmationEmail} = require('../services/mailer');
 
 const registerUser = async (payload) => {
   const {
