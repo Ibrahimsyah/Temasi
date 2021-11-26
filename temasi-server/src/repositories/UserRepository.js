@@ -38,10 +38,10 @@ const addNewUser = async (payload) => {
   try {
     await Pengguna.create(pengguna, {transaction});
     await sendConfirmationEmail(email, userCode);
+    transaction.commit();
   } catch (err) {
     throw err;
   }
-  transaction.commit();
   return userId;
 };
 

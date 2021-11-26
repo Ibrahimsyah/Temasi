@@ -9,7 +9,7 @@ require('./src/services/db');
 
 const port = PORT;
 const app = express();
-ENV !== 'TEST' && app.use(morgan('dev'));
+ENV !== 'TEST' && app.use(morgan('common'));
 app.use(cors());
 app.use(express.json());
 

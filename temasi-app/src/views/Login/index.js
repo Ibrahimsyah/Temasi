@@ -79,7 +79,7 @@ export default () => {
           placeholder="Alamat Email"
         />
         <Input
-          secureTextEntry
+          type="password"
           style={style.input}
           value={password}
           onChange={setPassword}
