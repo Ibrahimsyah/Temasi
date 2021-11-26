@@ -31,11 +31,7 @@ export default () => {
   const { isAfterAccept, donasiId, donasiType } = route.params || {};
 
   const handleBack = () => {
-    if (isAfterAccept) {
-      navigation.dispatch(StackActions.pop(2));
-    } else {
-      navigation.goBack();
-    }
+    navigation.goBack();
   };
 
   const onCall = () => {

@@ -9,7 +9,7 @@ import {
   Pressable,
 } from 'react-native';
 import ImageView from 'react-native-image-viewing';
-import { useNavigation, useRoute } from '@react-navigation/core';
+import { useNavigation, useRoute, StackActions } from '@react-navigation/core';
 
 import ButtonPrimary from '../../components/ButtonPrimary';
 import Header from '../../components/Header';
@@ -86,11 +86,13 @@ export default () => {
   useEffect(() => {
     if (status.acceptDonasi === STATUS_REQUEST_SUCCESS) {
       dispatch(clearStatus('acceptDonasi'));
-      navigation.navigate('PenyaluranDonasi', {
+
+      const navActions = StackActions.replace('PenyaluranDonasi', {
         isAfterAccept: true,
         donasiId: donasi.detail?.id,
         donasiType: donasi.detail?.type,
       });
+      navigation.dispatch(navActions);
     }
   }, [status.acceptDonasi, navigation, dispatch, donasi]);
 
