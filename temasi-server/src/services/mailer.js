@@ -11,14 +11,19 @@ const mailer = nodemailer.createTransport({
 const sendConfirmationEmail = async (to, code) => {
   const html = `Berikut adalah kode konfirmasi akun anda: <b>${code}</b>. Silahkan masukkan kode tersebut ke dalam aplikasi`;
 
-  await mailer.sendMail({
-    from: '"TEMASI" <temasi.covid19@gmail.com>',
-    to,
-    subject: 'Selamat Datang di TEMASI!',
-    html,
-  });
+  try {
+    await mailer.sendMail({
+      from: '"TEMASI" <temasi.covid19@gmail.com>',
+      to,
+      subject: 'Selamat Datang di TEMASI!',
+      html,
+    });
 
-  console.log(`Email to ${to} sent.`);
+    console.log(`Email to ${to} sent.`);
+  } catch (err) {
+    console.log(err);
+    throw new Error('Email tidak valid');
+  }
 };
 
 module.exports = {sendConfirmationEmail};

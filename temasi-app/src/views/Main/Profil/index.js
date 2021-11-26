@@ -52,6 +52,7 @@ const AccountNotFound = () => {
 export default () => {
   const account = useSelector(state => state.account);
   const dispatch = useDispatch();
+  const navigation = useNavigation();
   const {
     account: { summary },
   } = useSelector(state => state);
@@ -61,6 +62,10 @@ export default () => {
     dispatch(setDonasi([]));
     dispatch(getLatestPermohonan());
     dispatch(getUrgentPermohonan());
+  };
+
+  const onChangePassword = () => {
+    navigation.push('UbahPassword');
   };
 
   return !account.userId || account.status === false ? (
@@ -83,9 +88,13 @@ export default () => {
       <Text style={style.profileLabel}>Alamat Email</Text>
       <Text style={style.profileValue}>{account.email}</Text>
       <Text style={style.profileLabel}>Jenis Kelamin</Text>
-      <Text style={style.profileValue}>Pria</Text>
+      <Text style={style.profileValue}>
+        {account.is_male ? 'Pria' : 'Wanita'}
+      </Text>
       <View style={style.buttonContainer}>
-        <ButtonPrimary style={style.buttonFirst}>Ubah Password</ButtonPrimary>
+        <ButtonPrimary style={style.buttonFirst} onClick={onChangePassword}>
+          Ubah Password
+        </ButtonPrimary>
         <ButtonSecondary style={style.buttonSecond} onClick={onLogout}>
           Keluar
         </ButtonSecondary>

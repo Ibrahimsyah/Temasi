@@ -36,6 +36,11 @@ const loginUser = async (payload) => {
   await UserRepository.verifyUserPassword(password, account.password);
   const token = generateToken({userId: account.id});
 
+  if (!account.status) {
+    const userCode = user.id.split('-')[1];
+    await sendConfirmationEmail(email, userCode);
+  }
+
   return {
     fullName: account.full_name,
     email,
