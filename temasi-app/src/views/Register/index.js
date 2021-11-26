@@ -137,6 +137,7 @@ export default () => {
           placeholder="Nama Lengkap"
         />
         <Input
+          keyboardType="numeric"
           style={style.input}
           value={phone}
           onChange={setPhone}
