@@ -7,13 +7,13 @@
     "android-device": "adb reverse tcp:8081 tcp:8081 && react-native run-android",
     "ios": "react-native run-ios",
     "start": "react-native start",
+    "release": "react-native run-android --variant=release",
     "test": "jest",
     "lint": "eslint ."
   },
   "dependencies": {
     "@react-native-async-storage/async-storage": "^1.15.8",
     "@react-native-community/checkbox": "^0.5.8",
-    "@react-native-community/geolocation": "^2.0.2",
     "@react-navigation/bottom-tabs": "^6.0.5",
     "@react-navigation/native": "^6.0.2",
     "@react-navigation/native-stack": "^6.1.0",
@@ -22,6 +22,7 @@
     "react": "17.0.2",
     "react-native": "0.65.1",
     "react-native-android-location-enabler": "^1.2.2",
+    "react-native-geolocation-service": "^5.3.0-beta.3",
     "react-native-image-picker": "^4.1.1",
     "react-native-image-viewing": "^0.2.0",
     "react-native-looped-carousel": "^0.1.13",

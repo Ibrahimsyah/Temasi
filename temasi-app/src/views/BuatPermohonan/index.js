@@ -8,8 +8,6 @@ import {
   ActivityIndicator,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
-import Geolocation from '@react-native-community/geolocation';
-import RNAndroidLocationEnabler from 'react-native-android-location-enabler';
 import CheckBox from '@react-native-community/checkbox';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigation } from '@react-navigation/core';
@@ -43,12 +41,16 @@ export default () => {
   const [rhesus, setRhesus] = useState(null);
   const [jangkaWaktu, setJangkaWaktu] = useState(-1);
   const [modalVisible, setModalVisible] = useState(false);
-  const [position, setPosition] = useState(null);
   const [address, setAddress] = useState('');
   const [description, setDescription] = useState('');
   const [agreement, setAgreement] = useState(false);
 
-  const { loading, main, status } = useSelector(state => state);
+  const {
+    loading,
+    main,
+    status,
+    account: { position },
+  } = useSelector(state => state);
   const dispatch = useDispatch();
   const navigation = useNavigation();
 
@@ -91,30 +93,6 @@ export default () => {
       dispatch(setUploadResult(null));
     }
   }, [main, dispatch]);
-
-  useEffect(() => {
-    const getCurrentLocation = () => {
-      Geolocation.getCurrentPosition(
-        info => {
-          setPosition({
-            latitude: info.coords.latitude,
-            longitude: info.coords.longitude,
-          });
-        },
-        error => {
-          console.log(error);
-        },
-        { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 },
-      );
-    };
-
-    RNAndroidLocationEnabler.promptForEnableLocationIfNeeded({
-      interval: 10000,
-      fastInterval: 5000,
-    }).then(() => {
-      getCurrentLocation();
-    });
-  }, []);
 
   useEffect(() => {
     if (status.createPermohonan === STATUS_REQUEST_SUCCESS) {

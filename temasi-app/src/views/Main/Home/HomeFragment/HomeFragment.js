@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import { default as FontAwesomeIcon } from 'react-native-vector-icons/FontAwesome';
 import { default as FontAwesome5Icon } from 'react-native-vector-icons/FontAwesome5';
 import { default as MaterialCommunityIcon } from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -9,13 +9,13 @@ import {
   Pressable,
   ScrollView,
   FlatList,
-  ActivityIndicator,
+  Platform,
+  RefreshControl,
+  PermissionsAndroid,
 } from 'react-native';
 import { useNavigation } from '@react-navigation/core';
 import { useDispatch, useSelector } from 'react-redux';
-import Geolocation from '@react-native-community/geolocation';
-import RNAndroidLocationEnabler from 'react-native-android-location-enabler';
-
+import Geolocation from 'react-native-geolocation-service';
 import CardBantuan from '../../../../components/CardBantuan';
 import CardPermohonan from '../../../../components/CardPermohonan';
 import { Notification } from '../../../../components/Notification';
@@ -55,23 +55,32 @@ export default () => {
     });
   };
 
-  useEffect(() => {
-    if (account.position) {
-      dispatch(getLatestPermohonan());
-      dispatch(getUrgentPermohonan());
-    }
-  }, [dispatch, account.position]);
-
-  useEffect(() => {
+  const getAllData = useCallback(() => {
     if (account.userId && account.status) {
       dispatch(getDonasi());
       dispatch(getAccountSummary());
       dispatch(getSelfPermohonan());
     }
-  }, [account.status, dispatch, account.userId]);
+
+    if (account.position) {
+      dispatch(getLatestPermohonan());
+      dispatch(getUrgentPermohonan());
+    }
+  }, [account.userId, account.status, dispatch, account.position]);
 
   useEffect(() => {
-    const getCurrentLocation = () => {
+    getAllData();
+  }, [dispatch, getAllData]);
+
+  useEffect(() => {
+    const getCurrentLocation = async () => {
+      await PermissionsAndroid.request(
+        PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
+      );
+      const options =
+        Platform.OS === 'android'
+          ? { enableHighAccuracy: false, timeout: 5000 }
+          : { enableHighAccuracy: true, timeout: 5000, maximumAge: 2000 };
       Geolocation.getCurrentPosition(
         info => {
           dispatch(
@@ -84,27 +93,26 @@ export default () => {
         error => {
           console.log(error);
         },
-        { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 },
+        options,
       );
     };
-
-    setTimeout(() => {
-      RNAndroidLocationEnabler.promptForEnableLocationIfNeeded({
-        interval: 10000,
-        fastInterval: 5000,
-      })
-        .then(() => {
-          getCurrentLocation();
-        })
-        .catch(err => {
-          console.log(err);
-        });
-    }, 500);
+    getCurrentLocation();
   }, [dispatch]);
 
   return (
     <>
-      <ScrollView style={style.container}>
+      <ScrollView
+        style={style.container}
+        refreshControl={
+          <RefreshControl
+            refreshing={
+              loading.getLatestPermohonan ||
+              loading.getDonasi ||
+              loading.getUrgentPermohonan
+            }
+            onRefresh={getAllData}
+          />
+        }>
         {account.userId && account.status && (
           <>
             <Text style={style.greeting}>{greeting}</Text>
@@ -184,7 +192,6 @@ export default () => {
             <Text style={style.showMore}>Lihat Semua</Text>
           </Pressable>
         </View>
-        {loading.getLatestPermohonan && <ActivityIndicator size="small" />}
         <View style={style.list}>
           {permohonan.latest.map(item => (
             <CardPermohonan {...item} key={item.id} />

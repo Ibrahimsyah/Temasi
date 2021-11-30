@@ -2,6 +2,7 @@ const {generateToken} = require('../util/tokenizer');
 const UserRepository = require('../repositories/UserRepository');
 const {UserNotFoundError, ConfirmationCodeNotMatch} = require('../util/error');
 const {insertSuccess, updateSuccess} = require('../util/response');
+const {sendConfirmationEmail} = require('../services/mailer');
 
 const registerUser = async (payload) => {
   const {
@@ -35,6 +36,11 @@ const loginUser = async (payload) => {
 
   await UserRepository.verifyUserPassword(password, account.password);
   const token = generateToken({userId: account.id});
+
+  if (!account.status) {
+    const userCode = account.id.split('-')[1];
+    await sendConfirmationEmail(email, userCode);
+  }
 
   return {
     fullName: account.full_name,

@@ -137,6 +137,7 @@ export default () => {
           placeholder="Nama Lengkap"
         />
         <Input
+          keyboardType="numeric"
           style={style.input}
           value={phone}
           onChange={setPhone}
@@ -155,14 +156,14 @@ export default () => {
           placeholder="Alamat Email"
         />
         <Input
-          secureTextEntry
+          type="password"
           style={style.input}
           value={password}
           onChange={setPassword}
           placeholder="Kata Sandi"
         />
         <Input
-          secureTextEntry
+          type="password"
           style={style.input}
           value={confirmPassword}
           onChange={setConfirmPassword}

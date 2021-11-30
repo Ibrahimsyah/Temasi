@@ -1,7 +1,7 @@
 services:
   server:
     build: .
-    container_name: temasi-server-image
+    container_name: temasi-server
     environment:
       - DSN=postgresql://postgres:${POSTGRES_PASSWORD}@db:5432/${POSTGRES_DB}
     depends_on:
@@ -11,9 +11,11 @@ services:
       - 80:3000
     networks: 
       - server_network
+    volumes:
+      - server-data:/temasi-server/media
   db:
     image: 'postgres:latest'
-    container_name: 'temasi-db-image'
+    container_name: 'temasi-database'
     environment:
       - POSTGRES_DB=${POSTGRES_DB}
       - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
@@ -23,5 +25,12 @@ services:
       - 5678:5432
     networks: 
       - server_network
+    volumes:
+      - db-data:/var/lib/postgresql/data
 networks:
   server_network:
+volumes:
+  db-data:
+    driver: local
+  server-data:
+    driver: local
