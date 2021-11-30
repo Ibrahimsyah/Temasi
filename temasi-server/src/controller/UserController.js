@@ -49,6 +49,7 @@ const loginUser = async (payload) => {
     photo: account.photo,
     phoneNumber: account.phone_number,
     token,
+    is_male: account.is_male,
     status: account.status,
   };
 };
