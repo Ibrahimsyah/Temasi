@@ -10,6 +10,7 @@ const registerUser = async (payload) => {
     phoneNumber,
     email,
     photo,
+    isMale
   } = payload;
 
   await UserRepository.checkUserExists(email);
@@ -25,6 +26,7 @@ const registerUser = async (payload) => {
     userId,
     token,
     photo,
+    is_male: isMale,
     status: false,
   };
 };
