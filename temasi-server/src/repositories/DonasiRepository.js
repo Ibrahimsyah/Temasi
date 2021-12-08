@@ -17,7 +17,7 @@ const insertDonasi = async (payload) => {
     permohonan_id: permohonanId,
     donasi_date: donasiDate,
     status,
-  });
+  }, {returning: false});
 
   return id;
 };

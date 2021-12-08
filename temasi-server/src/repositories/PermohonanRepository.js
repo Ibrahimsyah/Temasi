@@ -19,7 +19,7 @@ const insertPermohonan = async (payload) => {
     note,
   };
 
-  await Permohonan.create(data);
+  await Permohonan.create(data, {returning: false});
   return id;
 };
 
