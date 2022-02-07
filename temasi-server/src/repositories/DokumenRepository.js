@@ -6,7 +6,7 @@ const insertDocument = async ({permohonanId, documents}) => {
     document_url: document,
   }));
 
-  await Dokumen.bulkCreate(documentsData);
+  await Dokumen.bulkCreate(documentsData, {returning: false});
 };
 
 module.exports = {
